@@ -1,0 +1,29 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{lipsum}  
+\usepackage[pagestyles]{titlesec}
+\usepackage{graphicx}
+
+
+\titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\Huge}
+\newpagestyle{mystyle}
+{\sethead[\thepage][][\chaptertitle]{}{}{\thepage}}
+\pagestyle{mystyle}
+
+\title{Front Page Test}
+\author{AmorosiniCasaliFioravanti}
+\date{October 2019}
+
+%TODO: Se non troviamo una copertina migliore prima di consegnare 
+%      il progetto eliminiamo la prima pagina e ne facciamo una con paint
+
+\begin{document}
+\maketitle 
+\tableofcontents
+\chapter{Introduction}
+\lipsum[2-3]
+\section{Boh}
+\lipsum[4-5]
+
+\end{document}
