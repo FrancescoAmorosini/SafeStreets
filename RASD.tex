@@ -50,6 +50,29 @@ SafeStreets is a crowd-sourced application that intends to provide users with th
 
 \section{Scope}
 % Stuff on world and shared phenomena
+According to the \textit{World} and \textit{Machine} paradigm we can distinguish the \textit{Machine}, that is the portion of the system to be developed, from the \textit{World}, that is the portion of the real-world affected by the machine. In this way, we can classify the phenomena in three different types: World, Machine and \textit{Shared} phenomena, where the latter type of phenomena can be controlled by the world and affected by the machine or controlled by the machine and affected by the world.
+\newline
+In this context, the main relevant phenomena are organized as in the following table.
+\begin{table}[h!]
+		%{pix.acc.} & {mean.acc.} & {mean.IoU} & {f.w.IoU}
+		\begin{center}
+		%\hspace{-4.5cm}
+			\begin{tabular}{|C{3.5cm}|C{3.5cm}|C{3.5cm}|}
+				\toprule
+				\textbf{World} &\textbf{Machine}& \textbf{Shared}\\
+				\midrule
+				\textbf{Traffic violation}: circumstances in which someone doesn't respect the traffic rules&\textbf{DBMS queries}: operation performed to retrieve/store data&\textbf{Registration/Login}: an user can sign up to the application or log in if is already registered.\\
+				\midrule
+				\textbf{Incident}:event that caused damage to things or people.&\textbf{API queries}: request for third-part services.&\textbf{Send of report}: someone who send the description of the traffic violation.\\
+				\midrule
+				\textbf{•}&\textbf{use of Hash}: compute the hash function to ensure that information is never altered. &\textbf{Build statistics}: compute statistics to found unsafe area, to see which veichles commit multiple infractions and also to see how the trends of issued tickets change.\\
+				\midrule
+				&&\textbf{Safe interventions}: the application give suggestion for possible safe interventions (e.g add a barrier). \\ 
+			\end{tabular}
+		\end{center}
+		\caption{}
+		\label{tab:multicol}
+	\end{table}
 
 \chapter{Overall Description}
 %Something later
