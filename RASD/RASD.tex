@@ -30,16 +30,40 @@ SafeStreets is a crowd-sourced application that intends to provide users with th
 \begin{itemize}
     \item {[G.1]} The System allows the Users to access the functionalities of the application from different locations and devices.
     \item {[G.2]} The System allows the Users to authenticate themselves either as Authority or Citizen.
+    \begin{itemize}
+    		\item {[G.2.1]}The System offers different levels of visibility to different roles.
+    \end{itemize}
     \item {[G.3]} The System allows the Citizens to document traffic violations to Authorities by compiling a Report.
-    {\setlength\itemindent{25pt} \item {[G.3.1]}The System offers different levels of visibility to different roles.	}
-    \item {[G.4]} The Report Manager handles the submissions:
+    \item {[G.4]} The System stores the reports provided by the Citizens.
+    \begin{itemize}
+    		\item {[G.4.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm 			to read it from the submitted picture.
+    	\end{itemize}     
+
+    \item {[G.6]} The System allows the Citizens to add testimony of an accident they have seen.
+    \item {[G.7]} The System elaborates information to detect unsafe areas
+    \begin{itemize}
+    		\item {[G.7.1]}If the System collects common witnesses for the same problem, can suggests possible interventions to the 		Authority.
+    \end{itemize}    
+    \item {[8]} The System ensure the chain of custody of the informations coming from the Citizens.
+    \item{[9]} The System can builds statistics on violations using the stored informantion about issued tickets.
+\end{itemize}
+
+\section{Scope}
+% Stuff on world and shared phenomena
+
+\chapter{Overall Description}
+%Something later
+\chapter{Specific Requirements}
+%stuff..
+\section{Functional Requirements}
+%TODO: Requirements che erano goal, da aggiustare successivamente
+\begin{itemize}
+\item {[G.4]} The Report Manager handles the submissions:
     {\setlength\itemindent{25pt} \item {[G.4.1]} Before accepting any Report, the Report Manager ensures that it contains a picture of the violation, the date, time, position, and type of violation.}
     {\setlength\itemindent{25pt} \item {[G.4.2]} The Report Manager notifies all logged in Authorities whenever a new Report is accepted.}
     {\setlength\itemindent{25pt} \item {[G.4.3]} The Report Manager must ensure that no more than one Authority has taken in charge the same Report.}
     {\setlength\itemindent{25pt} \item {[G.4.4]} The Report Manager notifies Citizens whenever one of their Reports has been taken in charge by an Authority.}
-    \item {[G.5]} The System stores the reports provided by the Citizens.
-    {\setlength\itemindent{25pt} \item {[G.5.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm to read it from the submitted picture.}
+\item {[G.9]} The System can accedes to the stored traffic tickets with a permission from the local municipality.
 \end{itemize}
-\section{Scope}
-% Stuff on world and shared phenomena
+
 \end{document}
