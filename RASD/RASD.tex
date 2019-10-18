@@ -35,7 +35,7 @@ In addition, the municipality could offer a service that takes the information a
 \subsection{Goals}
 \begin{itemize}
     \item {[G.1]} The System allows the Users to access the functionalities of the application from different locations and devices.
-    \item {[G.2]} The System allows the Users to authenticate themselves either as Authority or Citizen.
+    \item {[G.2]} The System allows Guests to authenticate themselves either as Authority or Citizen.
     \begin{itemize}
     		\item {[G.2.1]}The System offers different levels of visibility to different roles.
     \end{itemize}
@@ -45,9 +45,9 @@ In addition, the municipality could offer a service that takes the information a
     		\item {[G.4.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm to read it from the submitted picture.
     	\end{itemize}     
     %\item {[G.6]} The System allows the Citizens to add testimony of an accident they have seen.
-    \item {[G.6]} The System analyzes its information to detect unsafe areas.
+    \item {[G.6]} The System analyzes the stored information to detect unsafe areas.
     \begin{itemize}
-    		\item {[G.6.1]}If the System collects multiple reports for the same problem in a given area, it can suggest possible interventions to the Authority.
+    		\item {[G.6.1]}If the System collects multiple reports for the same problem in a given area, it can suggest possible interventions to the Authorities.
     		\item {[G.6.2]}If allowed by Authorities, SafeStreets can cross their information about accidents with its own in order to improve the analysis.
     \end{itemize}    
     \item{[G.7]} If allowed by Authorities, SafeStreets can access their information about issued tickets to build statistics and evaluate its effectiveness.
@@ -58,9 +58,9 @@ In addition, the municipality could offer a service that takes the information a
 
 \section{Scope}
 % Stuff on world and shared phenomena
-According to the \textit{World} and \textit{Machine} paradigm, as proposed by M. Jackson and P. Zave, we can distinguish the \textit{Machine}, that is the portion of the system to be developed, from the \textit{World}, that is the portion of the real-world affected by the machine. In this way, we can classify the phenomena in three different types: World, Machine and \textit{Shared} phenomena, where the latter type of phenomena can be controlled by the world and observed by the machine or controlled by the machine and observed by the world.
+According to the \textit{World} and \textit{Machine} paradigm, proposed by M. Jackson and P. Zave in 1995, we can distinguish the \textit{Machine}, that is the portion of the system to be developed, from the \textit{World}, that is the portion of the real-world affected by the machine. In this way, we can classify the phenomena in three different types: World, Machine and \textit{Shared} phenomena, where the latter type of phenomena can be controlled by the world and observed by the machine or controlled by the machine and observed by the world.
 \newline
-In this context, the main relevant phenomena are organized as in the following table.
+In this context, the most relevant phenomena are organized as in the following table.
 \begin{table}[!ht]
 		%{pix.acc.} & {mean.acc.} & {mean.IoU} & {f.w.IoU}
 		\begin{center}
@@ -69,11 +69,11 @@ In this context, the main relevant phenomena are organized as in the following t
 			\toprule
 			\textbf{World} &\textbf{Shared}& \textbf{Machine}\\
 			\midrule
-			\textbf{Traffic violation}: circumstances in which someone doesn't respect the traffic rules&\textbf{Registration/Login}$^{1}$: an user can sign up to the application or log in if is already registered.&\textbf{DBMS queries}: operation performed to retrieve/store data\\
+			\textbf{Traffic violation}: circumstances in which someone doesn't respect the traffic rules&\textbf{Registration/Login}$^{1}$: a Guest can sign up to the application or log in if already registered.&\textbf{DBMS queries}: operations performed to retrieve/store data\\
 			\midrule
-			\textbf{Incident}:event that caused damage to things or people.&\textbf{Send report}$^{1}$: someone who send the description of the traffic violation.&\textbf{API queries}: request for third-part services.\\
+			\textbf{Accident}:event that caused damage to things or people.&\textbf{Report commit}$^{1}$: action of sending a report documenting a traffic violation or an accident.&\textbf{API queries}: request for third-part services.\\
 			\midrule
-			&\textbf{Build statistics}$^{2}$: compute statistics to found unsafe area, to see which veichles commit multiple infractions and also to see how the trends of issued tickets change.&\textbf{use of Hash}: compute the hash function to ensure that information is never altered.\\
+			&\textbf{Build statistics}$^{2}$: to compute statistics and find unsafe areas, to see which veichles commit multiple infractions and also to see how the trends of issued tickets change.&\textbf{use of Hash}: compute the hash function to ensure that information is never altered.\\
 			\midrule
 			&\textbf{Safe interventions}$^{2}$: the application give suggestion for possible safe interventions (e.g add a barrier).&\textbf{Credential validation}: check that Citizens can not access as Authority\\ 
 			\midrule
@@ -83,30 +83,31 @@ In this context, the main relevant phenomena are organized as in the following t
 			\bottomrule
 		\end{tabular}
 		\end{center}
-		\caption{in the table \textit{1} refers to shared phenomena controlled by the world and observed by the machine and \textit{2} refers to the phenomena controlled by the machine and observed by the world}
+		\caption{In the table above, \textit{1} refers to shared phenomena controlled by the world and observed by the machine, whereas \textit{2} refers to the phenomena controlled by the machine and observed by the world}
 		\label{tab:multicol}
 	\end{table}
 	
 \section{Definitions, Acronyms and Abbreviations}
 \subsection{Definitions}
 \begin{itemize}
-    \item \textit{Guest}: a person who has to sign up and who is not able to access any feature of the application.
-    \item \textit{User}: a registered user who has to log in.
+	\item \textit{System}: the totality of the hardware/software applications that contribute to provide the service concerned.
+    \item \textit{Guest}: someone who has yet to sign up and who is not able to access any feature of the application.
+    \item \textit{User}: a registered user who has logged in.
 	\begin{itemize}
-		\item \textit{Citizens}: user sending report of traffic violation.
-		\item \textit{Authorities}: user who is notifid of the report sent. 
+		\item \textit{Citizen}: end-user who can send Reports of traffic violation. It has limited visibility over the stored information.
+		\item \textit{Authority}: user who has access to the history of Reports and is notified whenever a new Report is recieved. It has full visibility over the data exposed by the System.
 	\end{itemize} 
-    \item \textit{Logged in User}: a registered user who logged in.
-    \item \textit{Report}: a picture of a traffic violation with date, time and position attached.
-    \item \textit{Hash}: a mathematical algorithm that maps data of arbitrary size to a bit string of a fixed size and is a one-way function, that is, a function which is practically infeasible to invert.
+    %\item \textit{Logged in User}: a registered user who logged in.
+    \item \textit{Report}: documentation of a traffic violation. It contains a picture of the violation, the date, time, position, and type of violation. Some fields can be omitted in case an accident is being reported.
+    \item \textit{Hash}: a mathematical algorithm that maps data of arbitrary size to a bit string of fixed size. It is a one-way function, that is, a function which is practically infeasible to invert.
     \item \textit{Chain of custody}: chronological documentation that records the sequence of custody, control, transfer, analysis, and disposition of physical or electronic evidence.
-    \item \textit{Third-party services}: services used by the System in order to provide extra functionalities (e.g image recognition).
-    \item \textit{Notification}: message that advise the Authorities of a traffic violation.
+    \item \textit{Third-party services}: services used by the System in order to provide extra functionalities (e.g. image recognition).
+    %\item \textit{Notification}: message that advise the Authorities of a traffic violation.
 \end{itemize}
 \subsection{Acronyms}
 \begin{itemize}
 \item \textbf{API}: \textit{Application Program Interface}, set of routines, protocols and tools for building software applications on top of this one.
-\item \textbf{OCR}: \textit{Optical Character Recognition}, software dedicated to the detection of characters contained in a document and to their transfer to digital text that can be read by a machine. 
+\item \textbf{OCR}: \textit{Optical Character Recognition}, software dedicated to the detection of characters contained in a document and to their transfer to digital text that can be read by a machine. In this context, OCR will be used to read license plates.
 \item \textbf{GPS}: \textit{Global Positioning System}, system widely used to get the user's position.
 \end{itemize}
 \subsection{Abbreviations}
