@@ -59,39 +59,72 @@ In addition, the municipality could offer a service that takes the information a
 
 \section{Scope}
 % Stuff on world and shared phenomena
-According to the \textit{World} and \textit{Machine} paradigm we can distinguish the \textit{Machine}, that is the portion of the system to be developed, from the \textit{World}, that is the portion of the real-world affected by the machine. In this way, we can classify the phenomena in three different types: World, Machine and \textit{Shared} phenomena, where the latter type of phenomena can be controlled by the world and affected by the machine or controlled by the machine and affected by the world.
+According to the \textit{World} and \textit{Machine} paradigm, as proposed by M. Jackson and P. Zave, we can distinguish the \textit{Machine}, that is the portion of the system to be developed, from the \textit{World}, that is the portion of the real-world affected by the machine. In this way, we can classify the phenomena in three different types: World, Machine and \textit{Shared} phenomena, where the latter type of phenomena can be controlled by the world and observed by the machine or controlled by the machine and observed by the world.
 \newline
 In this context, the main relevant phenomena are organized as in the following table.
 \begin{table}[h!]
 		%{pix.acc.} & {mean.acc.} & {mean.IoU} & {f.w.IoU}
 		\begin{center}
 		%\hspace{-4.5cm}
-			\begin{tabular}{|C{3.5cm}|C{3.5cm}|C{3.5cm}|}
-				\toprule
-				\textbf{World} &\textbf{Machine}& \textbf{Shared}\\
-				\midrule
-				\textbf{Traffic violation}: circumstances in which someone doesn't respect the traffic rules&\textbf{DBMS queries}: operation performed to retrieve/store data&\textbf{Registration/Login}: an user can sign up to the application or log in if is already registered.\\
-				\midrule
-				\textbf{Incident}:event that caused damage to things or people.&\textbf{API queries}: request for third-part services.&\textbf{Send of report}: someone who send the description of the traffic violation.\\
-				\midrule
-				\textbf{•}&\textbf{use of Hash}: compute the hash function to ensure that information is never altered. &\textbf{Build statistics}: compute statistics to found unsafe area, to see which veichles commit multiple infractions and also to see how the trends of issued tickets change.\\
-				\midrule
-				&&\textbf{Safe interventions}: the application give suggestion for possible safe interventions (e.g add a barrier). \\ 
-			\end{tabular}
+		\begin{tabular}{|C{3.5cm}|C{3.5cm}|C{3.5cm}|}
+			\toprule
+			\textbf{World} &\textbf{Shared}& \textbf{Machine}\\
+			\midrule
+			\textbf{Traffic violation}: circumstances in which someone doesn't respect the traffic rules&\textbf{Registration/Login}$^{1}$: an user can sign up to the application or log in if is already registered.&\textbf{DBMS queries}: operation performed to retrieve/store data\\
+			\midrule
+			\textbf{Incident}:event that caused damage to things or people.&\textbf{Send report}$^{1}$: someone who send the description of the traffic violation.&\textbf{API queries}: request for third-part services.\\
+			\midrule
+			&\textbf{Build statistics}$^{2}$: compute statistics to found unsafe area, to see which veichles commit multiple infractions and also to see how the trends of issued tickets change.&\textbf{use of Hash}: compute the hash function to ensure that information is never altered.\\
+			\midrule
+			&\textbf{Safe interventions}$^{2}$: the application give suggestion for possible safe interventions (e.g add a barrier).&\textbf{Credential validation}: check that Citizens can not access as Authority\\ 
+			\midrule
+			&\textbf{Generation of traffic tickets}$^{1}$: generate traffic tickets using the information about traffic violation.&	\\			
+			\midrule
+			&\textbf{Send notification}$^{2}$: notify the autorithies when a report is submitted by someone.&\\
+			\bottomrule
+		\end{tabular}
 		\end{center}
-		\caption{}
+		\caption{in the table \textit{1} refers to shared phenomena controlled by the world and observed by the machine and \textit{2} refers to the phenomena controlled by the machine and observed by the world}
 		\label{tab:multicol}
 	\end{table}
   
-
+  
+	
 \section{Definitions, Acronyms and Abbreviations}
 \subsection{Definitions}
 \begin{itemize}
-    \item SafeStreets
-    
+    \item \textit{Guest}: a person who has to sign up and who is not able to access any feature of the application.
+    \item \textit{User}: a registered user who has to log in.
+	\begin{itemize}
+		\item \textit{Citizens}: user sending report of traffic violation.
+		\item \textit{Authorities}: user who is notifid of the report sent. 
+	\end{itemize} 
+    \item \textit{Logged in User}: a registered user who logged in.
+    \item \textit{Report}: a picture of a traffic violation with date, time and position attached.
+    \item \textit{Hash}: a mathematical algorithm that maps data of arbitrary size to a bit string of a fixed size and is a one-way function, that is, a function which is practically infeasible to invert.
+    \item \textit{Chain of custody}: chronological documentation that records the sequence of custody, control, transfer, analysis, and disposition of physical or electronic evidence.
+    \item \textit{Third-party services}: services used by the System in order to provide extra functionalities (e.g image recognition).
+    \item \textit{Notification}: message that advise the Authorities of a traffic violation.
 \end{itemize}
-\subsection{Acronyms}
-\subsection{Abbreviations}
+ \subsection{Acronyms}
+ \begin{itemize}
+ \item \textbf{API}: \textit{Application Program Interface}, set of routines, protocols and tools for building software applications on top of this one.
+ \item \textbf{OCR}: \textit{Optical Character Recognition}, software dedicated to the detection of characters contained in a document and to their transfer to digital text that can be read by a machine. 
+ \item \textbf{GPS}: \textit{Global Positioning System}, system widely used to get the user's position.
+ \end{itemize}
+ \subsection{Abbreviations}
+ \begin{itemize}
+ \item {[G$_{i}$]}: i-th goal.
+ \item {[R$_{i}$]}: i-th functional requirement.
+ \item {[D$_{i}$]}: i-th domain assumption.
+ \end{itemize}
+ \subsection{Reference Documents}
+ \subsection{Document Structure}
+ The rest of the document is organized as follows:
+ \begin{itemize}
+ \item{\textbf{Overall description}}: 
+ \item{\textbf{Specific requirements}}
+ \end{itemize}
 
 \chapter{Overall Description}
 %Something later
