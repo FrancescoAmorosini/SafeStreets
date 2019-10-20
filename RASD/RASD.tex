@@ -128,9 +128,9 @@ In this context, the most relevant phenomena are organized as in the following t
 This document is presented as it follows:
 \begin{itemize}
 	\item {\textbf{Introduction}} contains a general description of the system and its goals, presenting the problem in an informal way.
-	\item {\textbf{Overall description}} shows 
-	\item {\textbf{Specific requirements}}
-	\item {\textbf{Formal analysis using Alloy}}:
+	\item{\textbf{Overall description}} gives a general description of the application, focusing on the context of the system and giving further details about shared phenomena. Furthermore, we will provide the specifications of constraints, dependencies and assumptions, that show how the System is integrated with the real world.
+	\item{\textbf{Specific requirements}} goes into the details about functional and non-functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
+	\item {\textbf{Formal analysis using Alloy}} contains the Alloy model of some critical aspects of the System with all the related comments. A proof of consistency and an example of the generated world are also provided.
 	\item {\textbf{Effort spent}} shows the time spent writing this document by each member of the team.
 	\item {\textbf{References}}
 \end{itemize}
@@ -163,11 +163,20 @@ The System gives suggestions for possible safe interventions. His knowledge is b
 The System notifies a logged Authority when a report is submitted by an User. 
 Then the Authority takes the right legal measure based on the information that he/she gets.
 %Something later
-\chapter{Specific Requirements}
+
 %stuff..
+\subsection{Class Diagram}
+\begin{figure}[h!]
+\begin{center}
+
+\includegraphics[scale=0.4]{./img/SWE1.png}
+\end{center}
+\caption{SafeStreets' class diagram.}
+\label{schema}
+\end{figure} 
+\chapter{Specific Requirements}
 \section{Functional Requirements}
-%TODO: Requirements
-che erano goal, da aggiustare successivamente
+%TODO: Requirements che erano goal, da aggiustare successivamente
 \begin{itemize}
 \item {[G.4]} The Report Manager handles the submissions:
     {\setlength\itemindent{25pt} \item {[G.4.1]} Before accepting any Report, the Report Manager ensures that it contains a picture of the violation, the date, time, position, and type of violation.}
