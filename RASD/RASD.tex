@@ -110,6 +110,7 @@ In this context, the most relevant phenomena are organized as in the following t
 \item \textbf{OCR}: \textit{Optical Character Recognition}, software dedicated to the detection of characters contained in a document and to their transfer to digital text that can be read by a machine. In this context, OCR will be used to read license plates.
 \item \textbf{GPS}: \textit{Global Positioning System}, system widely used to get the user's position.
 \item \textbf{DBMS}: \textit{Data Base Management System}, system which provides organized space memory to store information.
+\item \textbf{ID}: \textit{Identification}
 \end{itemize}
 \subsection{Abbreviations}
 \begin{itemize}
@@ -168,12 +169,46 @@ Then the Authority takes the right legal measure based on the information that h
 \subsection{Class Diagram}
 \begin{figure}[h!]
 \begin{center}
-
 \includegraphics[scale=0.4]{./img/SWE1.png}
 \end{center}
 \caption{SafeStreets' class diagram.}
 \label{schema}
 \end{figure} 
+
+\newpage
+\subsection{Statechart Diagram}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4]{./img/img_Report.jpg}
+\end{center}
+\caption{SafeStreets' statechart diagram of the creation of a report.}
+\label{schema}
+\end{figure} 
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4]{./img/img_UnsafeAreas.jpg}
+\end{center}
+\caption{SafeStreets' statechart diagram of the creation of statistics on unsafe areas.}
+\label{schema}
+\end{figure} 
+
+\newpage
+\section{User Characteristics}
+SafeStreets can be used from both Citizens and Authorities. It is recommended for adult user but there are not limitation of age. 
+We give for granted that the Users have access to Internet and are able to install anduse the mobile application.\\
+The character are:
+\begin{itemize}
+	\item \textit{Guest}:a person who downloads and opens the app but still has to sign
+	up. He/she cannot use any of the functions provided by SafeStreets.
+	\item \textit{User}: a registered User who has to log-in in order to access any feature
+	of the application. He/she can retrieve his/her personal data from any
+	device with the app installed just providing credentials.
+	\item \textit{Citizen}: a person who logged-in with his credentials, which is recognized by the System throw an ID. He/she can accesses to the personal data menù and add new reports.
+	\item \textit{Authority}: a person who logged-in with his credentials. He/she can access to all the Report that has been notified for the municipality of belonging.
+	
+\end{itemize}
+
 \chapter{Specific Requirements}
 \section{Functional Requirements}
 %TODO: Requirements che erano goal, da aggiustare successivamente
