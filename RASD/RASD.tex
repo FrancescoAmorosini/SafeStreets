@@ -126,14 +126,14 @@ In this context, the most relevant phenomena are organized as in the following t
 \end{itemize}
 \section{Document Structure}
 This document is presented as it follows:
-\begin{itemize}
+\begin{enumerate}
 	\item {\textbf{Introduction}} contains a general description of the system and its goals, presenting the problem in an informal way.
 	\item{\textbf{Overall description}} gives a general description of the application, focusing on the context of the system and giving further details about shared phenomena. Furthermore, we will provide the specifications of constraints, dependencies and assumptions, that show how the System is integrated with the real world.
 	\item{\textbf{Specific requirements}} goes into the details about functional and non-functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
 	\item {\textbf{Formal analysis using Alloy}} contains the Alloy model of some critical aspects of the System with all the related comments. A proof of consistency and an example of the generated world are also provided.
 	\item {\textbf{Effort spent}} shows the time spent writing this document by each member of the team.
 	\item {\textbf{References}}
-\end{itemize}
+\end{enumerate}
 
 \chapter{Overall Description}
 \section{Product Perspective}
@@ -164,16 +164,24 @@ The System notifies a logged Authority when a report is submitted by an User.
 Then the Authority takes the right legal measure based on the information that he/she gets.
 %Something later
 
-%stuff..
 \subsection{Class Diagram}
 \begin{figure}[h!]
 \begin{center}
-
-\includegraphics[scale=0.4]{./img/SWE1.png}
+\includegraphics[width=\textwidth]{./img/SWE1.png}
 \end{center}
 \caption{SafeStreets' class diagram.}
 \label{schema}
 \end{figure} 
+
+\section{Product Functions}
+In this section the most important features of the application are explained:
+\begin{itemize}
+	\item \textbf{Commit of a Report}: the System allows a Citizens to notify Authorities whenever a traffic violations and accidents occur. This function is achieved by compiling a Report with a picture of the violation, the date, time, position, and type of violation. Not all of this fields are always compulsory: in case the type of violation is \textit{accident}, only date, time and position are required. Once all the information is gathered and the report is sent to SafeStreets, the Report Manager goes into the \texttt{Verify Information} status: it checks if all the obligatory fields have been compiled correctly, and then adds some useful metadata to the Report. Among the additional metadata, the systems takes note of whether or not the position has been provided by GPS, and also if the sender has added any license plate. If no license plate has been inserted, the Report Manager runs an OCR algorithm to retrive it from the picture provided. \\
+	After all the steps above, the Report is confirmed and it can be stored (\texttt{Ready to Store} status).
+	\item \textbf{Build statistics}: 
+	
+\end{itemize}
+
 \chapter{Specific Requirements}
 \section{Functional Requirements}
 %TODO: Requirements che erano goal, da aggiustare successivamente
