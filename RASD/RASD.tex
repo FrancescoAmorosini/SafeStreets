@@ -108,8 +108,9 @@ In this context, the most relevant phenomena are organized as in the following t
 \begin{itemize}
 \item \textbf{API}: \textit{Application Program Interface}, set of routines, protocols and tools for building software applications on top of this one.
 \item \textbf{OCR}: \textit{Optical Character Recognition}, software dedicated to the detection of characters contained in a document and to their transfer to digital text that can be read by a machine. In this context, OCR will be used to read license plates.
-\item \textbf{GPS}: \textit{Global Positioning System}, system widely used to get the user's position.
-\item \textbf{DBMS}: \textit{Data Base Management System}, system which provides organized space memory to store information.
+\item \textbf{GPS}: \textit{Global Positioning System}, technology widely used to get the user's position.
+\item \textbf{DBMS}: \textit{Data Base Management System}, software that provides organized space memory to store information.
+\item \textbf{ID}: \textit{Identification}
 \end{itemize}
 \subsection{Abbreviations}
 \begin{itemize}
@@ -145,7 +146,7 @@ In the case of a new submit, the System provides a form which the User have to f
 a Citizien or an Authority. Then the data are collected in the associated DBMS.\\
 \\
 \textbf{Commit of a report} (world controlled, machine observed)\\
-A User can send a report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the informations inserted in the fields are consistent and complete, then will send them to the
+A User can send a report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the information inserted in the fields are consistent and complete, then will send them to the
 DBMS.\\
 \\
 \textbf{Build statistics} (machine controlled, world observed)\\
@@ -170,27 +171,67 @@ Then the Authority takes the right legal measure based on the information that h
 \includegraphics[width=\textwidth]{./img/SWE1.png}
 \end{center}
 \caption{SafeStreets' class diagram.}
-\label{schema}
+\label{fig:UML}
 \end{figure} 
 
-\section{Product Functions}
-In this section the most important features of the application are explained:
-\begin{itemize}
-	\item \textbf{Commit of a Report}: the System allows a Citizens to notify Authorities whenever a traffic violations and accidents occur. This function is achieved by compiling a Report with a picture of the violation, the date, time, position, and type of violation. Not all of this fields are always compulsory: in case the type of violation is \textit{accident}, only date, time and position are required. Once all the information is gathered and the report is sent to SafeStreets, the Report Manager goes into the \texttt{Verify Information} status: it checks if all the obligatory fields have been compiled correctly, and then adds some useful metadata to the Report. Among the additional metadata, the systems takes note of whether or not the position has been provided by GPS, and also if the sender has added any license plate. If no license plate has been inserted, the Report Manager runs an OCR algorithm to retrive it from the picture provided. \\
-	After all the steps above, the Report is confirmed and it can be stored (\texttt{Ready to Store} status).
-	\item \textbf{Build statistics}: 
-	
-\end{itemize}
+\newpage
+\subsection{Statechart Diagram}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4]{./img/img_Report.jpg}
+\end{center}
+\caption{SafeStreets' statechart diagram of the creation of a report.}
+\label{fig:State1}
+\end{figure} 
 
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4]{./img/img_UnsafeAreas.jpg}
+\end{center}
+\caption{SafeStreets' statechart diagram of the creation of statistics on unsafe areas.}
+\label{schema}
+\end{figure}
+
+\newpage
+\section{Product Functions}
+In this section the most important features of the application are extensively explained:
+\begin{itemize}
+	\item \textbf{Commit of a Report}: the System allows a Citizen to notify Authorities whenever a traffic violations and accidents occur. This function is achieved by compiling a Report with a picture of the violation, the date, time, position, and type of violation. Not all of these fields are always compulsory: in case the type of violation is \textit{accident}, only date, time and position are required. Once all the information is gathered and the report is sent to SafeStreets, the Report Manager goes into the \texttt{Verify Information} status: it checks if all the obligatory fields have been compiled correctly, and then adds some useful metadata to the Report. Among the additional metadata, the systems takes note of whether or not the position has been provided by GPS, and also if the sender has added any license plate. If no license plate has been inserted, the Report Manager runs an OCR algorithm to retrive it from the picture provided. \\
+	After all the steps above, the Report is confirmed (\texttt{Repor Confirmed} status) and it is notified to the Authorities, which we assume are going to handle it properly (g.e. dispatching a local police patrol). It is important to outline that the System is only designed to inform Authorities whenever a new report is confirmed, but by no means it provides a function which generates official traffic tickets or dispatches patrols in case of accidents. Also, it's relevant to notice that the Report Manager contains a list of all the Authorities, so it can notify all and only those Authorities who are on duty in the involved municipality. \\
+	Once the report has been confimed and notified, the System enters the status \texttt{Ready to Store}: the report is saved into a local buffer and there awaits to be exported into SafeStreets' database. Each day at a set time (g.e. between day/night shifts of the police) the System permanently stores all the Reports into the database. This mechanism takes advantages of the fact that one does not need fresh data to do general statistics, and in return it gives the possibility to schedule the report storage when the System is not busy.
+
+	\item \textbf{Build statistics}: the System analyzes the stored data to compute general statistics and returns useful information to the Users. This function is carried out by an Information Manager, which is in charge of gathering the needed information from the storage an elaborating it. In particular, the Information Manager periodically executes the following functions:
+	\begin{enumerate}
+		\item Compute a statistic which highlights the areas and vehicles with the highest frequency of violations.
+		\item Identify potentially unsafe areas by analyzing Reports of accidents, and suggest possible interventions.
+		\item Analyze traffic ticket trends to build statistics about the most recurrent offenders or the effectiveness of SafeStreets.
+	\end{enumerate}
+	Every User can request to see the latest result of the functions above as soon as they are available. Since both Citizen and Authorities have access to those results, it's really important to give them different levels of visibility, so that classified information doesn't end up in the hands of civilians (g.e vehicles with the highest frequency of violations and most recurrent offenders). It is also worth noting that some of the above functions are enhanced, or even enabled, only if the municipalities grant the System access to their database. In particular, function 2 can be enhanced by crossing Authorities' accident information with Safestreets', whereas function 3 is entirely enabled only if the System has access to traffic tickets data.
+
+\end{itemize}
+\newpage
+\section{User Characteristics}
+SafeStreets can be used from both Citizens and Authorities. It is recommended for adult user but there are not limitation of age. 
+We give for granted that the Users have access to Internet and are able to install anduse the mobile application.\\
+The character are:
+\begin{itemize}
+	\item \textit{Guest}:someone who downloads and opens the app but still has to sign
+	up. He/she cannot use any of the functions provided by SafeStreets.
+	\item \textit{User}: a registered Guest who has to log-in in order to access any feature of the application. He/she can retrieve his/her personal data from any
+	device with the app installed just providing credentials.
+	\item \textit{Citizen}: a person who logged-in with his credentials, which is recognized by the System through an ID. He/she can access to the personal data menu and add new reports.
+	\item \textit{Authority}: a person who logged-in with his credentials. He/she can access to all the Report that has been notified for the municipality of belonging.
+\end{itemize}
 \chapter{Specific Requirements}
 \section{Functional Requirements}
 %TODO: Requirements che erano goal, da aggiustare successivamente
 \begin{itemize}
-\item {[G.4]} The Report Manager handles the submissions:
+	\item {[G.4]} The Report Manager handles the submissions:
     {\setlength\itemindent{25pt} \item {[G.4.1]} Before accepting any Report, the Report Manager ensures that it contains a picture of the violation, the date, time, position, and type of violation.}
     {\setlength\itemindent{25pt} \item {[G.4.2]} The Report Manager notifies all logged in Authorities whenever a new Report is accepted.}
     {\setlength\itemindent{25pt} \item {[G.4.3]} The Report Manager must ensure that no more than one Authority has taken in charge the same Report.}
     {\setlength\itemindent{25pt} \item {[G.4.4]} The Report Manager notifies Citizens whenever one of their Reports has been taken in charge by an Authority.}
-\item {[G.9]} The System can accedes to the stored traffic tickets with a permission from the local municipality.
-\end{itemize}their
+	\item {[G.9]} The System can accedes to the stored traffic tickets with a permission from the local municipality.
+\end{itemize}
+
 \end{document}
