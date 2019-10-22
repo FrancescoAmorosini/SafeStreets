@@ -149,8 +149,15 @@ a Citizien or an Authority. Then the data are collected in the associated DBMS.\
 \\
 \textbf{Commit of a report} (world controlled, machine observed)\\
 A User can send a report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the information inserted in the fields are consistent and complete, then will send them to the
-DBMS.\\
-\\
+DBMS.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4]{./img/img_Report.jpg}
+\end{center}
+\caption{SafeStreets' statechart diagram of the creation of a report.}
+\label{fig:State1}
+\end{figure} 
+\newpage
 \textbf{Build statistics} (machine controlled, world observed)\\
 The System computes general statistics on the violations, and also finds unsafe areas. These general information can be seen by the Citizens. Other specific statistics are accessible only by Authorities an example is
 the vehicles which commits multiple infractions, and also to see how the trends of issued tickets change. \\
@@ -158,10 +165,21 @@ the vehicles which commits multiple infractions, and also to see how the trends 
 \textbf{Safety suggestions} (machine controlled, world observed)\\
 The System gives suggestions for possible safe interventions. His knowledge is based on data statistics.\\
 \\
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4]{./img/img_UnsafeAreas.jpg}
+\end{center}
+\caption{SafeStreets' statechart diagram of the creation of statistics on unsafe areas.}
+\label{schema}
+\end{figure}
+
 %\textbf{Generation of traffic tickets} (machine controlled, world observed)\\
 %The Authorities can compile a legal form to make a traffic ticket, using the information about traffic violation. 
 %The System provides security tools to protect sensible data.\\
 %\\
+
+\newpage
 \textbf{Send Notification} (machine controlled, world observed)\\
 The System notifies a logged Authority when a report is submitted by an User. 
 Then the Authority takes the right legal measure based on the information that he/she gets.
@@ -176,24 +194,8 @@ Then the Authority takes the right legal measure based on the information that h
 \label{fig:UML}
 \end{figure} 
 
-\newpage
-\subsection{Statechart Diagram}
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[scale=0.4]{./img/img_Report.jpg}
-\end{center}
-\caption{SafeStreets' statechart diagram of the creation of a report.}
-\label{fig:State1}
-\end{figure} 
 
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[scale=0.4]{./img/img_UnsafeAreas.jpg}
-\end{center}
-\caption{SafeStreets' statechart diagram of the creation of statistics on unsafe areas.}
-\label{schema}
-\end{figure}
-\newpage
+
 \subsubsection{Use Case Diagrams}
 
 \begin{figure}[ht!]
