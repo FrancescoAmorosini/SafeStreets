@@ -7,6 +7,8 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{tabularx}
+\usepackage{ltablex}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
@@ -191,6 +193,199 @@ Then the Authority takes the right legal measure based on the information that h
 \caption{SafeStreets' statechart diagram of the creation of statistics on unsafe areas.}
 \label{schema}
 \end{figure}
+\newpage
+\subsubsection{Use Case Diagrams}
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.4]{./img/UseCase1.png}
+\end{center}
+\caption{Guest use case.}
+\label{schema}
+\end{figure}
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.4]{./img/UseCase2.png}
+\end{center}
+\caption{User and Report Manager use case.}
+\label{schema}
+\end{figure}
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.35]{./img/UseCase3.png}
+\end{center}
+\caption{Information Manager use case.}
+\label{schema}
+\end{figure}
+\newpage
+\subsection{Use Case Template}
+\begin{center}
+	\textbf{Log in}
+\end{center}
+
+\begin{tabularx}{\linewidth}{| l | X |}
+	\hline
+	\textbf{ID} & UC1\\
+	
+	\hline
+	\textbf{Description} & The \textbf{\textit{User}} wants to log in to the application.\\
+	
+	\hline
+	\textbf{Actors} & \textbf{\textit{User}}\\
+	
+	\hline
+	\textbf{Preconditions} & The \textbf{\textit{User}} opened the application\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
+			\item The \textbf{\textit{User}} inserts his/her credential.
+			\begin{itemize}
+			\item If the User is an \textbf{Authority}, he/she has to insert also his/her badge number.
+			\end{itemize}
+			\item The \textbf{\textit{User}} taps the Sign In button.			
+			\item The \textbf{\textit{Login Manager}} checks if all the credential provided are consistent.
+			
+			
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Postconditions} & The \textbf{\textit{User}} is logged in.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item The \textbf{\textit{Login Manager}} recognizes invalid credentials than shows an error message. The flow restarts from point 2. 
+		\end{enumerate}}\\
+	
+	\hline
+	
+\end{tabularx}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+	\textbf{Send report}
+\end{center}
+
+\begin{tabularx}{\linewidth}{| l | X |}
+	\hline
+	\textbf{ID} & UC2\\
+	
+	\hline
+	\textbf{Description} & The \textbf{\textit{User}} assists to a traffic violation and wants to send a report describing the offense.\\
+	
+	\hline
+	\textbf{Actors} & \textbf{\textit{Citizen}}\\
+	
+	\hline
+	\textbf{Preconditions} & The \textbf{\textit{Citizen}} assists to a traffic violation.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
+			\item The \textbf{\textit{Citizen}} log in to the application.
+			
+			\item The \textbf{\textit{Citizen}} creates a report.
+			\begin{itemize}
+			\item He/She takes a picture of the violation reporting also the date,the location and the type of the offense.			
+			\end{itemize}
+			\item The \textbf{\textit{Citizen}} taps the \textit{Send} button.	
+			\item The \textbf{\textit{Report Manager}} checks if the report is consistent.		
+			
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Postconditions} & The report is send and the \textbf{\textit{Citizen}} recives a message that confirms the sending was successfull.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item The \textbf{\textit{Report Manager}} recognizes invalid report than shows an error message saying what is missing. The flow restarts from point 2. 
+		\end{enumerate}}\\
+	
+	\hline
+	
+\end{tabularx}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+	\textbf{Notify and Store report}
+\end{center}
+
+\begin{tabularx}{\linewidth}{| l | X |}
+	\hline
+	\textbf{ID} & UC3\\
+	
+	\hline
+	\textbf{Description} & The \textbf{\textit{Report Manager}} recieves a report from an User and notify the \textbf{\textit{Authority}} about this. Then the report is stored in a database.\\
+	
+	\hline
+	\textbf{Actors} & \textbf{\textit{Report Manager}}\\
+	
+	\hline
+	\textbf{Preconditions} & The \textbf{\textit{Report Manager}} recives a valid report.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
+			\item The \textbf{\textit{Report Manager}} checks the list of the avaiable authorities and their municipality.			
+			\item The \textbf{\textit{Report Manager}} notify the Authority of the municipality where the violation occurred about the report.
+			
+			\item The \textbf{\textit{Report Manager}} stores the report in the database.
+					
+			
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Postconditions} & The \textbf{\textit{Authorities}} are notified about the report and the report is avaiable to be taken from the database by the \textbf{\textit{Information Manger}} to compute statistics.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the type of the report recived by the \textbf{\textit{Report Manager}} is about \textit{Incident} the report is not notify to the authority but it is only stored in the database. 
+		\end{enumerate}}\\
+	
+	\hline
+	
+\end{tabularx}
+%%%%
+\begin{center}
+	\textbf{Retrieve information}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	\hline
+	\textbf{ID} & UC4\\
+	
+	\hline
+	\textbf{Description} & \textbf{\textit{Users}} want to compute some statistics (e.g the safeness of a certain area) and ask to the \textbf{\textit{Information Manager}} to  retrieve the report from the database and to compute statistics.\\
+	
+	\hline
+	\textbf{Actors} & \textbf{\textit{Users}} and \textbf{\textit{Information Manager}}\\
+	
+	\hline
+	\textbf{Preconditions} & The reports have to be already stored in the database. \\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
+			\item The \textbf{\textit{User}} taps on \textit{Statistics} button.
+			\item The \textbf{\textit{System}} display a menù with all the possible statistic options to compute.
+			\item The \textbf{\textit{User}} chooses the statistics in which he/she is interested in.
+			
+			\item The \textbf{\textit{Information Manager}} retrieves the reports from the database.
+			\begin{itemize}
+			\item If the \textbf{\textit{User}} chooses to compute statistics about traffic tickets, the \textbf{\textit{Authority}} must give the permission to retrieve and process also this kind of informations.
+			\end{itemize}
+			
+			\item The \textbf{\textit{Information Manager}} compute the requested statistics and display the result back to the \textbf{\textit{User}}.
+					
+			
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Postconditions} & The \textbf{\textit{User}} sees the results of his/her request.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the \textbf{\textit{User}} asks for statistics about traffic tickets and the \textbf{\textit{Authority}} doesn't give the permission to treat the information about this, the \textbf{\textit{Information Manager}} isn't able to recover this information and a message saying \textit{Permission Denied} is displayed back to the User. The flow restart from point 3. 
+		\end{enumerate}}\\
+	
+	\hline
+	
+\end{tabularx}
 
 \newpage
 \section{Product Functions}
