@@ -71,17 +71,17 @@ In this context, the most relevant phenomena are organized as in the following t
 			\toprule
 			\textbf{World} &\textbf{Shared}& \textbf{Machine}\\
 			\midrule
+			\midrule
 			\textbf{Traffic violation}: circumstance in which someone doesn't respect the traffic rules &\textbf{Registration/Login}$^{1}$: a Guest can sign up to the application or log in if already registered.&\textbf{DBMS query}: operation performed to retrieve/store data\\
 			\midrule
 			\textbf{Accident}: event that caused damage to things or people.&\textbf{Commit of a report}$^{1}$: action of sending a report documenting a traffic violation or an accident.&\textbf{API queries}: request for third-part services.\\
 			\midrule
-			&\textbf{Build statistics}$^{2}$: computation of statistics to find unsafe areas, to see which veichles commit multiple infractions and also to monitor the trend of issued tickets.&\textbf{use of Hash}: compute the hash function to ensure that information is never altered.\\
+			&\textbf{Send notifications}$^{2}$: to notify the Autorithies when a report is submitted.&\textbf{use of Hash}: compute the hash function to ensure that information is never altered.\\
 			\midrule
-			&\textbf{Safety suggestions}$^{2}$: to give suggestions for possible safe interventions (e.g add a barrier).&\textbf{Credential validation}: checking that Citizens can not access as Authorities\\ 
+			&\textbf{Build statistics}$^{2}$: computation of statistics to find unsafe areas, to see which veichles commit multiple infractions and also to monitor the trend of issued tickets.&\textbf{Credential validation}: checking that Citizens can not access as Authorities\\ 
 			\midrule
 			%\textbf{Generation of traffic tickets}$^{1}$: to generate traffic tickets using the information about traffic violation.&	\\			
-			\midrule
-			&\textbf{Send notifications}$^{2}$: to notify the Autorithies when a report is submitted.&\\
+			&\textbf{Safety suggestions}$^{2}$: to give suggestions for possible safe interventions (e.g add a barrier).&\\
 			\bottomrule
 		\end{tabular}
 		\end{center}
@@ -110,14 +110,16 @@ In this context, the most relevant phenomena are organized as in the following t
 \begin{itemize}
 \item \textbf{API}: \textit{Application Program Interface}, set of routines, protocols and tools for building software applications on top of this one.
 \item \textbf{OCR}: \textit{Optical Character Recognition}, software dedicated to the detection of characters contained in a document and to their transfer to digital text that can be read by a machine. In this context, OCR will be used to read license plates.
+\item \textbf{UML}: \textit{Unified Modeling Language}, is a standard visual modeling language intended to be used for analysis, design, and implementation of software-based systems.
 \item \textbf{GPS}: \textit{Global Positioning System}, technology widely used to get the user's position.
 \item \textbf{DBMS}: \textit{Data Base Management System}, software that provides organized space memory to store information.
-\item \textbf{ID}: \textit{Identification}
+\item \textbf{ID}: \textit{Identification}, a unique key given to each registered User.
+\item \textbf{UML}: \textit{Unified Modeling Language}, is a standard visual modeling language intended to be used for analysis, design, and implementation of software-based systems.
 \end{itemize}
 \subsection{Abbreviations}
 \begin{itemize}
 \item {[G$_{i}$]}: i-th goal.
-\item {[R$_{i}$]}: i-th functional requirement.
+\item {[R$_{i}$]}: i-th requirement.
 \item {[D$_{i}$]}: i-th domain assumption.
 \end{itemize}
 \section{Reference Documents}
@@ -132,7 +134,7 @@ This document is presented as it follows:
 \begin{enumerate}
 	\item {\textbf{Introduction}} contains a general description of the system and its goals, presenting the problem in an informal way.
 	\item{\textbf{Overall description}} gives a general description of the application, focusing on the context of the system and giving further details about shared phenomena. Furthermore, we will provide the specifications of constraints, dependencies and assumptions, that show how the System is integrated with the real world.
-	\item{\textbf{Specific requirements}} goes into the details about functional and non-functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
+	\item{\textbf{Specific requirements}} goes into details about functional and non-functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
 	\item {\textbf{Formal analysis using Alloy}} contains the Alloy model of some critical aspects of the System with all the related comments. A proof of consistency and an example of the generated world are also provided.
 	\item {\textbf{Effort spent}} shows the time spent writing this document by each member of the team.
 	\item {\textbf{References}}
@@ -143,50 +145,44 @@ This document is presented as it follows:
 We are going to analyze all the shared phenomena that are listed in the previous section. The concepts are clarified throw class and state diagrams.\\
 \\
 \textbf{Registration/Login} (world controlled, machine observed)\\
-A User can sign up to the application or log in, if is already registered. 
+A Guest can sign up to the application or log in, if already registered. 
 In the case of a new submit, the System provides a form which the User have to fill with his data, specifying if he/she is 
 a Citizien or an Authority. Then the data are collected in the associated DBMS.\\
-\\
+\\ 
 \textbf{Commit of a report} (world controlled, machine observed)\\
-A User can send a report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the information inserted in the fields are consistent and complete, then will send them to the
-DBMS.
-\begin{figure}[h!]
+A Citizen can send a report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the compiled fields are consistent and complete, then it will send the Report to the DBMS (Figure \ref{fig:State1}). \\
+\\
+\textbf{Send Notification} (Machine controlled, World observed)\\
+The System notifies the Authorities whenever a report is submitted by a Citizen. 
+We assume that the notified Authorities will accordingly handle the violation reported. (Figure \ref{fig:State1}).
+\begin{figure}[!ht]
 \begin{center}
-\includegraphics[scale=0.4]{./img/img_Report.jpg}
+\includegraphics[width=.8\textwidth]{./img/img_Report.jpg}
 \end{center}
-\caption{SafeStreets' statechart diagram of the creation of a report.}
+\caption{SafeStreets' statehart diagram about the collection, notification, and storage of a Report.}
 \label{fig:State1}
 \end{figure} 
 \newpage
-\textbf{Build statistics} (machine controlled, world observed)\\
-The System computes general statistics on the violations, and also finds unsafe areas. These general information can be seen by the Citizens. Other specific statistics are accessible only by Authorities an example is
-the vehicles which commits multiple infractions, and also to see how the trends of issued tickets change. \\
+\noindent \textbf{Build statistics} (Machine controlled, World observed)\\
+The System analyzes the stored data and computes general statistics on the violations. In this way, the System is able to find unsafe areas and which vehicles commit the most violations. All Users can access general statistics, however only Authorities can request statistics on private information such as traffic tickets. If the System is allowed to access municipality's data, statistics can be enhanced by crossing it with SafeStreets' information (Figure \ref{fig:State2}).  \\
 \\
-\textbf{Safety suggestions} (machine controlled, world observed)\\
-The System gives suggestions for possible safe interventions. His knowledge is based on data statistics.\\
+\textbf{Safety suggestions} (Machine controlled, World observed)\\
+The System gives Authorities suggestions for possible safe interventions. His knowledge is based on the statistics previously computed (Figure \ref{fig:State2}).\\
 \\
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
 \begin{center}
-\includegraphics[scale=0.4]{./img/img_UnsafeAreas.jpg}
+\includegraphics[width=.8\textwidth]{./img/img_UnsafeAreas.jpg}
 \end{center}
 \caption{SafeStreets' statechart diagram of the creation of statistics on unsafe areas.}
-\label{schema}
+\label{fig:State2}
 \end{figure}
 
-%\textbf{Generation of traffic tickets} (machine controlled, world observed)\\
-%The Authorities can compile a legal form to make a traffic ticket, using the information about traffic violation. 
-%The System provides security tools to protect sensible data.\\
-%\\
-
 \newpage
-\textbf{Send Notification} (machine controlled, world observed)\\
-The System notifies a logged Authority when a report is submitted by an User. 
-Then the Authority takes the right legal measure based on the information that he/she gets.
-%Something later
 
 \subsection{Class Diagram}
-\begin{figure}[h!]
+%Something later
+\begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=\textwidth]{./img/SWE1.png}
 \end{center}
@@ -194,32 +190,32 @@ Then the Authority takes the right legal measure based on the information that h
 \label{fig:UML}
 \end{figure} 
 
-
+\newpage
 
 \subsubsection{Use Case Diagrams}
 
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics[scale=0.4]{./img/UseCase1.png}
+\includegraphics[width=.8\textwidth]{./img/UseCase1.png}
 \end{center}
 \caption{Guest use case.}
-\label{schema}
+\label{fig:UseCase1}
 \end{figure}
 
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics[scale=0.4]{./img/UseCase2.png}
+\includegraphics[width=.8\textwidth]{./img/UseCase2.png}
 \end{center}
 \caption{User and Report Manager use case.}
-\label{schema}
+\label{fig:UseCase2}
 \end{figure}
 
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics[scale=0.35]{./img/UseCase3.png}
+\includegraphics[width=.8\textwidth]{./img/UseCase3.png}
 \end{center}
 \caption{Information Manager use case.}
-\label{schema}
+\label{fig:UseCase3}
 \end{figure}
 \newpage
 \subsection{Use Case Template}
@@ -285,7 +281,7 @@ Then the Authority takes the right legal measure based on the information that h
 	\textbf{Actors} & \textbf{\textit{User}}\\
 	
 	\hline
-	\textbf{Preconditions} & The \textbf{\textit{User}} opened the application\\
+	\textbf{Preconditions} & The \textbf{\textit{User}} wants to log in to the application and is already registered.\\
 	
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
@@ -294,13 +290,13 @@ Then the Authority takes the right legal measure based on the information that h
 			\item If the User is an \textbf{Authority}, he/she has to insert his/her badge number as username.
 			\end{itemize}
 			\item The \textbf{\textit{User}} taps the Sign In button.			
-			\item The \textbf{\textit{Login Manager}} checks if all the credential provided are consistent.
+			\item The \textbf{\textit{Login Manager}} checks if all the credentials provided are correct.
 			
 			
 	\end{enumerate}}\\
 	
 	\hline
-	\textbf{Postconditions} & The \textbf{\textit{User}} is logged in.\\
+	\textbf{Postconditions} & The \textbf{\textit{User}} is logged in either as \textbf{Citizen} or \textbf{Authority}.\\
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
@@ -308,7 +304,6 @@ Then the Authority takes the right legal measure based on the information that h
 		\end{enumerate}}\\
 	
 	\hline
-	
 \end{tabularx}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{center}
@@ -320,25 +315,24 @@ Then the Authority takes the right legal measure based on the information that h
 	\textbf{ID} & UC3\\
 	
 	\hline
-	\textbf{Description} & The \textbf{\textit{User}} assists to a traffic violation and wants to send a report describing the offense.\\
+	\textbf{Description} & A \textbf{\textit{Citizen}} reports a traffic violation.\\
 	
 	\hline
 	\textbf{Actors} & \textbf{\textit{Citizen}}\\
 	
 	\hline
-	\textbf{Preconditions} & The \textbf{\textit{Citizen}} assists to a traffic violation.\\
+	\textbf{Preconditions} & The \textbf{\textit{Citizen}} witnesses a traffic violation and wants to report it.\\
 	
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
 			\item The \textbf{\textit{Citizen}} log in to the application.
 			
-			\item The \textbf{\textit{Citizen}} creates a report.
+			\item The \textbf{\textit{Citizen}} compiles a Report.
 			\begin{itemize}
 			\item He/She takes a picture of the violation reporting also the date,the location and the type of the offense.			
 			\end{itemize}
 			\item The \textbf{\textit{Citizen}} taps the \textit{Send} button.	
 			\item The \textbf{\textit{Report Manager}} checks if the report is consistent.		
-			
 	\end{enumerate}}\\
 	
 	\hline
@@ -436,7 +430,7 @@ Then the Authority takes the right legal measure based on the information that h
 \section{Product Functions}
 In this section the most important features of the application are extensively explained:
 \begin{itemize}
-	\item \textbf{Commit of a Report}: the System allows a Citizen to notify Authorities whenever a traffic violations and accidents occur. This function is achieved by compiling a Report with a picture of the violation, the date, time, position, and type of violation. Not all of these fields are always compulsory: in case the type of violation is \textit{accident}, only date, time and position are required. Once all the information is gathered and the report is sent to SafeStreets, the Report Manager goes into the \texttt{Verify Information} status: it checks if all the obligatory fields have been compiled correctly, and then adds some useful metadata to the Report. Among the additional metadata, the systems takes note of whether or not the position has been provided by GPS, and also if the sender has added any license plate. If no license plate has been inserted, the Report Manager runs an OCR algorithm to retrive it from the picture provided. \\
+	\item \textbf{Commit of a Report}: the System allows a Citizen to notify Authorities whenever a traffic violations and accidents occur. This function is achieved by compiling a Report with a picture of the violation, the date, time, position, and type of violation. Not all of these fields are always compulsory: in case the type of violation is \textit{accident}, only date, time and position are required. Once all the information is gathered and the report is sent to SafeStreets, the Report Manager goes in the \texttt{Verify Information} status: it checks if all the obligatory fields have been compiled correctly, and then adds some useful metadata to the Report. Among the additional metadata, the systems takes note of whether or not the position has been provided by GPS, and also if the sender has added any license plate. If no license plate has been inserted, the Report Manager runs an OCR algorithm to retrive it from the picture provided. \\
 	After all the steps above, the Report is confirmed (\texttt{Repor Confirmed} status) and it is notified to the Authorities, which we assume are going to handle it properly (g.e. dispatching a local police patrol). It is important to outline that the System is only designed to inform Authorities whenever a new report is confirmed, but by no means it provides a function which generates official traffic tickets or dispatches patrols in case of accidents. Also, it's relevant to notice that the Report Manager contains a list of all the Authorities, so it can notify all and only those Authorities who are on duty in the involved municipality. \\
 	Once the report has been confimed and notified, the System enters the status \texttt{Ready to Store}: the report is saved into a local buffer and there awaits to be exported into SafeStreets' database. Each day at a set time (g.e. between day/night shifts of the police) the System permanently stores all the Reports into the database. This mechanism takes advantages of the fact that one does not need fresh data to do general statistics, and in return it gives the possibility to schedule the report storage when the System is not busy.
 
