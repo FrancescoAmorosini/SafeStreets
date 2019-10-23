@@ -458,7 +458,11 @@ The character are:
 \section{Assumptions, Dependencies and Constraints}
 \subsection{Assumptions}
 \begin{itemize}
-	\item {D.1} %gestione mail?
+	\item {[D.1]} The given email is assumed to be correct.
+	\item {[D.2]} The sent email is assumed to be correctly received.
+	\item {[D.3]} The System internal clock time used to provide notifications is
+	correct.
+	\item {[D.4]} The badge number of the Authority is assumed to be correct.
 \end{itemize}
 \subsection{Dependencies}
 \begin{itemize}
@@ -470,8 +474,9 @@ The character are:
 \begin{itemize}
 	\item Users must have a smartphone equipped with an OS compatible with the application.
 	\item Users must have Internet connection.
-	\item The System must ask Users for the permission to acquire acquire store personal data. Therefore, the System must offer 
+	\item The System must ask Users for the permission to acquire and store personal data. Therefore, the System must offer 
 	the possibility to the Users to delete their personal account.
+	\item The System provides statistics on issued tickets but it can not know if the tickets come from its pull of report, or if they are independent from its services.
 \end{itemize}
 
 \chapter{Specific Requirements}
@@ -496,20 +501,37 @@ In the following section are explained the functional requirements of the applic
 %TODO: Requirements che erano goal, da aggiustare successivamente
 \begin{itemize}
 	\item {[R.1]} A visitor must be able to register. During the registration the System will ask to provide credentials.
-	\item {[R.2]}The System must check if the Guest credentials are valid:
+	\item {[R.2]} The System must check if the Guest credentials are valid:
 		\begin{itemize}
 			\item the username is not already taken by another registered User.
-			\item the email is in the right format
-			\item the password has a minimum length
-			\item \textbf{Only for Authority}: 
+			\item the email is in the right format.
+			\item the password has a minimum length.
 		\end{itemize}
 		If credentials are correct, the System sends a confirmation email.
-	\item {[G.4]} The Report Manager handles the submissions:
-    {\setlength\itemindent{25pt} \item {[G.4.1]} Before accepting any Report, the Report Manager ensures that it contains a picture of the violation, the date, time, position, and type of violation.}
-    {\setlength\itemindent{25pt} \item {[G.4.2]} The Report Manager notifies all logged in Authorities whenever a new Report is accepted.}
-    {\setlength\itemindent{25pt} \item {[G.4.3]} The Report Manager must ensure that no more than one Authority has taken in charge the same Report.}
-    {\setlength\itemindent{25pt} \item {[G.4.4]} The Report Manager notifies Citizens whenever one of their Reports has been taken in charge by an Authority.}
-	\item {[G.9]} The System can accedes to the stored traffic tickets with a permission from the local municipality.
+	\item {[R.3]} The System must store all User data such as personal informa-
+	tion and credentials.
+	\item {[R.4]} The System must allow the User to log in using his/her personal
+	credentials.
+	\item {[R.5]} The System must allow the User to change username, only if the
+	new username is not already in use by another User, email, only if the
+	new email is in a correct format and password, only if the new password
+	is different from the precedent and respects the minimum length.
+	\item {[R.6]} The System must send a confirmation email if username, email
+	or password is changed. The System must replace the old credentials
+	with the new one.
+	\item {[R.7]} The System must allow the User to change password if it has been forgotten, 
+	through the personal email.
+	\item {[R.8]} The User must be allowed to create reports, specifying:
+		\begin{itemize}
+			\item The type of report (violation/accident).
+			\item The location of the violation/accident.
+			\item The date of the violation/accident.
+			\item The time of the violation/accident.
+			\item A picture of the violation/accident (not mandatory).
+		\end{itemize}
+	\item {[R.9]} The System must check if the report created or edited by the
+	User is correct.
+	\item {[R.10]} The System must notify the Authorities logged if a new report submitted is located in its municipality. 
 \end{itemize}
 
 \section{Software System Attribute}
