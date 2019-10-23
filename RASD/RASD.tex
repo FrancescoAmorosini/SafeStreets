@@ -92,6 +92,7 @@ In this context, the most relevant phenomena are organized as in the following t
 \section{Definitions, Acronyms and Abbreviations}
 \subsection{Definitions}
 \begin{itemize}
+	\item \textit{Traffic violation}: the infraction of the highway code by someone (e.g double-way parking).
 	\item \textit{System}: the totality of the hardware/software applications that contribute to provide the service concerned.
     \item \textit{Guest}: someone who has yet to sign up and who is not able to access any feature of the application.
     \item \textit{User}: a registered user who has logged in.
@@ -474,6 +475,22 @@ The character are:
 \end{itemize}
 
 \chapter{Specific Requirements}
+\section{External Interface Requirement}
+SafeStreets is a mobile based application. In the following sections is given a more detailed description of the application in terms of hardware, software and communication interface. There are also present some prototype of User interface through mockup.
+\subsection{Hardware Interface}
+The application is avaiable for mobile devices that guarantee Internet access with a reasonably recent browser and have a camera with a fairly high definition.
+\subsection{Software Interface}
+\begin{itemize}
+\item \textbf{Operating System}: iOS, Android.
+\item Web browser.
+\item Web Server application.
+\item DBMS.
+\item \textbf{Report System}: use third part services as OCR.
+\item \textbf{Mailing System}: APIs to send emails to the User.
+\item \textbf{Mapping System}: APIs to locate the position of the traffic violation.
+\end{itemize}
+\subsection{Communication Interface}
+The application runs over HTTPS protocol for the communication over the Internet and with the DBMS.
 \section{Functional Requirements}
 In the following section are explained the functional requirements of the application.
 %TODO: Requirements che erano goal, da aggiustare successivamente
@@ -494,5 +511,20 @@ In the following section are explained the functional requirements of the applic
     {\setlength\itemindent{25pt} \item {[G.4.4]} The Report Manager notifies Citizens whenever one of their Reports has been taken in charge by an Authority.}
 	\item {[G.9]} The System can accedes to the stored traffic tickets with a permission from the local municipality.
 \end{itemize}
+
+\section{Software System Attribute}
+\subsection{Reliability}
+The System (and all its components) should guarantees a 99\% of reliability.
+\subsection{Availability}
+The System must guarantee an high availability, indeed it has to offer a continuous service 24 hours every day. 
+\subsection{Security}
+User credentials and data will be stored in a DBMS that should guarantee an high level of security. To reach this goal the passwords stored in the DBMS are salted and hashed, in this way a sequence of generic characters of any length is concatenated to the password, hashed it all and stored in the DBMS.
+Hash is used also to stored the report so that the informations cannot be altered by anyone. So as soon as a report arrives to the Report Manager, the hash of the report is computed, encrypted to form a digital signature and then it is stored. In this way we create a snapshot of the report ensuring the identity, authenticity and non-tampered state of the informations.
+As mentioned before, the System uses HTTP over SSL protocol (HTTPS) to comunicate with all the services in order to guarantee privacy and protection of the exchanged informations.
+\newline
+If someone break into the OCR service, the System is not responsible in case of damage, due to the fact that its functionalities are provided by third-part services.  
+\subsection{Maintainability}
+\subsection{Portability}
+
 
 \end{document}
