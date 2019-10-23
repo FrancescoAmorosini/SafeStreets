@@ -149,8 +149,15 @@ a Citizien or an Authority. Then the data are collected in the associated DBMS.\
 \\
 \textbf{Commit of a report} (world controlled, machine observed)\\
 A User can send a report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the information inserted in the fields are consistent and complete, then will send them to the
-DBMS.\\
-\\
+DBMS.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4]{./img/img_Report.jpg}
+\end{center}
+\caption{SafeStreets' statechart diagram of the creation of a report.}
+\label{fig:State1}
+\end{figure} 
+\newpage
 \textbf{Build statistics} (machine controlled, world observed)\\
 The System computes general statistics on the violations, and also finds unsafe areas. These general information can be seen by the Citizens. Other specific statistics are accessible only by Authorities an example is
 the vehicles which commits multiple infractions, and also to see how the trends of issued tickets change. \\
@@ -158,10 +165,21 @@ the vehicles which commits multiple infractions, and also to see how the trends 
 \textbf{Safety suggestions} (machine controlled, world observed)\\
 The System gives suggestions for possible safe interventions. His knowledge is based on data statistics.\\
 \\
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4]{./img/img_UnsafeAreas.jpg}
+\end{center}
+\caption{SafeStreets' statechart diagram of the creation of statistics on unsafe areas.}
+\label{schema}
+\end{figure}
+
 %\textbf{Generation of traffic tickets} (machine controlled, world observed)\\
 %The Authorities can compile a legal form to make a traffic ticket, using the information about traffic violation. 
 %The System provides security tools to protect sensible data.\\
 %\\
+
+\newpage
 \textbf{Send Notification} (machine controlled, world observed)\\
 The System notifies a logged Authority when a report is submitted by an User. 
 Then the Authority takes the right legal measure based on the information that he/she gets.
@@ -176,24 +194,8 @@ Then the Authority takes the right legal measure based on the information that h
 \label{fig:UML}
 \end{figure} 
 
-\newpage
-\subsection{Statechart Diagram}
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[scale=0.4]{./img/img_Report.jpg}
-\end{center}
-\caption{SafeStreets' statechart diagram of the creation of a report.}
-\label{fig:State1}
-\end{figure} 
 
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[scale=0.4]{./img/img_UnsafeAreas.jpg}
-\end{center}
-\caption{SafeStreets' statechart diagram of the creation of statistics on unsafe areas.}
-\label{schema}
-\end{figure}
-\newpage
+
 \subsubsection{Use Case Diagrams}
 
 \begin{figure}[ht!]
@@ -351,22 +353,27 @@ Then the Authority takes the right legal measure based on the information that h
 	\textbf{ID} & UC4\\
 	
 	\hline
-	\textbf{Description} & \textbf{\textit{Users}} want to see some statistics (e.g the safeness of a certain area) and ask this to the \textbf{\textit{Information Manager}} .\\
+	\textbf{Description} & \textbf{\textit{Users}} want to compute some statistics (e.g the safeness of a certain area) and ask to the \textbf{\textit{Information Manager}} to  retrieve the report from the database and to compute statistics.\\
 	
 	\hline
 	\textbf{Actors} & \textbf{\textit{Users}} and \textbf{\textit{Information Manager}}\\
 	
 	\hline
-	\textbf{Preconditions} & The \textbf{\textit{Information Manager}} has already computed the statistics that the user intends to consult. Every night the \textbf{\textit{Information Manager}} recompute all the statistics due to possible new stored reports. \\
+	\textbf{Preconditions} & The reports have to be already stored in the database. \\
 	
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
 			\item The \textbf{\textit{User}} taps on \textit{Statistics} button.
-			\item The \textbf{\textit{System}} display a menù with all the possible statistic options to visualize.
+			\item The \textbf{\textit{System}} display a menù with all the possible statistic options to compute.
 			\item The \textbf{\textit{User}} chooses the statistics in which he/she is interested in.
 			
-			\item The \textbf{\textit{Information Manager}} shows the statistics that the user has selected.
+			\item The \textbf{\textit{Information Manager}} retrieves the reports from the database.
+			\begin{itemize}
+			\item If the \textbf{\textit{User}} chooses to compute statistics about traffic tickets, the \textbf{\textit{Authority}} must give the permission to retrieve and process also this kind of informations.
+			\end{itemize}
 			
+			\item The \textbf{\textit{Information Manager}} compute the requested statistics and display the result back to the \textbf{\textit{User}}.
+					
 			
 	\end{enumerate}}\\
 	
@@ -375,7 +382,7 @@ Then the Authority takes the right legal measure based on the information that h
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
-			\item If the \textbf{\textit{Authority}} doesn't give the permission to treat the traffic ticket information, the \textbf{\textit{Information Manager}} can't retrieve this type of data and the user can't visualize the traffic tickets statistics. So if an \textbf{\textit{User}} wants to see traffic tickets statistic but the \textbf{\textit{Authority}} doesn't give the permission, a message saying \textit{Permission Denied} is displayed back to the User. The flow restart from point 3. 
+			\item If the \textbf{\textit{User}} asks for statistics about traffic tickets and the \textbf{\textit{Authority}} doesn't give the permission to treat the information about this, the \textbf{\textit{Information Manager}} isn't able to recover this information and a message saying \textit{Permission Denied} is displayed back to the User. The flow restart from point 3. 
 		\end{enumerate}}\\
 	
 	\hline
@@ -411,6 +418,12 @@ The character are:
 	device with the app installed just providing credentials.
 	\item \textit{Citizen}: a person who logged-in with his credentials, which is recognized by the System through an ID. He/she can access to the personal data menu and add new reports.
 	\item \textit{Authority}: a person who logged-in with his credentials. He/she can access to all the Report that has been notified for the municipality of belonging.
+\end{itemize}
+
+\section{Assumptions, Dependencies and Constraints}
+\subsection{Assumptions}
+\begin{itemize}
+	\item {D.1} 
 \end{itemize}
 \chapter{Specific Requirements}
 \section{Functional Requirements}
