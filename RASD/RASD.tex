@@ -223,13 +223,60 @@ Then the Authority takes the right legal measure based on the information that h
 \end{figure}
 \newpage
 \subsection{Use Case Template}
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+	\textbf{Register Account}
+\end{center}
+
+\begin{tabularx}{\linewidth}{| l | X |}
+	\hline
+	\textbf{ID} & UC1\\
+	
+	\hline
+	\textbf{Description} & The \textbf{\textit{Guest}} wants to create an account for the appli-
+	cation.\\
+	
+	\hline
+	\textbf{Actors} & \textbf{\textit{Guest}}\\
+	
+	\hline
+	\textbf{Preconditions} & The \textbf{\textit{Guest}} opens the application.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
+			\item The \textbf{\textit{Guest}} select the function \textit{Sign Up}.
+			\item The \textbf{\textit{System}} select the options between \textbf{\textit{Citizen}} or \textbf{\textit{Authority}}.
+			\item The \textbf{\textit{System}} returns the right form (based on the \textbf{\textit{Guests'}} decision) to enter all the required data
+			: username, email address and pass-word. In the \textbf{\textit{Authoritys'}} form the username is the badge number and it must be add also the municipality of belonging. These data will be used for the future logins.	
+			\item The \textbf{\textit{Guest}} fills the form with all the required information.
+			\item The \textbf{\textit{User Manager}} checks if all the informa-
+			tions are correct, generates a random activation
+			URL and asks the \textbf{\textit{Mailing System}} to forward his/her URL to the email address of the \textbf{\textit{Guest}}.
+			\item The \textbf{\textit{Guest}} receives the mail and click on the URL. The \textbf{\textit{User Manager}} stores the data provided by the \textbf{\textit{User}} .
+			
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Postconditions} & The \textbf{\textit{Guest}} is able to log in.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item The \textbf{\textit{User Manager}} recognizes invalid infor-
+			mation than shows an error message. The flow
+			restarts from point 2. 
+		\end{enumerate}}\\
+	
+	\hline
+	
+\end{tabularx}
+%%%%%%%%%%%%%%%%%%%%%%
 \begin{center}
 	\textbf{Log in}
 \end{center}
 
 \begin{tabularx}{\linewidth}{| l | X |}
 	\hline
-	\textbf{ID} & UC1\\
+	\textbf{ID} & UC2\\
 	
 	\hline
 	\textbf{Description} & The \textbf{\textit{User}} wants to log in to the application.\\
@@ -242,9 +289,9 @@ Then the Authority takes the right legal measure based on the information that h
 	
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
-			\item The \textbf{\textit{User}} inserts his/her credential.
+			\item The \textbf{\textit{User}} inserts his/her credential (username and password).
 			\begin{itemize}
-			\item If the User is an \textbf{Authority}, he/she has to insert also his/her badge number.
+			\item If the User is an \textbf{Authority}, he/she has to insert his/her badge number as username.
 			\end{itemize}
 			\item The \textbf{\textit{User}} taps the Sign In button.			
 			\item The \textbf{\textit{Login Manager}} checks if all the credential provided are consistent.
@@ -270,7 +317,7 @@ Then the Authority takes the right legal measure based on the information that h
 
 \begin{tabularx}{\linewidth}{| l | X |}
 	\hline
-	\textbf{ID} & UC2\\
+	\textbf{ID} & UC3\\
 	
 	\hline
 	\textbf{Description} & The \textbf{\textit{User}} assists to a traffic violation and wants to send a report describing the offense.\\
@@ -312,7 +359,7 @@ Then the Authority takes the right legal measure based on the information that h
 
 \begin{tabularx}{\linewidth}{| l | X |}
 	\hline
-	\textbf{ID} & UC3\\
+	\textbf{ID} & UC4\\
 	
 	\hline
 	\textbf{Description} & The \textbf{\textit{Report Manager}} recieves a report from an User and notify the \textbf{\textit{Authority}} about this. Then the report is stored in a database.\\
@@ -344,13 +391,13 @@ Then the Authority takes the right legal measure based on the information that h
 	\hline
 	
 \end{tabularx}
-%%%%
+%%%%%%%%%%%%%%%%%%%
 \begin{center}
 	\textbf{Retrieve information}
 \end{center}
 \begin{tabularx}{\linewidth}{| l | X |}
 	\hline
-	\textbf{ID} & UC4\\
+	\textbf{ID} & UC5\\
 	
 	\hline
 	\textbf{Description} & \textbf{\textit{Users}} want to see some statistics (e.g the safeness of a certain area) and ask this to the \textbf{\textit{Information Manager}}.\\
@@ -419,7 +466,7 @@ The character are:
 \section{Assumptions, Dependencies and Constraints}
 \subsection{Assumptions}
 \begin{itemize}
-	\item {D.1} 
+	\item {D.1} %gestione mail?
 \end{itemize}
 \subsection{Dependencies}
 \begin{itemize}
@@ -437,8 +484,18 @@ The character are:
 
 \chapter{Specific Requirements}
 \section{Functional Requirements}
+In the following section are explained the functional requirements of the application.
 %TODO: Requirements che erano goal, da aggiustare successivamente
 \begin{itemize}
+	\item {[R.1]} A visitor must be able to register. During the registration the System will ask to provide credentials.
+	\item {[R.2]}The System must check if the Guest credentials are valid:
+		\begin{itemize}
+			\item the username is not already taken by another registered User.
+			\item the email is in the right format
+			\item the password has a minimum length
+			\item \textbf{Only for Authority}: 
+		\end{itemize}
+		If credentials are correct, the System sends a confirmation email.
 	\item {[G.4]} The Report Manager handles the submissions:
     {\setlength\itemindent{25pt} \item {[G.4.1]} Before accepting any Report, the Report Manager ensures that it contains a picture of the violation, the date, time, position, and type of violation.}
     {\setlength\itemindent{25pt} \item {[G.4.2]} The Report Manager notifies all logged in Authorities whenever a new Report is accepted.}
