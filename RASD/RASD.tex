@@ -422,8 +422,8 @@ In the following section are explained the functional requirements of the applic
 	
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
-			\item The \textbf{\textit{Citizen}} logs in to the application.
-			
+			\item The \textbf{\textit{Citizen}} log in to the application.
+			\item The \textbf{\textit{Citizen}} taps on \textit{Report} button.
 			\item The \textbf{\textit{Citizen}} compiles a Report.
 			\begin{itemize}
 				\item He/She takes a picture of the violation, if possible.
@@ -532,6 +532,39 @@ In the following section are explained the functional requirements of the applic
 	\hline
 	
 \end{tabularx}
+\newpage
+\subsection{Sequence Diagrams}
+\begin{figure}[ht!]
+	\begin{center}
+	\includegraphics[width=\textwidth]{./img/RegistrationSD.png}
+	\end{center}
+	\caption{Sign up Sequence Diagram.}
+	\label{fig:SequenceDiagram1}
+	\end{figure}
+\newpage
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=\textwidth]{./img/LoginSD.png}
+\end{center}
+\caption{Login Sequence Diagram.}
+\label{fig:SequenceDiagram2}
+\end{figure}
+\newpage
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=\textwidth]{./img/SendReportSD.png}
+\end{center}
+\caption{Send Report, notify and Store report Sequence Diagram.}
+\label{fig:SequenceDiagram3}
+\end{figure}
+\newpage
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=\textwidth]{./img/RetrieveSD.png}
+\end{center}
+\caption{Retrieve Information Sequence Diagram.}
+\label{fig:SequenceDiagram4}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%
 \begin{center}
@@ -579,7 +612,7 @@ tions:
 	\item 50 MB of space
 	\item 2 GB of RAM
 \end{itemize}
-
+\newpage
 \section{Software System Attribute}
 \subsection{Reliability}
 The System (and all its components) should guarantees a 99\% of reliability.
