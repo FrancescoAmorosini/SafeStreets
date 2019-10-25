@@ -320,20 +320,24 @@ In the following section are explained the functional requirements of the applic
 	\textbf{Description} & The \textbf{\textit{Guest}} wants to create an account for the application.\\
 	
 	\hline
-	\textbf{Actors} & \textbf{\textit{Guest}}, \textbf{\textit{Login Manager}}\\
+	\textbf{Actors} & \textbf{\textit{Guest}}, \textbf{\textit{Login Manager}} and \textbf{\textit{Mailing System}}\\
 	
 	\hline
 	\textbf{Preconditions} & The \textbf{\textit{Guest}} downloads and opens the application.\\
 	
 	\hline
-	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
-			\item The \textbf{\textit{Guest}} opens SafeStreets application and selects a role between Citizen or Authority.
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The \textbf{\textit{Guest}} opens SafeStreets application, taps the Sign Up button and and selects a role between Citizen or Authority.
 			\item Based on the the \textbf{\textit{Guests'}} decision, the \textbf{\textit{Login Manager}} provides the appropriate form to enter all the required data
 			: username, email address and pass-word. In the Authoritys' form the username corresponds to the badge number, and the municipality of belonging must be inserted as well. 
-			\item The \textbf{\textit{Guest}} fills the form with all the required information and then confirms the entries. The same procedure will be used for future logins.	
+			\item The \textbf{\textit{Guest}} fills the form with all the required information and then confirms the entries. The same procedure will be used for future logins.
+			\begin{itemize}
+				\item If the \textbf{\textit{Guest}} is an Authority, he/she has to insert his/her badge number as username and provide the municipality of belonging.
+			\end{itemize}	
 			\item The \textbf{\textit{Login Manager}} checks if all the informa-
 			tions are correct, in which case it generates a random activation
-			URL and asks the Mailing System to forward his/her URL to the email address of the \textbf{\textit{Guest}}.
+			URL and asks the \textbf{\textit{Mailing System}} to forward the URL to the email address of the \textbf{\textit{Guest}}.
 			\item The \textbf{\textit{Guest}} receives the mail and clicks on the URL. \item The \textbf{\textit{Login Manager}} accepts the registration and stores the data provided by the \textbf{\textit{User}} .
 	\end{enumerate}}\\
 	
@@ -363,29 +367,29 @@ In the following section are explained the functional requirements of the applic
 	\textbf{Description} & The \textbf{\textit{Guest}} wants to log in to the application.\\
 	
 	\hline
-	\textbf{Actors} & \textbf{\textit{Guest}} and the \textbf{\textit{Login Manager}} \\
+	\textbf{Actors} & \textbf{\textit{Guest}} and \textbf{\textit{Login Manager}} \\
 	
 	\hline
 	\textbf{Preconditions} & A \textbf{\textit{Guest}} wants to log in to the application and is already registered.\\
 	
 	\hline
-	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
-		\item The \textbf{\textit{Guest}} inserts his/her credential (username and password).
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{
+		\begin{enumerate}
+			\item The \textbf{\textit{Guest}} opens the application and inserts his/her credentials (username and password).
 			\begin{itemize}
-			\item If the \textbf{\textit{Guest}} is an Authority, he/she has to insert his/her badge number as username.
+				\item If the \textbf{\textit{Guest}} is an Authority, he/she has to insert his/her badge number as username.
 			\end{itemize}
-			\item The \textbf{\textit{Guest}} taps the Sign In button.			
+			\item The \textbf{\textit{Guest}} taps the Log In button.			
 			\item The \textbf{\textit{Login Manager}} checks if all the credentials provided are correct.
-			
-			
 	\end{enumerate}}\\
 	
 	\hline
 	\textbf{Postconditions} & The \textbf{\textit{User}} is logged in either as Citizen or Authority.\\
 	
 	\hline
-	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
-			\item The \textbf{\textit{Login Manager}} recognizes invalid credentials than shows an error message. The flow restarts from point 2. 
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ 
+		\begin{enumerate}
+			\item The \textbf{\textit{Login Manager}} recognizes invalid credentials than shows an error message. The flow restarts from point 1. 
 		\end{enumerate}}\\
 	
 	\hline
@@ -411,29 +415,30 @@ In the following section are explained the functional requirements of the applic
 	\textbf{Description} & A \textbf{\textit{Citizen}} reports a traffic violation.\\
 	
 	\hline
-	\textbf{Actors} & \textbf{\textit{Citizen}}\\
+	\textbf{Actors} & \textbf{\textit{Citizen}} and \textbf{\textit{Report Manager}}\\
 	
 	\hline
 	\textbf{Preconditions} & The \textbf{\textit{Citizen}} witnesses a traffic violation and wants to report it.\\
 	
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
-			\item The \textbf{\textit{Citizen}} log in to the application.
+			\item The \textbf{\textit{Citizen}} logs in to the application.
 			
 			\item The \textbf{\textit{Citizen}} compiles a Report.
 			\begin{itemize}
-			\item He/She takes a picture of the violation reporting also the date,the location and the type of the offense.			
+				\item He/She takes a picture of the violation, if possible.
+				\item He/She also enters the date, time, location and the type of the violation.			
 			\end{itemize}
-			\item The \textbf{\textit{Citizen}} taps the \textit{Send} button.	
-			\item The \textbf{\textit{Report Manager}} checks if the report is consistent.		
+			\item The \textbf{\textit{Citizen}} taps the \textit{Send} button.
+			\item The \textbf{\textit{Report Manager}} checks if the report has bee correctly compiled.		
 	\end{enumerate}}\\
 	
 	\hline
-	\textbf{Postconditions} & The report is send and the \textbf{\textit{Citizen}} recives a message that confirms the sending was successfull.\\
+	\textbf{Postconditions} & The report is sent and the \textbf{\textit{Citizen}} recives a message that confirms the sending was successfull.\\
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
-			\item The \textbf{\textit{Report Manager}} recognizes invalid report than shows an error message saying what is missing. The flow restarts from point 2. 
+			\item The \textbf{\textit{Report Manager}} rejects the report and shows an error message saying what fields are wrongly compiled. The flow restarts from point 2. 
 		\end{enumerate}}\\
 	
 	\hline
@@ -441,7 +446,7 @@ In the following section are explained the functional requirements of the applic
 \end{tabularx}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{center}
-	\textbf{Notify and Store report}
+	\textbf{Store and Notify report}
 \end{center}
 
 \begin{tabularx}{\linewidth}{| l | X |}
@@ -449,26 +454,26 @@ In the following section are explained the functional requirements of the applic
 	\textbf{ID} & UC4\\
 	
 	\hline
-	\textbf{Description} & The \textbf{\textit{Report Manager}} recieves a report from an User and notify the \textbf{\textit{Authority}} about this. Then the report is stored in a database.\\
+	\textbf{Description} & The \textbf{\textit{Report Manager}} recieves a report from a Citizen and notifies the Authorities about this. Then the report is stored in a database.\\
 	
 	\hline
 	\textbf{Actors} & \textbf{\textit{Report Manager}}\\
 	
 	\hline
-	\textbf{Preconditions} & The \textbf{\textit{Report Manager}} recives a valid report.\\
+	\textbf{Preconditions} & The \textbf{\textit{Report Manager}} recives a valid report (see UC3).\\
 	
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
-			\item The \textbf{\textit{Report Manager}} checks the list of the avaiable authorities and their municipality.			
-			\item The \textbf{\textit{Report Manager}} notify the Authority of the municipality where the violation occurred about the report.
-			
+			\item The \textbf{\textit{Report Manager}} computes metadata (g.e. whether or not license plate has been entered, if position has been provided by GPS, etc.) and attaches them to the Report.
+			\item The \textbf{\textit{Report Manager}} runs an API call to retrieve any information about the license plate by means of an external OCR.
+			\item The \textbf{\textit{Report Manager}} encrypts the report.	
 			\item The \textbf{\textit{Report Manager}} stores the report in the database.
-					
+			\item The \textbf{\textit{Report Manager}} notifis the Authorities of the municipality where the violation occurred about the report.
 			
 	\end{enumerate}}\\
 	
 	\hline
-	\textbf{Postconditions} & The \textbf{\textit{Authorities}} are notified about the report and the report is avaiable to be taken from the database by the \textbf{\textit{Information Manger}} to compute statistics.\\
+	\textbf{Postconditions} & The \textbf{\textit{Authorities}} are notified about the report and the report is avaiable to be taken from the database by the \textbf{\textit{Information Manger}}.\\
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
@@ -487,38 +492,37 @@ In the following section are explained the functional requirements of the applic
 	\caption{Information Manager use case.}
 	\label{fig:UseCase3}
 	\end{figure}
+	\newpage
 %%%%%%%%%%%%%%%%%%%%
 
 \begin{center}
-	\textbf{Retrieve information}
+	\textbf{Compute Statistics}
 \end{center}
 \begin{tabularx}{\linewidth}{| l | X |}
 	\hline
 	\textbf{ID} & UC5\\
 	
 	\hline
-	\textbf{Description} & \textbf{\textit{Users}} want to see some statistics (e.g the safeness of a certain area) and ask this to the \textbf{\textit{Information Manager}}.\\
+	\textbf{Description} & A \textbf{\textit{User}} wants to see some statistics (e.g the safety of a certain area) and ask the \textbf{\textit{Information Manager}} about them.\\
 	
 	\hline
-	\textbf{Actors} & \textbf{\textit{Users}} and \textbf{\textit{Information Manager}}\\
+	\textbf{Actors} & \textbf{\textit{User}} and \textbf{\textit{Information Manager}}\\
 	
 	\hline
-	\textbf{Preconditions} & The \textbf{\textit{Information Manager}} has already computed the statistics that the user intends to consult. Every night the \textbf{\textit{Information Manager}} recompute all the statistics due to possible new stored reports. \\
+	\textbf{Preconditions} & The \textbf{\textit{Information Manager}} has already computed the statistics that the user intends to consult. At set times, the \textbf{\textit{Information Manager}} updates all the statistics due to possible new stored reports. \\
 	
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
-			\item The \textbf{\textit{User}} taps on \textit{Statistics} button.
-			\item The \textbf{\textit{System}} display a menù with all the possible statistic options to compute.
+			\item The \textbf{\textit{User}} logs in to the application and taps on the \textit{Statistics} button.
+			\item The \textbf{\textit{System}} displays a menu with all the possible statistic options to compute.
 			\item The \textbf{\textit{User}} chooses the statistics in which he/she is interested in.
 			
-			
-			\item The \textbf{\textit{Information Manager}} shows the statistics that the user has selected.
-					
+			\item The \textbf{\textit{Information Manager}} loads the statistics that the user selected and the application shows them.
 			
 	\end{enumerate}}\\
 	
 	\hline
-	\textbf{Postconditions} & The \textbf{\textit{User}} sees the results of his/her request.\\
+	\textbf{Postconditions} & The \textbf{\textit{User}} sees the results of the statistics request.\\
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
@@ -529,7 +533,38 @@ In the following section are explained the functional requirements of the applic
 	
 \end{tabularx}
 
-
+%%%%%%%%%%%%%%%%%
+\begin{center}
+	\textbf{Investigation of a Report}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	\hline
+	\textbf{ID} & UC6\\
+	
+	\hline
+	\textbf{Description} & An \textbf{\textit{Authority}} demands the \textbf{\textit{Information Manager}} to see a certain report to investigate it.\\
+	
+	\hline
+	\textbf{Actors} & \textbf{\textit{Authority}} and \textbf{\textit{Information Manager}}\\
+	
+	\hline
+	\textbf{Preconditions} & The \textbf{\textit{Authority}} has been notified by the Report Manager about a new violation. He/She wants to investigate it. \\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{\begin{enumerate}
+			\item The \textbf{\textit{Authority}} taps on the interested Notification to download the full Report.
+			\item The \textbf{\textit{Information Manager}} loads the selected Report, decrypts it and sends a copy of it to the \textbf{\textit{Authority}}.
+			\item The \textbf{\textit{Authority}} has now access to all the documentation about the violation and can handle it accordingly. 
+			
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Postconditions} & The \textbf{\textit{Authority}} is now able to investigate the reported violation.\\
+	
+	\hline
+	
+\end{tabularx}
+%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Performance Requirements}
 %TODO
 
