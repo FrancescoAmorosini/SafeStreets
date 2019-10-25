@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{natbib}
 \usepackage[pagestyles]{titlesec}
+\usepackage[hidelinks]{hyperref}
 \usepackage{pdfpages}
 \usepackage{graphicx}
 \usepackage{multicol}
@@ -22,7 +23,7 @@
 
 \begin{document}
 %TODO: CAMBIARE LA DATA PRIMA DELLA CONSEGNA
-\includepdf[pages={1}]{./img/FrontPage.pdf}
+\includepdf[pages={1}]{./img/FrontPage}
 \tableofcontents
 \chapter{Introduction}
 This document represents the Requirement Analysis and Specification Document (RASD) for SafeStreets: an application that aims to improve the safety of urban areas by giving its users the possibility to report parking violations and accidents to authorities. The goal of this document is to supply a description of the system in terms of its functional and non functional requirements, listing all of its goals, discussing the constraints and the limits of the software, and indicating the typical use cases that will occur after the release. This document is addressed to the stakeholders, who will evaluate the correctness of the assumptions and decisions contained in it, and to the developers who will have to implement the requirements.
@@ -31,7 +32,7 @@ SafeStreets is a crowd-sourced application that intends to provide users with th
 In addition, the municipality could offer a service that takes the information about the violations coming from SafeStreets, and generates traffic tickets from it. In this case, SafeStreets ensures that the chain of custody of information coming from users is never broken, thus information is never altered. Information about issued tickets can be used by SafeStreets to build statistics, for example to have a feedback on the effectiveness of the application.
 \subsection{Goals}
 \begin{itemize}
-    \item {[G.1]} The System allows the Users to access the functionalities of the application from different locations and devices.
+    \item {[G.1]} The System allows Users to access the functionalities of the application from different locations and devices.
     \item {[G.2]} The System allows Guests to authenticate themselves either as Authority or Citizen.
     \begin{itemize}
     		\item {[G.2.1]}The System offers different levels of visibility to different roles.
@@ -73,7 +74,7 @@ In this context, the most relevant phenomena are organized as in the following t
 			\midrule
 			&\textbf{Send notifications}$^{2}$: to notify the Autorithies when a report is submitted.&\textbf{Encrypt data}: to compute the hash function to ensure that reports are never altered and that user's credentials are safe.\\
 			\midrule
-			&\textbf{Build statistics}$^{2}$: computation of statistics to find unsafe areas, to see which veichles commit multiple infractions and also to monitor the trend of issued tickets.&\textbf{Credential validation}: checking that Citizens can not access as Authorities\\ 
+			&\textbf{Build statistics}$^{2}$: computation of statistics to find unsafe areas, to see which veichles commit multiple infractions and also to monitor the trend of issued tickets.&\textbf{Credential validation}: to grant different levels of visibility to Citizen and Authorities\\ 
 			\midrule			
 			&\textbf{Safety suggestions}$^{2}$: to give suggestions for possible safe interventions (e.g add a barrier).&\\
 			\bottomrule
@@ -86,7 +87,6 @@ In this context, the most relevant phenomena are organized as in the following t
 \section{Definitions, Acronyms and Abbreviations}
 \subsection{Definitions}
 \begin{itemize}
-	\item \textit{Traffic violation}: the infraction of the highway code by someone (e.g double-way parking).
 	\item \textit{System}: the totality of the hardware/software applications that contribute to provide the service concerned.
     \item \textit{Guest}: someone who has yet to sign up and who is not able to access any feature of the application.
     \item \textit{User}: a registered user who has logged in.
@@ -94,7 +94,7 @@ In this context, the most relevant phenomena are organized as in the following t
 		\item \textit{Citizen}: end-user who can send Reports of traffic violation. It has limited visibility over the stored information.
 		\item \textit{Authority}: user who has access to the history of Reports and is notified whenever a new Report is recieved. It has full visibility over the data exposed by the System.
 	\end{itemize} 
-    %\item \textit{Logged in User}: a registered user who logged in.
+    \item \textit{Traffic violation}: occurrence of drivers that violate laws that regulate vehicle operation on streets and highways(e.g double-way parking).
     \item \textit{Report}: documentation of a traffic violation. It contains a picture of the violation, the date, time, position, and type of violation. Some fields can be omitted in case an accident is being reported.
     \item \textit{Hash}: a mathematical algorithm that maps data of arbitrary size to a bit string of fixed size. It is a one-way function, that is, a function which is practically infeasible to invert.
     \item \textit{Chain of custody}: chronological documentation that records the sequence of custody, control, transfer, analysis, and disposition of physical or electronic evidence.
@@ -109,7 +109,6 @@ In this context, the most relevant phenomena are organized as in the following t
 \item \textbf{GPS}: \textit{Global Positioning System}, technology widely used to get the user's position.
 \item \textbf{DBMS}: \textit{Data Base Management System}, software that provides organized space memory to store information.
 \item \textbf{ID}: \textit{Identification}, a unique key given to each registered User.
-\item \textbf{UML}: \textit{Unified Modeling Language}, is a standard visual modeling language intended to be used for analysis, design, and implementation of software-based systems.
 \end{itemize}
 \subsection{Abbreviations}
 \begin{itemize}
@@ -119,10 +118,10 @@ In this context, the most relevant phenomena are organized as in the following t
 \end{itemize}
 \section{Reference Documents}
 \begin{itemize}
-	\item Specification document: "SafeStreets Mandatory Project Assignment.pdf".
-	\item IEEE std 830-1998: "IEEE Recommended Practice for Software Requirements Specifications" (http://www.math.uaa.alaska.edu/~afkjm/cs401/).
-	\item Alloy documentation: "http://alloy.lcs.mit.edu/alloy/documentation.html".
-	\item UML diagrams: "https://www.uml-diagrams.org".
+	\item Specification document: \textit{SafeStreets Mandatory Project Assignment.pdf}.
+	\item IEEE std 830-1998:  \href{http://www.math.uaa.alaska.edu/~afkjm/cs401/}{\textit{IEEE Recommended Practice for Software Requirements Specifications}}.
+	\item Alloy documentation: \url{http://alloy.lcs.mit.edu/alloy/documentation.html}.
+	\item UML diagrams: \url{https://www.uml-diagrams.org}.
 \end{itemize}
 \section{Document Structure}
 This document is presented as it follows:
@@ -184,6 +183,8 @@ The System gives Authorities suggestions for possible safe interventions. His kn
 \end{figure} 
 \noindent The class diagram in Figure \ref{fig:UML} shows a possible rapresentation of the SafeStreets' architecture. Notice that the Municipality package is only accessible by the System if SafeStreets is authorized to access such data. From the diagram above we can immediatly spot one of the limitations of SafeStreets: since the System is not designed to provide a function to generate official traffic tickets, we can only assume that the Authorities will handle the reported traffic violations properly. For this reason, the System is not aware of whether or not the violation is being handled, at least as long as a corresponding traffic ticket is generated by an Authority (and the System has the authorization to access such data).
 
+\newpage
+
 \section{Product Functions}
 In this section the most important features of the application are extensively explained:
 \begin{itemize}
@@ -202,16 +203,15 @@ In this section the most important features of the application are extensively e
 \end{itemize}
 
 \section{User Characteristics}
-SafeStreets can be used from both Citizens and Authorities. It is recommended for adult user but there are not limitation of age. 
-We give for granted that the Users have access to Internet and are able to install anduse the mobile application.\\
+SafeStreets can be used from both Citizens and Authorities. It is recommended for adult users, but there are no limitation of age. 
+We take for granted that the Users have access to Internet and are able to install and use the mobile application.\\
 The character are:
 \begin{itemize}
 	\item \textit{Guest}:someone who downloads and opens the app but still has to sign
-	up. He/she cannot use any of the functions provided by SafeStreets.
-	\item \textit{User}: a registered Guest who has to log-in in order to access any feature of the application. He/she can retrieve his/her personal data from any
-	device with the app installed just providing credentials.
-	\item \textit{Citizen}: a person who logged-in with his credentials, which is recognized by the System through an ID. He/she can access to the personal data menu and add new reports.
-	\item \textit{Authority}: a person who logged-in with his credentials. He/she can access to all the Report that has been notified for the municipality of belonging.
+	up or log in. He/she cannot use any of the functions provided by SafeStreets.
+	\item \textit{User}: a registered Guest who has to logged either as Citizen or as Authority. He/She is recognized by the System through an ID and can access any feature of the application. %and can retrieve his/her personal data from any device with the app installed just providing credentials.
+	\item \textit{Citizen}: someone who has logged-in with his credentials, which is recognized by the System through an ID. He/she can access to the personal data menu and add new reports.
+	\item \textit{Authority}: someone who logged-in with his credentials. He/she is notified every time a new Report regarding its municipality is stored by the System. He/She can access and download those Reports he is interested in handling.
 \end{itemize}
 
 \section{Assumptions, Dependencies and Constraints}
@@ -221,13 +221,13 @@ The character are:
 	\item {[D.2]} The sent email is assumed to be correctly received.
 	\item {[D.3]} The System internal clock time used to provide notifications is
 	correct.
-	\item {[D.4]} The badge number of the Authority is assumed to be correct.
+	\item {[D.4]} The badge number of the Authority is assumed to be valid.
 \end{itemize}
 \subsection{Dependencies}
 \begin{itemize}
-	\item The System needs a DBMS in order to store and retrieve Users’ report.
-	\item Information on issued ticket are provided by the Authorities' DBMS, if they give the System free access.
-	\item OCR tool is provided by external thrid party services.
+	\item The System needs a DBMS in order to store and retrieve Users’ Reports.
+	\item Information on issued tickets are provided by the Authorities' DBMS, which has limited access. 
+	\item The OCR tool is provided by external thrid party services.
 \end{itemize}
 \subsection{Constraints}
 \begin{itemize}
@@ -240,7 +240,7 @@ The character are:
 
 \chapter{Specific Requirements}
 \section{External Interface Requirement}
-SafeStreets is a mobile based application. In the following sections is given a more detailed description of the application in terms of hardware, software and communication interface. There are also present some prototype of User interface through mockup.
+SafeStreets is a mobile based application. In the following sections a more detailed description of the application is given in terms of hardware, software and communication interfaces. There are also present some prototypes of User Interface through mockups.
 \subsection{User Interface}
 \includegraphics[width=\textwidth]{img/Mockup_logging.jpg}
 \subsection{Hardware Interface}
@@ -269,8 +269,7 @@ In the following section are explained the functional requirements of the applic
 			\item the password has a minimum length.
 		\end{itemize}
 		If credentials are correct, the System sends a confirmation email.
-	\item {[R.3]} The System must store all User data such as personal informa-
-	tion and credentials.
+	\item {[R.3]} The System must store all User data such as personal information and credentials.
 	\item {[R.4]} The System must allow the User to log in using his/her personal
 	credentials.
 	\item {[R.5]} The System must allow the User to change username, only if the
