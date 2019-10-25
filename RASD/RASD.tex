@@ -291,7 +291,9 @@ In the following section are explained the functional requirements of the applic
 		\end{itemize}
 	\item {[R.9]} The System must check if the report created or edited by the
 	User is correct.
-	\item {[R.10]} The System must notify the Authorities logged if a new report submitted is located in its municipality. 
+	\item {[R.10]} The System must notify the Authorities logged if a new report submitted is located in its municipality.
+	\item {[R.11]} The System must provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
+	\item {[R.12]} The System must allow the User to consult the statistics.
 \end{itemize}
 
 \newpage
@@ -528,6 +530,21 @@ In the following section are explained the functional requirements of the applic
 \end{tabularx}
 
 
+\section{Performance Requirements}
+%TODO
+
+\section{Design Constraint}
+\subsection{Standards Compliance}
+%TODO
+\subsection{Hardware limitations}
+The application should be able to run, at least, under the following condi-
+tions:
+\begin{itemize}
+	\item 3G connections at 2Mb/s
+	\item 50 MB of space
+	\item 2 GB of RAM
+\end{itemize}
+
 \section{Software System Attribute}
 \subsection{Reliability}
 The System (and all its components) should guarantees a 99\% of reliability.
@@ -541,6 +558,5 @@ As mentioned before, the System uses HTTP over SSL protocol (HTTPS) to comunicat
 If someone break into the OCR service, the System is not responsible in case of damage, due to the fact that its functionalities are provided by third-part services.  
 \subsection{Maintainability}
 \subsection{Portability}
-
 
 \end{document}
