@@ -33,24 +33,30 @@ In addition, the municipality could offer a service that takes the information a
 \subsection{Goals}
 \begin{itemize}
     \item {[G.1]} The System allows Users to access the functionalities of the application from different locations and devices.
-    \item {[G.2]} The System allows Guests to authenticate themselves either as Authority or Citizen.
-    \begin{itemize}
-    		\item {[G.2.1]}The System offers different levels of visibility to different roles.
-    \end{itemize}
+	\item {[G.2]} The System allows Guests to authenticate
+	 themselves either as Authority or Citizen.
     \item {[G.3]} The System allows the Citizens to document traffic violations and accidents to Authorities by compiling a Report.
     \item {[G.4]} The System stores the reports provided by the Citizens.
     \begin{itemize}
     		\item {[G.4.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm to read it from the submitted picture.
-    	\end{itemize}     
+		\end{itemize}     
+	\item {[G.5]} The System allows Authorities to consult the reports submitted by the Citizens.
     \item {[G.6]} The System analyzes the stored information to detect unsafe areas.
     \begin{itemize}
-    		\item {[G.6.1]}If allowed the Municiplaity, SafeStreets can cross their information about accidents with its own in order to improve the analysis.
-    		\item \item {[G.6.2]}If the System collects multiple reports of the same violation in a given area, it can suggest possible interventions to the Authorities.
-    \end{itemize}    
-    \item{[G.7]} If allowed by the Municiplaity, SafeStreets can access their information about issued tickets to build statistics and evaluate its effectiveness.
+    		\item {[G.6.1]}If allowed by the Municiplaity, SafeStreets can cross their information about accidents with its own in order to improve the analysis.
+	\end{itemize}  
+	\item {[G.7]} The System detects unsafe areas through statistics.
+	\begin{itemize}
+		\item The System can suggest possible interventions to the Authorities.
+	\end{itemize}
+    \item{[G.8]} If allowed by the Municiplaity, SafeStreets can access their information about issued tickets to build statistics and evaluate its effectiveness.
     \begin{itemize}
-        \item {[G.7.1]} The System ensures that the chain of custody of the information coming from the Citizens is never broken.
-    \end{itemize}
+        \item {[G.8.1]} The System ensures that the chain of custody of the information coming from the Citizens is never broken.
+	\end{itemize}
+	\item {[G.9]} The System allows the User to consult statistics
+	\begin{itemize}
+		\item {[G.9.1]} The System offers different levels of visibility to different roles.
+	\end{itemize}
 \end{itemize}
 
 \section{Scope}
@@ -215,12 +221,15 @@ The character are:
 \section{Assumptions, Dependencies and Constraints}
 \subsection{Assumptions}
 \begin{itemize}
-	\item {[D.1]} The given email is assumed to be correct.
-	\item {[D.2]} The sent email is assumed to be correctly received.
-	\item {[D.3]} The System internal clock time used to provide notifications is
+	\item {[D.1]} The sent email is assumed to be correctly received.
+	\item {[D.2]} The System internal clock time used to provide notifications is
 	correct.
-	\item {[D.4]} The badge number of the Authority is assumed to be valid.
-	\item {[D.5]} The Authorities notifications are assumed to be made only in case of parking violations. Indeed, if a little accident occurs there is no need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
+	\item {[D.3]} The Authorities notifications are assumed to be made only in case of parking violations. Indeed, if a little accident occurs there is no need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
+	\item {[D.4]} The Authority should take measures when they are notified about a new report.
+	\item {[D.5]} The System does not need the permission to access to the Authorities’ DBMS each time.
+	\item {[D.6]} The System can cross the data coming from external DBMS with its own data.
+	\item {[D.7]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service.
+	\item {[D.8]} Only specific component of the System is able to decrypt sensible data.
 \end{itemize}
 \subsection{Dependencies}
 \begin{itemize}
@@ -265,6 +274,7 @@ In the following section are explained the functional requirements of the applic
 			\item the username is not already taken by another registered User.
 			\item the email is in the right format.
 			\item the password has a minimum length.
+			\item the municipality, if it is an Authority.
 		\end{itemize}
 		If credentials are correct, the System sends a confirmation email.
 	\item {[R.3]} The System must store all User data such as personal information and credentials.
@@ -287,10 +297,20 @@ In the following section are explained the functional requirements of the applic
 			\item The time of the violation/accident.
 			\item A picture of the violation/accident (not mandatory).
 		\end{itemize}
-	\item {[R.9]} The System must check if the report created by the User is correct.
-	\item {[R.10]} The System must notify the Authorities logged if a new report submitted is located in its municipality.
+	\item {[R.9]} The System must check if the Report created by the User is correct.
+	\item {[R.10]} The System must notify the Authorities if a new report is in its municipality.
 	\item {[R.11]} The System must provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
 	\item {[R.12]} The System must allow the User to consult the statistics.
+	\item {[R.13]} The System provides a recognition system of badge number.
+	\item {[R.14]} The System must allow the Citizen to consult the history of its personal reports.
+	\item {[R.15]} The System must allow the User to see its position in a map.
+	\item {[R.16]} The System notify a copy of a report about traffic violation to Authorities.
+	\item {[R.17]} The System provides a list of the most recent reports submitted to the Authorities.
+	\item {[R.18]} The System provides an history of reports submitted to the Authorities.
+	\item {[R.19]} The System must interact with the Municipality to get the permission for using their data.
+	\item {[R.20]} The System can use third part services to read the license plate from the pictures.
+	\item {[R.21]} The System has to update the statistics, periodically.
+	\item {[R.22]} The System must provide protection of data, using encryption.
 \end{itemize}
 
 \newpage
@@ -571,70 +591,115 @@ In the following section are explained the functional requirements of the applic
 \subsection{Goals mapping on requirements}
 %Intro
 \begin{enumerate}
-	\item {[G.1]} The System allows Users to access the functionalities of the application from different locations and devices.
+	\item \textbf{{[G.1]} The System allows Users to access the functionalities of the application from different locations and devices.}
 	\begin{itemize}
-		\item [R.1]
-		\item [R.2]
-		\item [D.1]
-		\item [R.3]
-		\item [R.5]
-		\item [R.6]
-		\item [R.7]
+		\textbf{Requirements}
+		\item {[R.1]} A visitor must be able to register. During the registration the System will ask to provide some credentials.
+		\item {[R.2]} The System must check if the Guest credentials are valid:
+	        \begin{itemize}
+	            \item the username is not already taken by another registered User.
+	            \item the email is in the right format.
+	            \item the password has a minimum length.
+	            \item the municipality, if it is an Authority.
+	        \end{itemize}
+		\item {[R.3]} The System must store all User data such as personal information and credentials.
+		\item {[R.5]} The System must allow the User to change username, only if the
+		    new username is not already in use by another User, email, only if the
+		    new email is in a correct format and password, only if the new password
+		    is different from the precedent and respects the minimum length.
+		\item {[R.6]} The System must send a confirmation email if username, email
+		    or password is changed. The System must replace the old credentials
+		    with the new one.
+		\item {[R.7]} The System must allow the User to change password if it has been forgotten, through the personal email.
+		\\\textbf{Domain Assumption}
+		\item {[D.1]} The sent email is assumed to be correctly received.
 	\end{itemize}
-	\item {[G.2]} The System allows Guests to authenticate themselves either as Authority or Citizen.
+	\item \textbf{{[G.2]} The System allows Guests to authenticate themselves either as Authority or Citizen.
+		\begin{itemize}
+			\item {[G.2.1]}The System offers different levels of visibility to different roles.
+		\end{itemize}}
     \begin{itemize}
-    	\item {[G.2.1]}The System offers different levels of visibility to different roles.
-    	\item [R.13] badge validity
-    	\item [R.4] login
-    	\item [R.15]
+		\textbf{Requirements}\\
+		\item {[R.4]} The System must allow the User to log in using his/her personal credentials.
+		\item {[R.13]} The System provides a recognition system of badge number.
+    	\item {[R.15]} The System must allow the User to see its position in a map.
     \end{itemize}
-    \item {[G.3]} The System allows the Citizens to document traffic violations and accidents to Authorities by compiling a Report.
-    \begin{itemize}
-		\item [R.8]
-    	\item [R.14] consult history
-    	\item [R.9]
-	\end{itemize}
-    \item {[G.4]} The System stores the reports provided by the Citizens.
-    \begin{itemize}
-    	\item {[G.4.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm to read it from the submitted picture.
-    	\item [R.10]
-    	\item [D.3]
-    	\item [D.2]
-    	\item [R.20]
-	\end{itemize} 
-	\ {[G.5]} The System must allows Authorities to consult Reports. 
+    \item \textbf{{[G.3]} The System allows the Citizens to document traffic violations and accidents to Authorities by compiling a Report.}
 	\begin{itemize}
-		\item [R.16] notification
-		\item [R.17] show most recent reports (authority)
-    	\item [R.18] 
-    	\item [D.4] authority intervengono
-	\end{itemize} 
-    \item {[G.6]} The System analyzes the stored information to build statistics.
+		\textbf{Requirements}\\
+		\item {[R.8]} The User must be allowed to create reports, specifying:
+	        \begin{itemize}
+	            \item The type of report (violation/accident).
+	            \item The location of the violation/accident.
+	            \item The date of the violation/accident.
+	            \item The time of the violation/accident.
+	            \item A picture of the violation/accident (not mandatory).
+	        \end{itemize}
+		\item {[R.9]} The System must check if the Report created by the User is correct.
+    	\item {[R.14]} The System must allow the Citizen to consult the history of its personal reports.
+	\end{itemize}
+	\item \textbf{{[G.4]} The System stores the reports provided by the Citizens.
+		\begin{itemize}
+			\item {[G.4.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm to read it from the submitted picture.
+		\end{itemize}}
     \begin{itemize}
-    	\item {[G.6.1]}If allowed by the Municiplaity, SafeStreets can cross their information about accidents with its own in order to improve the analysis.
-    	\item [R.11]
-    	\item [R.12]
-    	\item [R.19]
-    	\item [D.5]
-    	\item [D.6]
-    	\item [R.21]
-    	\item [D.7]
+    	\textbf{Requirements}\\
+    	\item {[R.10]} The System must notify the Authorities if a new report is in its municipality.
+    	\item {[R.20]} The System can use third part services to read the license plate from the pictures.
+		\\ \textbf{Domain Assumption}\\
+		\item {[D.2]} The System internal clock time used to provide notifications is correct.
+    	\item {[D.3]}  The Authorities notifications are assumed to be made only in case of parking violations. Indeed, if a little accident occurs there is no need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
+	\end{itemize} 
+	\item \textbf{{[G.5]} The System must allows Authorities to consult Reports.}  
+	\begin{itemize}
+		\textbf{Requirements}
+		\item {[R.16]} The System notify a copy of a report about traffic violation to Authorities.
+		\item {[R.17]} The System provides a list of the most recent reports submitted to the Authorities.
+    	\item {[R.18]} The System provides an history of reports submitted to the Authorities.
+    	\\ \textbf{Domain Assumption}
+    	\item {[D.4]} The Authority should take measures when they are notified about a new report.
+	\end{itemize} 
+	\item \textbf{{[G.6]} The System analyzes the stored information to build statistics.
+	\begin{itemize}
+		\item {[G.6.1]}If allowed by the Municiplaity, SafeStreets can cross their information about accidents with its own in order to improve the analysis.
+	\end{itemize}}
+    \begin{itemize}
+    	\textbf{Requirements}\\
+    	\item {[R.11]} The System must provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
+    	\item {[R.12]} The System must allow the User to consult the statistics.
+    	\item {[R.19]} The System must interact with the Municipality to get the permission for using their data.
+		\item {[R.21]} The System has to update the statistics, periodically.
+		\textbf{Domain Assumption}
+		\item {[D.5]} The System does not need the permission to access to the Authorities’ DBMS each time.
+    	\item {[D.6]} The System can cross the data coming from external DBMS with its own data.
+    	\item {[D.7]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service.
 	\end{itemize}    
-	\item {[G.7]} The System is able to detect unsafe areas.
+	\item \textbf{{[G.7]} The System is able to detect unsafe areas.
 	\begin{itemize}
-		\item {[G.7.1]} The System can suggest possible interventions to the Authorities. 
-		\item [D.7]
+		\item {[G.7.1]} The System can suggest possible interventions to the Authorities.
+	\end{itemize}}
+	\begin{itemize}
+		\textbf{Domain Assumption}
+		\item {[D.7]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service. 
 	\end{itemize}
-    \item{[G.8]} If allowed by the Municiplaity, SafeStreets can access their information about issued tickets to build statistics and evaluate its effectiveness.
+    \item \textbf{{[G.8]} If allowed by the Municiplaity, SafeStreets can access their information about issued tickets to build statistics and evaluate its effectiveness.
     \begin{itemize}
         \item {[G.8.1]} The System ensures that the chain of custody of the information coming from the Citizens is never broken.
-        \item [R.22]
-        \item [D.10]
-	\end{itemize}
-	\item{[G.9]}
+	\end{itemize}}
 	\begin{itemize}
-		\item [R.12]
-		\item [R.21]
+		\textbf{Requirements}
+		\item {[R.22]} The System must provide protection of data, using encryption.
+		\\\textbf{Domain Assumption}
+        \item {[D.8]} Only specific component of the System is able to decrypt sensible data.
+	\end{itemize}
+	\item \textbf{{[G.9]} The System allows the User to consult statistics
+	    \begin{itemize}
+	        \item {[G.9.1]} The System offers different levels of visibility to different roles.
+	    \end{itemize}}
+	\begin{itemize}
+		\textbf{Requirements}
+		\item {[R.12]} The System must allow the User to consult the statistics.
+		\item {[R.21]} The System has to update the statistics, periodically.
 	\end{itemize}
 \end{enumerate}
 
