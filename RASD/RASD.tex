@@ -68,12 +68,12 @@ In this context, the most relevant phenomena are organized as in the following t
 		%{pix.acc.} & {mean.acc.} & {mean.IoU} & {f.w.IoU}
 		\begin{center}
 		%\hspace{-4.5cm}
-		\begin{tabular}{|C{3.5cm}||C{3.5cm}||C{3.5cm}|}
+		\begin{tabular}{|C{.28\textwidth}||C{.28\textwidth}||C{.28\textwidth}|}
 			\toprule
 			\textbf{World} &\textbf{Shared}& \textbf{Machine}\\
 			\midrule
 			\midrule
-			\textbf{Traffic violation}: circumstance in which someone doesn't respect the traffic rules &\textbf{Registration/Login}$^{1}$: a Guest can sign up to the application or log in if already registered.&\textbf{DBMS query}: operation performed to retrieve/store data\\
+			\textbf{Traffic violation}: circumstance in which someone doesn't respect the traffic rules &\textbf{\small{Registration/Login}}$^{1}$: a Guest can sign up to the application or log in if already registered.&\textbf{DBMS query}: operation performed to retrieve/store data\\
 			\midrule
 			\textbf{Accident}: event that caused damage to things or people.&\textbf{Commit of a report}$^{1}$: action of sending a report documenting a traffic violation or an accident.&\textbf{API queries}: request for third-part services.\\
 			\midrule
@@ -88,7 +88,7 @@ In this context, the most relevant phenomena are organized as in the following t
 		\caption{In the table above, \textit{1} refers to shared phenomena controlled by the world and observed by the machine, whereas \textit{2} refers to the phenomena controlled by the machine and observed by the world}.
 		\label{tab:multicol}
 	\end{table}
-	
+
 \section{Definitions, Acronyms and Abbreviations}
 \subsection{Definitions}
 \begin{itemize}
@@ -126,7 +126,7 @@ In this context, the most relevant phenomena are organized as in the following t
 \begin{itemize}
 	\item Specification document: \textit{SafeStreets Mandatory Project Assignment.pdf}.
 	\item IEEE std 830-1998:  \href{http://www.math.uaa.alaska.edu/~afkjm/cs401/}{\textit{IEEE Recommended Practice for Software Requirements Specifications}}.
-	\item Alloy documentation: \url{http://alloy.lcs.mit.edu/alloy/documentation.html}.
+	\item Alloy docs: \url{http://alloy.lcs.mit.edu/alloy/documentation.html}.
 	\item UML diagrams: \url{https://www.uml-diagrams.org}.
 \end{itemize}
 \section{Document Structure}
@@ -134,7 +134,7 @@ This document is presented as it follows:
 \begin{enumerate}
 	\item {\textbf{Introduction}} contains a general description of the system and its goals, presenting the problem in an informal way.
 	\item{\textbf{Overall description}} gives a general description of the application, focusing on the context of the system and giving further details about shared phenomena. Furthermore, we will provide the specifications of constraints, dependencies and assumptions, that show how the System is integrated with the real world.
-	\item{\textbf{Specific requirements}} goes into details about functional and non-functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
+	\item{\textbf{Specific requirements}} goes into details about functional and non functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
 	\item {\textbf{Formal analysis using Alloy}} contains the Alloy model of some critical aspects of the System with all the related comments. A proof of consistency and an example of the generated world are also provided.
 	\item {\textbf{Effort spent}} shows the time spent writing this document by each member of the team.
 	\item {\textbf{References}}
@@ -142,17 +142,17 @@ This document is presented as it follows:
 
 \chapter{Overall Description}
 \section{Product Perspective}
-We are going to analyze all the shared phenomena that are listed in the previous section. The concepts are clarified throw class and state diagrams.\\
-\\
-\textbf{Registration/Login} (world controlled, machine observed)\\
+We are going to analyze all the shared phenomena that are listed in the previous section. The concepts are clarified through class and state diagrams.\\ \vspace{2mm}
+
+\noindent\textbf{Registration/Login} (World controlled, Machine observed)\\
 A Guest can sign up to the application or log in, if already registered. 
 In the case of a new submit, the System provides a form which the Guest have to fill with his data, specifying if he/she is 
-a Citizien or an Authority.\\
-\\ 
-\textbf{Commit of a report} (world controlled, machine observed)\\
-A Citizen can send a Report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the compiled fields are consistent and complete, then it will encrypt the Report and send it to the DBMS (Figure \ref{fig:State1}). \\
-\\
-\textbf{Send Notification} (Machine controlled, World observed)\\
+a Citizien or an Authority.\\ \vspace{2mm}
+
+\noindent\textbf{Commit of a report} (world controlled, machine observed)\\
+A Citizen can send a Report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the compiled fields are consistent and complete, then it will encrypt the Report and send it to the DBMS (Figure \ref{fig:State1}). \\ \vspace{2mm}
+
+\noindent\textbf{Send Notification} (Machine controlled, World observed)\\
 The System notifies the Authorities whenever a new Report is submitted by a Citizen. 
 We assume that the notified Authorities will accordingly handle the violation reported. (Figure \ref{fig:State1}).
 \begin{figure}[!ht]
@@ -163,11 +163,11 @@ We assume that the notified Authorities will accordingly handle the violation re
 \label{fig:State1}
 \end{figure} 
 \newpage
-\noindent \textbf{Build statistics} (Machine controlled, World observed)\\
-The System analyzes the stored data and computes general statistics on the violations. In this way, the System is able to find unsafe areas and which vehicles commit the most violations. All Users can access general statistics, however only Authorities can request statistics on private information such as traffic tickets. If the System is allowed to access Municipality's data, statistics can be enhanced by crossing it with SafeStreets' information (Figure \ref{fig:State2}).  \\
-\\
-\textbf{Safety suggestions} (Machine controlled, World observed)\\
-The System gives Authorities suggestions for possible safe interventions. His knowledge is based on the statistics previously computed (Figure \ref{fig:State2}).\\
+\noindent\textbf{Build statistics} (Machine controlled, World observed)\\
+The System analyzes the stored data and computes general statistics on the violations. In this way, the System is able to find unsafe areas and which vehicles commit the most violations. All Users can access general statistics, however only Authorities can request statistics on private information such as traffic tickets. If the System is allowed to access Municipality's data, statistics can be enhanced by crossing it with SafeStreets' information (Figure \ref{fig:State2}).  \\ \vspace{2mm}
+
+\noindent\textbf{Safety suggestions} (Machine controlled, World observed)\\
+The System gives Authorities suggestions for possible safe interventions. His knowledge is based on the statistics previously computed (Figure \ref{fig:State2}).
 
 \begin{figure}[!ht]
 \begin{center}
@@ -178,7 +178,7 @@ The System gives Authorities suggestions for possible safe interventions. His kn
 \end{figure}
 \newpage
 \subsection{Class Diagram}
-The class diagram in Figure \ref{fig:UML} shows a possible rapresentation of the SafeStreets' architecture. Notice that the Municipality's DBMS is only accessible by the System if SafeStreets is authorized by the AccessController. It's also important to outline that the System is not designed to provide a function to generate official traffic tickets, since only real world authorities (g.e. local police) can generate traffic tickets with legal validity.
+The class diagram in Figure \ref{fig:UML} shows a possible representation of the Safe Streets' architecture. Notice that the Municipality's DBMS is only accessible by the System if SafeStreets is authorized by the AccessController. It's also important to outline that the System is not designed to provide a function to generate official traffic tickets, since only real world authorities (g.e. local police) can generate traffic tickets with legal validity.
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=.9\textwidth]{./img/SWE1.png}
@@ -364,7 +364,7 @@ In the following section are explained the functional requirements of the applic
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
 			\item The \textbf{\textit{Login Manager}} realizes that invalid cerdentials have been entered (g.e. the account already exists) and shows an error message. The flow restarts from point 2. 
 		\end{enumerate}}\\
-	
+
 	\hline
 	
 \end{tabularx}
@@ -590,43 +590,48 @@ In the following section are explained the functional requirements of the applic
 
 \subsection{Goals mapping on requirements}
 %Intro
-\begin{enumerate}
-	\item \textbf{{[G.1]} The System allows Users to access the functionalities of the application from different locations and devices.}
+\begin{itemize}
+	\item \textbf{{[G.1]} The System allows Users to access the functionalities of the application from different locations and devices.} \vspace{3mm}\\
+	\centering{\large{\textit{Requirements}}}
 	\begin{itemize}
-		\textbf{Requirements}
-		\item {[R.1]} A visitor must be able to register. During the registration the System will ask to provide some credentials.
+		\item{[R.1]} 
+		A visitor must be able to register. During the registration the System will ask to provide some credentials.
 		\item {[R.2]} The System must check if the Guest credentials are valid:
 	        \begin{itemize}
-	            \item the username is not already taken by another registered User.
 	            \item the email is in the right format.
 	            \item the password has a minimum length.
 	            \item the municipality, if it is an Authority.
+	            \item the username is not already taken by another registered User.\\
 	        \end{itemize}
 		\item {[R.3]} The System must store all User data such as personal information and credentials.
-		\item {[R.5]} The System must allow the User to change username, only if the
-		    new username is not already in use by another User, email, only if the
-		    new email is in a correct format and password, only if the new password
-		    is different from the precedent and respects the minimum length.
+		\item {[R.5]} 
+		The System must allow the User to change username, but only if the
+		new username is not already in use by another User, email, but only if the
+		new email is in a correct format, and password, only if the new password is different from the precedent and respects the minimum length.
 		\item {[R.6]} The System must send a confirmation email if username, email
 		    or password is changed. The System must replace the old credentials
 		    with the new one.
-		\item {[R.7]} The System must allow the User to change password if it has been forgotten, through the personal email.
-		\\\textbf{Domain Assumption}
+		\item {[R.7]} 
+		The System must allow the User to change password if it has been forgotten,through the personal email.\\
+	\end{itemize}
+	\centering{\large{\textit{Domain Assumptions}}}
+	\begin{itemize}
 		\item {[D.1]} The sent email is assumed to be correctly received.
 	\end{itemize}
+	\vspace{3mm}
 	\item \textbf{{[G.2]} The System allows Guests to authenticate themselves either as Authority or Citizen.
 		\begin{itemize}
 			\item {[G.2.1]}The System offers different levels of visibility to different roles.
 		\end{itemize}}
+	\centering{\large{\textit{Requirements}}}
     \begin{itemize}
-		\textbf{Requirements}\\
 		\item {[R.4]} The System must allow the User to log in using his/her personal credentials.
 		\item {[R.13]} The System provides a recognition system of badge number.
     	\item {[R.15]} The System must allow the User to see its position in a map.
     \end{itemize}
-    \item \textbf{{[G.3]} The System allows the Citizens to document traffic violations and accidents to Authorities by compiling a Report.}
+    \item \textbf{{[G.3]} The System allows the Citizens to document traffic violations and accidents to Authorities by compiling a Report.} \\\vspace{3mm}
+    \centering{\large{\textit{Requirements}}}
 	\begin{itemize}
-		\textbf{Requirements}\\
 		\item {[R.8]} The User must be allowed to create reports, specifying:
 	        \begin{itemize}
 	            \item The type of report (violation/accident).
@@ -636,72 +641,96 @@ In the following section are explained the functional requirements of the applic
 	            \item A picture of the violation/accident (not mandatory).
 	        \end{itemize}
 		\item {[R.9]} The System must check if the Report created by the User is correct.
-    	\item {[R.14]} The System must allow the Citizen to consult the history of its personal reports.
-	\end{itemize}
+		\item {[R.14]} 
+		The System must allow the Citizen to consult the history of its personal reports.
+	\end{itemize} 
+	\vspace{3mm}
 	\item \textbf{{[G.4]} The System stores the reports provided by the Citizens.
 		\begin{itemize}
 			\item {[G.4.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm to read it from the submitted picture.
 		\end{itemize}}
+	\centering{\large{\textit{Requirements}}}
     \begin{itemize}
-    	\textbf{Requirements}\\
-    	\item {[R.10]} The System must notify the Authorities if a new report is in its municipality.
-    	\item {[R.20]} The System can use third part services to read the license plate from the pictures.
-		\\ \textbf{Domain Assumption}\\
-		\item {[D.2]} The System internal clock time used to provide notifications is correct.
-    	\item {[D.3]}  The Authorities notifications are assumed to be made only in case of parking violations. Indeed, if a little accident occurs there is no need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
-	\end{itemize} 
-	\item \textbf{{[G.5]} The System must allows Authorities to consult Reports.}  
+		\item {[R.10]}
+		The System must notify the Authorities if a new report is in its municipality.
+		\item {[R.20]}
+		The System can use third part services to read the license plate from the pictures.
+		\\ 
+	\end{itemize}
+	\centering{\large{\textit{Domain Assumptions}}}
 	\begin{itemize}
-		\textbf{Requirements}
+		\item {[D.2]} The System internal clock time used to provide notifications is correct.
+		\item {[D.3]}
+		 The Authorities notifications are assumed to be made only in case of parking violations. Indeed, if a little accident occurs there is no need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
+	\end{itemize}
+	\vspace{3mm} 
+	\item \textbf{{[G.5]} The System must allows Authorities to consult Reports.}  \\\vspace{3mm}
+	\centering{\large{\textit{Requirements}}}
+	\begin{itemize}
 		\item {[R.16]} The System notify a copy of a report about traffic violation to Authorities.
 		\item {[R.17]} The System provides a list of the most recent reports submitted to the Authorities.
     	\item {[R.18]} The System provides an history of reports submitted to the Authorities.
-    	\\ \textbf{Domain Assumption}
-    	\item {[D.4]} The Authority should take measures when they are notified about a new report.
+		\\ 
+	\end{itemize}
+	\centering{\large{\textit{Domain Assumptions}}}
+	\begin{itemize}
+		\item {[D.4]}
+		The Authority should take measures when they are notified about a new report.
 	\end{itemize} 
+	\vspace{3mm}
 	\item \textbf{{[G.6]} The System analyzes the stored information to build statistics.
 	\begin{itemize}
 		\item {[G.6.1]}If allowed by the Municiplaity, SafeStreets can cross their information about accidents with its own in order to improve the analysis.
 	\end{itemize}}
+	\centering{\large{\textit{Requirements}}}
     \begin{itemize}
-    	\textbf{Requirements}\\
-    	\item {[R.11]} The System must provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
+		\item {[R.11]}
+		The System must provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
     	\item {[R.12]} The System must allow the User to consult the statistics.
     	\item {[R.19]} The System must interact with the Municipality to get the permission for using their data.
 		\item {[R.21]} The System has to update the statistics, periodically.
-		\textbf{Domain Assumption}
+	\end{itemize}
+	\centering{\large{\textit{Domain Assumptions}}}
+	\begin{itemize}
 		\item {[D.5]} The System does not need the permission to access to the Authorities’ DBMS each time.
-    	\item {[D.6]} The System can cross the data coming from external DBMS with its own data.
+		\item {[D.6]}
+		The System can cross the data coming from external DBMS with its own data.
     	\item {[D.7]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service.
-	\end{itemize}    
+	\end{itemize}
+	\vspace{3mm}    
 	\item \textbf{{[G.7]} The System is able to detect unsafe areas.
+		\begin{itemize}
+			\item {[G.7.1]} The System can suggest possible interventions to the Authorities.
+		\end{itemize}}
+	\centering{\large{\textit{Domain Assumptions}}}
 	\begin{itemize}
-		\item {[G.7.1]} The System can suggest possible interventions to the Authorities.
-	\end{itemize}}
-	\begin{itemize}
-		\textbf{Domain Assumption}
 		\item {[D.7]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service. 
 	\end{itemize}
+	\vspace{3mm}
     \item \textbf{{[G.8]} If allowed by the Municiplaity, SafeStreets can access their information about issued tickets to build statistics and evaluate its effectiveness.
     \begin{itemize}
         \item {[G.8.1]} The System ensures that the chain of custody of the information coming from the Citizens is never broken.
 	\end{itemize}}
+	\centering{\large{\textit{Requirements}}}
 	\begin{itemize}
-		\textbf{Requirements}
 		\item {[R.22]} The System must provide protection of data, using encryption.
-		\\\textbf{Domain Assumption}
+		\\
+	\end{itemize}
+	\centering{\large{\textit{Domain Assumptions}}}
+	\begin{itemize}
         \item {[D.8]} Only specific component of the System is able to decrypt sensible data.
 	\end{itemize}
+	\vspace{3mm}
 	\item \textbf{{[G.9]} The System allows the User to consult statistics
-	    \begin{itemize}
-	        \item {[G.9.1]} The System offers different levels of visibility to different roles.
-	    \end{itemize}}
 	\begin{itemize}
-		\textbf{Requirements}
+		\item {[G.9.1]} The System offers different levels of visibility to different roles.
+	\end{itemize}}
+	\centering{\large{\textit{Requirements}}}
+	\begin{itemize}
 		\item {[R.12]} The System must allow the User to consult the statistics.
 		\item {[R.21]} The System has to update the statistics, periodically.
 	\end{itemize}
-\end{enumerate}
+\end{itemize}
 
 \newpage
 
