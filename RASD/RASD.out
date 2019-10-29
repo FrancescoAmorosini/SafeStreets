@@ -26,11 +26,11 @@
 \BOOKMARK [1][-]{section.3.2}{Functional Requirements}{chapter.3}% 26
 \BOOKMARK [2][-]{subsection.3.2.1}{Use Cases}{section.3.2}% 27
 \BOOKMARK [2][-]{subsection.3.2.2}{Sequence Diagrams}{section.3.2}% 28
-\BOOKMARK [2][-]{subsection.3.2.3}{Goals mapping on requirements}{section.3.2}% 29
+\BOOKMARK [2][-]{subsection.3.2.3}{Goals Mapping on Requirements and Assumptions}{section.3.2}% 29
 \BOOKMARK [1][-]{section.3.3}{Performance Requirements}{chapter.3}% 30
 \BOOKMARK [1][-]{section.3.4}{Design Constraint}{chapter.3}% 31
 \BOOKMARK [2][-]{subsection.3.4.1}{Standards Compliance}{section.3.4}% 32
-\BOOKMARK [2][-]{subsection.3.4.2}{Hardware limitations}{section.3.4}% 33
+\BOOKMARK [2][-]{subsection.3.4.2}{Hardware Limitations}{section.3.4}% 33
 \BOOKMARK [1][-]{section.3.5}{Software System Attribute}{chapter.3}% 34
 \BOOKMARK [2][-]{subsection.3.5.1}{Reliability}{section.3.5}% 35
 \BOOKMARK [2][-]{subsection.3.5.2}{Availability}{section.3.5}% 36

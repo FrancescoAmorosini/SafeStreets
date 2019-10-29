@@ -26,7 +26,7 @@
 \includepdf[pages={1}]{./img/FrontPage}
 \tableofcontents
 \chapter{Introduction}
-This document represents the Requirement Analysis and Specification Document (RASD) for SafeStreets: an application that aims to improve the safety of urban areas by giving its users the possibility to report traffic violations and accidents to authorities. The goal of this document is to supply a description of the system in terms of its functional and non functional requirements, listing all of its goals, discussing the constraints and the limits of the software, and indicating the typical use cases that will occur after the release. This document is addressed to the stakeholders, who will evaluate the correctness of the assumptions and decisions contained in it, and to the developers who will have to implement the requirements.
+This document represents the Requirement Analysis and Specification Document (RASD) for SafeStreets: an application that aims to improve the safety of urban areas by giving its users the possibility to report traffic violations and accidents to authorities. The goal of this document is to supply a description of the system in terms of its functional and non-functional requirements, listing all of its goals, discussing the constraints and the limits of the software, and indicating the typical use cases that will occur after the release. This document is addressed to the stakeholders, who will evaluate the correctness of the assumptions and decisions contained in it, and to the developers who will have to implement the requirements.
 \section{Purpose}
 SafeStreets is a crowd-sourced application that intends to provide users with the possibility to notify authorities when traffic violations and accidents occur. In order to report a traffic violation, users have to compile a report containing a picture of the violation, the date, time, position, and type of violation. SafeStreets stores all the information provided by users, completing it with suitable metadata (timestamps, sender's GPS if available, etc.). In particular, in case the user had not provided any information regarding the license plate of the car breaking the traffic rules, SafeStreets runs an algorithm to read it from the submitted picture. Moreover, the application allows both end-users and authorities to mine the information that has been received: this function allows users to perform useful statistics, for example to find out which area is more dangerous or which vehicles commit the most violations. If the municipality offers a service that allows users to retrieve the information about the accidents that occur in its territory, SafeStreets can cross this information with its own data to identify potentially unsafe areas, and suggest possible interventions.
 In addition, the municipality could offer a service that takes the information about the violations coming from SafeStreets, and generates traffic tickets from it. In this case, SafeStreets ensures that the chain of custody of information coming from users is never broken, thus information is never altered. Information about issued tickets can be used by SafeStreets to build statistics, for example to have a feedback on the effectiveness of the application.
@@ -60,10 +60,10 @@ In addition, the municipality could offer a service that takes the information a
 \end{itemize}
 
 \section{Scope}
-% Stuff on world and shared phenomena
 According to the \textit{World} and \textit{Machine} paradigm, proposed by M. Jackson and P. Zave in 1995, we can distinguish the \textit{Machine}, that is the portion of the system to be developed, from the \textit{World}, that is the portion of the real-world affected by the machine. In this way, we can classify the phenomena in three different types: World, Machine and \textit{Shared} phenomena, where the latter type of phenomena can be controlled by the world and observed by the machine or controlled by the machine and observed by the world.
 \newline
 In this context, the most relevant phenomena are organized as in the following table.
+\clearpage
 \begin{table}[!ht]
 		%{pix.acc.} & {mean.acc.} & {mean.IoU} & {f.w.IoU}
 		\begin{center}
@@ -122,10 +122,11 @@ In this context, the most relevant phenomena are organized as in the following t
 \item {[R$_{i}$]}: i-th requirement.
 \item {[D$_{i}$]}: i-th domain assumption.
 \end{itemize}
-\section{Reference Documents}
+\section{Reference Documents} \label{docs}
 \begin{itemize}
 	\item Specification document: \textit{SafeStreets Mandatory Project Assignment.pdf}.
 	\item IEEE std 830-1998:  \href{http://www.math.uaa.alaska.edu/~afkjm/cs401/}{\textit{IEEE Recommended Practice for Software Requirements Specifications}}.
+	\item ISO/IEC 9126-1:2001: \href{https://www.iso.org/standard/22749.html}{\textit{Software engineering — Product quality — Part 1: Quality model}}
 	\item Alloy docs: \url{http://alloy.lcs.mit.edu/alloy/documentation.html}.
 	\item UML diagrams: \url{https://www.uml-diagrams.org}.
 \end{itemize}
@@ -134,7 +135,7 @@ This document is presented as it follows:
 \begin{enumerate}
 	\item {\textbf{Introduction}} contains a general description of the system and its goals, presenting the problem in an informal way.
 	\item{\textbf{Overall description}} gives a general description of the application, focusing on the context of the system and giving further details about shared phenomena. Furthermore, we will provide the specifications of constraints, dependencies and assumptions, that show how the System is integrated with the real world.
-	\item{\textbf{Specific requirements}} goes into details about functional and non functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
+	\item{\textbf{Specific requirements}} goes into details about functional and non-functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
 	\item {\textbf{Formal analysis using Alloy}} contains the Alloy model of some critical aspects of the System with all the related comments. A proof of consistency and an example of the generated world are also provided.
 	\item {\textbf{Effort spent}} shows the time spent writing this document by each member of the team.
 	\item {\textbf{References}}
@@ -187,7 +188,6 @@ The class diagram in Figure \ref{fig:UML} shows a possible representation of the
 \label{fig:UML}
 \end{figure} 
 \newpage
-%From the diagram above we can immediatly spot one of the limitations of SafeStreets: since the System is not designed to provide a function to generate official traffic tickets, we can only assume that the Authorities will handle the reported traffic violations properly. For this reason, the System is not aware of whether or not the violation is being handled, at least as long as a corresponding traffic ticket is generated by an Authority (and the System has the authorization to access such data).
 
 \section{Product Functions}
 In this section the most important features of the application are extensively explained:
@@ -202,9 +202,9 @@ In this section the most important features of the application are extensively e
 		\item \label{func2} Identify potentially unsafe areas by analyzing Reports of accidents, and suggest possible interventions.
 		\item \label{func3} Analyze traffic ticket trends to build statistics about the most recurrent offenders and the effectiveness of SafeStreets.
 	\end{enumerate}
-	Every User can request to see the latest result of the functions above as soon as they are available. Since both Citizen and Authorities have access to those results, it's really important to give them different levels of visibility, so that classified information doesn't end up in the hands of civilians (g.e vehicles with the highest frequency of violations and most recurrent offenders). It is also worth noting that some of the above functions are enhanced, or even enabled, only if the Municipality grants the Information Manager access to their database. In particular, the Function \ref{func2} can be enhanced by crossing Authorities' accident information with Safestreets', whereas Function \ref{func3} is entirely enabled only if the System has access to traffic tickets data.
+	Every User can request to see the latest result of the functions above as soon as they are available. Since both Citizen and Authorities have access to those results, it's really important to give them different levels of visibility, so that classified information doesn't end up in the hands of civilians (g.e vehicles with the highest frequency of violations and most recurrent offenders). It is also worth noting that some of the above functions are enhanced, or even enabled, only if the Municipality grants the Information Manager access to their database. In particular, the Function \ref{func2} can be enhanced by crossing Authorities' accident information with SafeStreets', whereas Function \ref{func3} is entirely enabled only if the System has access to traffic tickets data.
 
-	\item \textbf{Safety suggestions}: the System is able to give Authorities suggestions to improve the safety of urban areas. This function is enabled by the the Information Manager and the statistics previously built. In fact, observing for each area which kind of violations are more frequent and the trends of the accidents, the Information Manager runs an artificial intelligence to detect which solution is the most suitable for a given problem. Just like for the report storing process, these suggestions are updated when the System is less busy (g.e. at night) and a sufficient amount of fresh data is added to the database. Safety suggestions are downloaded by SafeStreets' application togheter with the latest statistics results, whenever they are requested. Despite this, it should be noted that only Authorities have access to such data, as they are assumed to be those who implement the suggestions in order to improve their service.
+	\item \textbf{Safety suggestions}: the System is able to give Authorities suggestions to improve the safety of urban areas. This function is enabled by the Information Manager and the statistics previously built. In fact, observing for each area which kind of violations are more frequent and the trends of the accidents, the Information Manager runs an artificial intelligence to detect which solution is the most suitable for a given problem. Just like for the report storing process, these suggestions are updated when the System is less busy (g.e. at night) and a sufficient amount of fresh data is added to the database. Safety suggestions are downloaded by SafeStreets' application togeter with the latest statistics results, whenever they are requested. Despite this, it should be noted that only Authorities have access to such data, as they are assumed to be those who implement the suggestions in order to improve their service.
 \end{itemize}
 
 \section{User Characteristics}
@@ -222,29 +222,30 @@ The character are:
 \section{Assumptions, Dependencies and Constraints}
 \subsection{Assumptions}
 \begin{itemize}
-	\item {[D.1]} The sent email is assumed to be correctly received.
+	\item {[D.1]} The registration mail is assumed to be correctly recieved by the User.
 	\item {[D.2]} The System internal clock time used to provide notifications is
 	correct.
 	\item {[D.3]} The Authorities notifications are assumed to be made only in case of parking violations. Indeed, if a little accident occurs there is no need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
-	\item {[D.4]} The Authority should take measures when they are notified about a new report.
-	\item {[D.5]} The System does not need the permission to access to the Authorities’ DBMS each time.
-	\item {[D.6]} The System can cross the data coming from external DBMS with its own data.
-	\item {[D.7]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service.
-	\item {[D.8]} Only specific component of the System is able to decrypt sensible data.
+	\item {[D.4]} The Authorities are assumed to  take measures when they are notified about a new report.
+	\item {[D.5]} After the first time, the System does not need to request the access to the Municipality's’ DBMS as long as the permission is still valid.
+	\item {[D.6]} The statistics and suggestions are assumed to be consulted by Authorities periodically, in order to provide a better service.
+	\item {[D.7]} Only specific component of the System is able to decrypt sensible data.
+	\item {[D.8]} SafeStreets is not responsible of the traffic tickets generated by Authorities.
 \end{itemize}
 \subsection{Dependencies}
 \begin{itemize}
 	\item The System needs a DBMS in order to store and retrieve Users’ Reports.
 	\item Information on issued tickets are provided by the Authorities' DBMS, which has limited access. 
 	\item The OCR tool is provided by external thrid party services.
+	\item The Map service is provided by external an third party (which can be different by the one that provides the OCR) tool.
 \end{itemize}
-\subsection{Constraints}
+\subsection{Constraints} \label{constraints}
 \begin{itemize}
 	\item Users must have a smartphone equipped with an OS compatible with the application.
-	\item Users must have Internet connection.
-	\item The System must ask Users for the permission to acquire and store personal data. Therefore, the System must offer 
-	the possibility to the Users to delete their personal account.
-	\item The System provides statistics on issued tickets but it can not know if the tickets come from its pull of report, or if they are independent from its services.
+	\item Users must have a working Internet connection.
+	\item The System must ask Users for the permission to acquire and store personal data. Therefore, the System must offer the possibility to the Users to delete their personal account.
+	\item The System provides statistics on issued tickets but it is not able to acknowledge if the tickets are generated thanks to its service, or if they are independent from Safestreets.
+	
 \end{itemize}
 
 \chapter{Specific Requirements}
@@ -286,8 +287,7 @@ In the following section are explained the functional requirements of the applic
 	new email is in a correct format and password, only if the new password
 	is different from the precedent and respects the minimum length.
 	\item {[R.6]} The System must send a confirmation email if username, email
-	or password is changed. The System must replace the old credentials
-	with the new one.
+	or password is changed (similarly to the registration process). 
 	\item {[R.7]} The System must allow the User to change password if it has been forgotten, 
 	through the personal email.
 	\item {[R.8]} The User must be allowed to create reports, specifying:
@@ -299,7 +299,7 @@ In the following section are explained the functional requirements of the applic
 			\item A picture of the violation/accident (not mandatory).
 		\end{itemize}
 	\item {[R.9]} The System must check if the Report created by the User is correct.
-	\item {[R.10]} The System must notify the Authorities if a new report is in its municipality.
+	\item {[R.10]} The System must notify the Authorities whenever a new Report involving their municipality is submitted. 
 	\item {[R.11]} The System must provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
 	\item {[R.12]} The System must allow the User to consult the statistics.
 	\item {[R.13]} The System provides a recognition system of badge number.
@@ -309,9 +309,11 @@ In the following section are explained the functional requirements of the applic
 	\item {[R.17]} The System provides a list of the most recent reports submitted to the Authorities.
 	\item {[R.18]} The System provides an history of reports submitted to the Authorities.
 	\item {[R.19]} The System must interact with the Municipality to get the permission for using their data.
-	\item {[R.20]} The System can use third part services to read the license plate from the pictures.
-	\item {[R.21]} The System has to update the statistics, periodically.
-	\item {[R.22]} The System must provide protection of data, using encryption.
+	\item {[R.20]} The System can use third party services to enable some of its functions.
+	\item {[R.21]} The System has to update the statistics periodically.
+	\item {[R.22]} The System must provide protection of data using encryption.
+	\item {[R.23]} The System must be able to acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.
+	\item {[R.24]} The System can cross the data coming from external DBMS with its own data.
 \end{itemize}
 
 \newpage
@@ -537,7 +539,7 @@ In the following section are explained the functional requirements of the applic
 			\item The \textbf{\textit{Information Manager}} loads the statistics that the user selected and the application shows. 
 			\begin{itemize}
 				\item The application may use external services to show some statistics on a map.
-				\item If the \textbf{\textit{User}} who requested to see the statistics is also an Authority, the \textbf{\textit{Information Manager}} will also show him/her the latest safety suggestions (if available).
+				\item If the \textbf{\textit{User}} who requested to see the statistics is an Authority, the \textbf{\textit{Information Manager}} will also show him/her the latest safety suggestions (if available).
 			\end{itemize}
 			
 	\end{enumerate}}\\
@@ -590,11 +592,11 @@ In the following section are explained the functional requirements of the applic
 
 \newpage 
 
-\subsection{Goals mapping on requirements}
+\subsection{Goals Mapping on Requirements and Assumptions}
 %Intro
 \begin{itemize}
-	\item \textbf{{[G.1]} The System allows Users to access the functionalities of the application from different locations and devices.} \vspace{3mm}\\
-	\centering{\large{\textit{Requirements}}}
+	\item \textbf{{[G.1]} The System allows Users to access the functionalities of the application from different locations and devices.}
+\begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
 		\item{[R.1]} 
 		A visitor must be able to register. During the registration the System will ask to provide some credentials.
@@ -603,36 +605,36 @@ In the following section are explained the functional requirements of the applic
 	            \item the email is in the right format.
 	            \item the password has a minimum length.
 	            \item the municipality, if it is an Authority.
-	            \item the username is not already taken by another registered User.\\
+	            \item the username is not already taken by another registered User.
 	        \end{itemize}
 		\item {[R.3]} The System must store all User data such as personal information and credentials.
 		\item {[R.5]} 
 		The System must allow the User to change username, but only if the
 		new username is not already in use by another User, email, but only if the
 		new email is in a correct format, and password, only if the new password is different from the precedent and respects the minimum length.
-		\item {[R.6]} The System must send a confirmation email if username, email
-		    or password is changed. The System must replace the old credentials
-		    with the new one.
+		\item {[R.6]} The System must send a confirmation email if username, email
+		or password is changed (similarly to the registration process).
 		\item {[R.7]} 
-		The System must allow the User to change password if it has been forgotten,through the personal email.\\
+		The System must allow the User to change password if it has been forgotten,through the personal email.
 	\end{itemize}
-	\centering{\large{\textit{Domain Assumptions}}}
+\begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
-		\item {[D.1]} The sent email is assumed to be correctly received.
+		\item {[D.1]} The registration mail is assumed to be correctly recieved by the User.
 	\end{itemize}
 	\vspace{3mm}
-	\item \textbf{{[G.2]} The System allows Guests to authenticate themselves either as Authority or Citizen.
+	\textbf{\item {[G.2]} The System allows Guests to authenticate themselves either as Authority or Citizen.
 		\begin{itemize}
 			\item {[G.2.1]}The System offers different levels of visibility to different roles.
 		\end{itemize}}
-	\centering{\large{\textit{Requirements}}}
+\begin{center}\large{\textit{Requirements}}\end{center}
     \begin{itemize}
 		\item {[R.4]} The System must allow the User to log in using his/her personal credentials.
 		\item {[R.13]} The System provides a recognition system of badge number.
     	\item {[R.15]} The System must allow the User to see its position in a map.
-    \end{itemize}
-    \item \textbf{{[G.3]} The System allows the Citizens to document traffic violations and accidents to Authorities by compiling a Report.} \\\vspace{3mm}
-    \centering{\large{\textit{Requirements}}}
+	\end{itemize}
+	\vspace{3mm}
+    \item \textbf{{[G.3]} The System allows the Citizens to document traffic violations and accidents to Authorities by compiling a Report.}
+\begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
 		\item {[R.8]} The User must be allowed to create reports, specifying:
 	        \begin{itemize}
@@ -651,117 +653,121 @@ In the following section are explained the functional requirements of the applic
 		\begin{itemize}
 			\item {[G.4.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm to read it from the submitted picture.
 		\end{itemize}}
-	\centering{\large{\textit{Requirements}}}
+\begin{center}\large{\textit{Requirements}}\end{center}
     \begin{itemize}
 		\item {[R.10]}
-		The System must notify the Authorities if a new report is in its municipality.
+		The System must notify the Authorities whenever a new Report involving their municipality is submitted. 
 		\item {[R.20]}
 		The System can use third part services to read the license plate from the pictures.
-		\\ 
 	\end{itemize}
-	\centering{\large{\textit{Domain Assumptions}}}
+\begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
 		\item {[D.2]} The System internal clock time used to provide notifications is correct.
 		\item {[D.3]}
 		 The Authorities notifications are assumed to be made only in case of parking violations. Indeed, if a little accident occurs there is no need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
 	\end{itemize}
 	\vspace{3mm} 
-	\item \textbf{{[G.5]} The System must allows Authorities to consult Reports.}  \\\vspace{3mm}
-	\centering{\large{\textit{Requirements}}}
+	\item \textbf{{[G.5]} The System must allows Authorities to consult Reports.}
+\begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
 		\item {[R.16]} The System notify a copy of a report about traffic violation to Authorities.
 		\item {[R.17]} The System provides a list of the most recent reports submitted to the Authorities.
     	\item {[R.18]} The System provides an history of reports submitted to the Authorities.
-		\\ 
 	\end{itemize}
-	\centering{\large{\textit{Domain Assumptions}}}
+\begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
 		\item {[D.4]}
-		The Authority should take measures when they are notified about a new report.
+		The Authorities are assumed to  take measures when they are notified about a new report.
 	\end{itemize} 
 	\vspace{3mm}
 	\item \textbf{{[G.6]} The System analyzes the stored information to build statistics.
 	\begin{itemize}
 		\item {[G.6.1]}If allowed by the Municiplaity, SafeStreets can cross their information about accidents with its own in order to improve the analysis.
 	\end{itemize}}
-	\centering{\large{\textit{Requirements}}}
+\begin{center}\large{\textit{Requirements}}\end{center}
     \begin{itemize}
 		\item {[R.11]}
 		The System must provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
     	\item {[R.12]} The System must allow the User to consult the statistics.
     	\item {[R.19]} The System must interact with the Municipality to get the permission for using their data.
-		\item {[R.21]} The System has to update the statistics, periodically.
+		\item {[R.21]} The System has to update the statistics periodically.
+		\item {[R.24]} The System can cross the data coming from external DBMS \\with its own data.
 	\end{itemize}
-	\centering{\large{\textit{Domain Assumptions}}}
+\begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
-		\item {[D.5]} The System does not need the permission to access to the Authorities’ DBMS each time.
-		\item {[D.6]}
-		The System can cross the data coming from external DBMS with its own data.
-    	\item {[D.7]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service.
+		\item {[D.5]} After the first time, the System does not need to request the access to the Municipality's’ DBMS as long as the permission is still valid..
+    	\item {[D.6]} The statistics and suggestions are assumed to be consulted by Authorities periodically, in order to provide a better service.
+    	\item {[R.23]} The System must be able to acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.
 	\end{itemize}
 	\vspace{3mm}    
 	\item \textbf{{[G.7]} The System is able to detect unsafe areas.
 		\begin{itemize}
 			\item {[G.7.1]} The System can suggest possible interventions to the Authorities.
 		\end{itemize}}
-	\centering{\large{\textit{Domain Assumptions}}}
+\begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
-		\item {[D.7]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service. 
+		\item {[D.6]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service. 
 	\end{itemize}
 	\vspace{3mm}
     \item \textbf{{[G.8]} If allowed by the Municiplaity, SafeStreets can access their information about issued tickets to build statistics and evaluate its effectiveness.
     \begin{itemize}
         \item {[G.8.1]} The System ensures that the chain of custody of the information coming from the Citizens is never broken.
 	\end{itemize}}
-	\centering{\large{\textit{Requirements}}}
+\begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
-		\item {[R.22]} The System must provide protection of data, using encryption.
-		\\
+		\item {[R.22]} The System must provide protection of data using encryption.
 	\end{itemize}
-	\centering{\large{\textit{Domain Assumptions}}}
+\begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
-        \item {[D.8]} Only specific component of the System is able to decrypt sensible data.
+        \item {[D.7]} Only specific component of the System is able to decrypt sensible data.
 	\end{itemize}
 	\vspace{3mm}
 	\item \textbf{{[G.9]} The System allows the User to consult statistics
 	\begin{itemize}
 		\item {[G.9.1]} The System offers different levels of visibility to different roles.
 	\end{itemize}}
-	\centering{\large{\textit{Requirements}}}
+\begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
 		\item {[R.12]} The System must allow the User to consult the statistics.
-		\item {[R.21]} The System has to update the statistics, periodically.
+		\item {[R.21]} The System has to update the statistics periodically.
 	\end{itemize}
 \end{itemize}
 
 \newpage
 
 \section{Performance Requirements}
-%TODO
+SafeStreets is an application who's main job is to compute statistics and show the results to its Users. The collection of the data and the computation of the statistics are operations carried out by two distinct modules (respectively the Report Manager and the Information Manager) which write and read the database independently and asynchronously. This design is thought to benefit the performances: in conditions of high traffic the Report Manager can store the recieved Reports into a buffer and export later into secondary memory, whereas the Information Manager can suspend the computation of statistics and present to the requesting Users older results previously computed.
 \section{Design Constraint}
+As already mentioned in Section \ref{constraints}, since the System is not designed to provide a function to generate official traffic tickets, we can only assume that the Authorities will handle the reported traffic violations properly. For this reason, the System is not aware of whether or not the violation is being handled, at least as long as a corresponding traffic ticket is generated by an Authority (and the System has the authorization to access such data). However, the System cannot distinguish a traffic ticket generated with the help of SafeStreets by one that is not.
 \subsection{Standards Compliance}
-GDPR?
-\subsection{Hardware limitations}
+\begin{itemize}
+	\item \textbf{GDPR} with regard to the processing of the User's personal data.
+	\item \textbf{Latitude and Longidute degrees} for all the information regarding locations.
+\end{itemize}
+\subsection{Hardware Limitations}
 The application should be able to run, at least, under the following condi-
 tions:
 \begin{itemize}
+	\item iOS or Android smartphone
 	\item 3G connections at 2Mb/s
 	\item 50 MB of space
 	\item 2 GB of RAM
 \end{itemize}
 \newpage
 \section{Software System Attribute}
+This section will cover the non-functional requirements that might be used to evaluate the software performances. All of the covered requirements are part of the ISO/IEC 9126-1:2001 (see Section \ref{docs}).
 \subsection{Reliability}
-The System (and all its components) should guarantees a 99\% of reliability.
+The System (and all its components) should guarantees a 99\% of reliability. In order to guarantee the continuity of the service, it must be ensured that the System is fault tolerant.
 \subsection{Availability}
-The System must guarantee an high availability, indeed it has to offer a continuous service 24 hours every day. 
+The System must guarantee an high availability, indeed it has to offer a continuous service 24/7. 
 \subsection{Security} \label{sec:security}
 User credentials and data will be stored in a DBMS that should guarantee an high level of security. To reach this goal the passwords stored in the DBMS are salted and hashed, in this way a sequence of generic characters of any length is concatenated to the password, hashed it all and stored in the DBMS.
 Hash is used also to stored the report so that the informations cannot be altered by anyone. So as soon as a report arrives to the Report Manager, the hash of the report is computed, encrypted to form a digital signature and then it is stored. In this way we create a snapshot of the report ensuring the identity, authenticity and non-tampered state of the informations.
 As mentioned before, the System uses HTTP over SSL protocol (HTTPS) to comunicate with all the services in order to guarantee privacy and protection of the exchanged informations.
 \newline
-If someone break into the OCR service, the System is not responsible in case of damage, due to the fact that its functionalities are provided by third-part services.  
+If someone break into the OCR tool or the Map service, the System is not responsible in case of damage, due to the fact that its functionalities are provided by third-part services.  
 \subsection{Maintainability}
+The System will have a modular architecture: Report Manager, Login Manager and Information Manager are designed to work separately in an asynchronous way, thus the maintenance process will be sped up in case of failure of one module.
 \subsection{Portability}
-
+SafeStreets is developed in terms of a native application on Android and iOS.
 \end{document}
