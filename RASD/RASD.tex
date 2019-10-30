@@ -610,12 +610,12 @@ In the following section are explained the functional requirements of the applic
 		\item {[R.3]} The System must store all User data such as personal information and credentials.
 		\item {[R.5]} 
 		The System must allow the User to change username, but only if the
-		new username is not already in use by another User, email, but only if the
-		new email is in a correct format, and password, only if the new password is different from the precedent and respects the minimum length.
+		new username is not already in use by another User, email, \\but only if the
+		new email is in a correct format, and password, only if \\the new password is different from the precedent and respects the minimum length.
 		\item {[R.6]} The System must send a confirmation email if username, email
 		or password is changed (similarly to the registration process).
 		\item {[R.7]} 
-		The System must allow the User to change password if it has been forgotten,through the personal email.
+		The System must allow the User to change password if it has been \\forgotten, through the personal email.
 	\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
@@ -646,7 +646,7 @@ In the following section are explained the functional requirements of the applic
 	        \end{itemize}
 		\item {[R.9]} The System must check if the Report created by the User is correct.
 		\item {[R.14]} 
-		The System must allow the Citizen to consult the history of its personal reports.
+		The System must allow the Citizen to consult the history of its \\personal reports.
 	\end{itemize} 
 	\vspace{3mm}
 	\item \textbf{{[G.4]} The System stores the reports provided by the Citizens.
@@ -658,13 +658,13 @@ In the following section are explained the functional requirements of the applic
 		\item {[R.10]}
 		The System must notify the Authorities whenever a new Report involving their municipality is submitted. 
 		\item {[R.20]}
-		The System can use third part services to read the license plate from the pictures.
+		The System can use third part services to read the license plate\\ from the pictures.
 	\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
 		\item {[D.2]} The System internal clock time used to provide notifications is correct.
 		\item {[D.3]}
-		 The Authorities notifications are assumed to be made only in case of parking violations. Indeed, if a little accident occurs there is no need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
+		 The Authorities notifications are assumed to be made only in \\case of parking violations. Indeed, if a little accident occurs there is no \\need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
 	\end{itemize}
 	\vspace{3mm} 
 	\item \textbf{{[G.5]} The System must allows Authorities to consult Reports.}
@@ -687,7 +687,7 @@ In the following section are explained the functional requirements of the applic
 \begin{center}\large{\textit{Requirements}}\end{center}
     \begin{itemize}
 		\item {[R.11]}
-		The System must provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
+		The System must provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with \\private data.
     	\item {[R.12]} The System must allow the User to consult the statistics.
     	\item {[R.19]} The System must interact with the Municipality to get the permission for using their data.
 		\item {[R.21]} The System has to update the statistics periodically.
@@ -752,6 +752,7 @@ tions:
 	\item 3G connections at 2Mb/s
 	\item 50 MB of space
 	\item 2 GB of RAM
+	\item GPS
 \end{itemize}
 \newpage
 \section{Software System Attribute}
@@ -770,4 +771,6 @@ If someone break into the OCR tool or the Map service, the System is not respons
 The System will have a modular architecture: Report Manager, Login Manager and Information Manager are designed to work separately in an asynchronous way, thus the maintenance process will be sped up in case of failure of one module.
 \subsection{Portability}
 SafeStreets is developed in terms of a native application on Android and iOS.
+
+\chapter{Formal Analysis Using Alloy}
 \end{document}
