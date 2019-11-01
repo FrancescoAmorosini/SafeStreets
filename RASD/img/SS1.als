@@ -1,4 +1,7 @@
+/*SIGNATURE*/
 abstract sig ReportType{}
+abstract sig Client {}
+
 sig Municipality{
 }
 sig Location{
@@ -7,7 +10,7 @@ sig Location{
 one sig Incident extends ReportType{}
 one sig TrafficViolation extends ReportType{}
 
-abstract sig Client {}
+
 sig Guest extends Client {}
 abstract sig User extends Client {
 	id: one Int
@@ -31,11 +34,17 @@ sig Report {
 sig ReportManager{
 	notify: Report-> Authority
 }
+sig Statistic{}
+sig Suggestion{}
+one sig DBMS{
+}
 sig InformationManager{
-	
+	retrieve: DBMS,
+	compute: Statistic,
+	give: Suggestion
 }
 
-////////////////////////////////////////////////////////
+/*FACT*/
 fact ReportSender{
 	all r:Report, c:Citizen,rm:ReportManager | (r.sender=c) <=>( r->rm in c.send)
 }
@@ -54,13 +63,9 @@ fact IdDifferentFromBadge{
 	all c1:Citizen, a1:Authority | (c1.id!=a1.badgeNumber) and (a1.id!=a1.badgeNumber) 
 }
 fact BadgeNumberDifferent{
-	all disj a1,a2:Authority | a1.badgeNumber!=a2.badgeNumber
+	all disj a1,a2:Authority | a1.badgeNumber!=a2.badgeNumber 
 }
-/*
-fact AuthorityMunicipality{
-	all m:Municipality, a:Authority | 
-}
-*/
+/*ASSERTION*/
 
 assert notifyReportBasedOnMunicipality{
 	no r :Report, a: Authority, rm: ReportManager | (r->a in rm.notify) and (r.location.municipality != a.municipality) 
@@ -80,7 +85,7 @@ check WriterReportDifferent
 check OneMunicipalityOneAuthority
 */
 
-//////////////////////////////////////////
+/*PREDICATE*/
 
 pred newReport[r:Report, c:Citizen,rm:ReportManager]{
 	c.send=c.send + (r -> rm)
@@ -94,10 +99,10 @@ pred showUser{
 #Authority=3
 #Municipality=4
 }
-//run changeMunicipalityofAuthority for exactly 6 User, 6 Report,6 Client,1 ReportManager,4 Municipality, 4 Location,1 InformationManager
+run changeMunicipalityofAuthority for exactly 6 User, 6 Report,6 Client,1 ReportManager,4 Municipality, 4 Location,1 InformationManager,3 Statistic, 1 Suggestion
 
-//run newReport for exactly 6 User, 6 Report,6 Client,1 ReportManager,4 Municipality, 4 Location,1 InformationManager
-run showUser for 6 User, 6 Report,6 Client,1 ReportManager,4 Municipality, 4 Location,1 InformationManager
+run newReport for exactly 6 User, 6 Report,6 Client,1 ReportManager,4 Municipality, 4 Location,1 InformationManager,3 Statistic, 1 Suggestion
+run showUser for 6 User, 6 Report,6 Client,1 ReportManager,4 Municipality, 4 Location,1 InformationManager,3 Statistic,1 Suggestion
 
 
 	
