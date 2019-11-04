@@ -38,3 +38,5 @@
 \BOOKMARK [2][-]{subsection.3.5.4}{Maintainability}{section.3.5}% 38
 \BOOKMARK [2][-]{subsection.3.5.5}{Portability}{section.3.5}% 39
 \BOOKMARK [0][-]{chapter.4}{Formal Analysis Using Alloy}{}% 40
+\BOOKMARK [1][-]{subsection.4.0.1}{Model Check}{chapter.4}% 41
+\BOOKMARK [2][-]{subsection.4.0.2}{Generated World}{subsection.4.0.1}% 42
