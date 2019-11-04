@@ -3,9 +3,12 @@ abstract sig ReportType{}
 abstract sig Client {}
 
 sig Municipality{
+	authority : Authority,
+	location : some Location
 }
 sig Location{
-	municipality: one Municipality
+	municipality: one Municipality,
+	report: Report
 }
 lone abstract sig Incident extends ReportType{}
 lone abstract sig TrafficViolation extends ReportType{}
@@ -64,15 +67,30 @@ fact IdsAndBadgesDifferent{
 	all c1:Citizen, a1:Authority | (c1.id!=a1.badgeNumber) and (a1.id!=a1.badgeNumber)
 	all disj a1,a2:Authority | a1.badgeNumber!=a2.badgeNumber 
 }
-
-fact noReportNoMunicipality{
-	all m:Municipality | (some r:Report | getMunicipality[r] = m ) or (some a:Authority | a.municipality = m )	
+//UNA LOCATION NON PUO AVERE DUE MUNICIPALITÀ DIVERSE
+fact differentLocationSameMunicipality{
+	no disj m1,m2:Municipality, l:Location | l.municipality=m1 and l.municipality=m2 
+}
+/*fact noReportNoMunicipality{
+//	all m:Municipality | (some r:Report | getMunicipality[r] = m ) or (some a:Authority | a.municipality = m )	
 	//CLAUSOLA CHE FA APPARIRE LE FRECCE ROSSE
-	no l:Location | (no r:Report | l = r.location)
+	//no l:Location | (all r:Report | l = r.location)
+}*/
+fact noReportNoMunicipality{
+	all m:Municipality, a:Authority | m in a.municipality <=> a in m.authority
+}
+fact noReportNoLocation{
+	all l:Location,r:Report | l in r.location <=> r in l.report
+}
+fact noMunicipalityNoLocation{
+	all l:Location, m:Municipality | l in m.location <=> m in l.municipality
+}
+fact noInfoManagerNoStatistics{
+	no s:Statistics, i:InformationManager  | no (s & i.build)
 }
 
-fact noInfoManagerNoStatistics{
-	all s:Statistics, i:InformationManager | s in i.build 
+fact noInfoManagerNoSuggestion{
+	all s:Suggestion,i:InformationManager | s in i.compute
 }
 
 /*ASSERTIONS*/
@@ -80,7 +98,7 @@ assert notifyReportBasedOnMunicipality{
 	no r :Report, a: Authority, rm: ReportManager | (r->a in rm.notify) and (r.location.municipality != a.municipality) 
 }
 assert notifyReportBasedOnType{
-	no r :Report, a: Authority, rm: ReportManager | (r->a in rm.notify) and (r.type = Incident) 
+	no r :Report, a: Authority, rm: ReportManager | (r->a in rm.notify) and (r.type = Incident)
 }
 assert WriterReportDifferent{
 	no disj c1,c2:Citizen, r:Report | r.sender=c1 and r.sender=c2
@@ -93,27 +111,18 @@ assert OneMunicipalityOneAuthority{
 pred newReport[r:Report, c:Citizen, rm:ReportManager]{
 	c.send=c.send + (r -> rm)
 
-	#Municipality = 4
-	#ReportManager = 1
-	#Citizen = 3
-	#Authority = 3
 }
 pred changeMunicipalityofAuthority[a:Authority,m:Municipality]{
 	a.municipality=m
 }
 
 pred showUser{
-#Citizen =2
-#Authority=2
-#Municipality=2
-#ReportManager = 0
-#InformationManager = 1
 }
 
 /*EXECUTION*/
-run changeMunicipalityofAuthority for exactly 6 User, 6 Report,6 Client,1 ReportManager,4 Municipality, 4 Location,1 InformationManager,3 Statistics, 1 Suggestion
-run newReport for exactly 6 User, 6 Report,6 Client ,1 ReportManager,4 Municipality, 4 Location, 0 InformationManager,0 Statistics,0 Suggestion
-run showUser for 4 User, 0 Report, 4 Client,0 ReportManager,4 Municipality, 4 Location, 1 InformationManager,3 Statistics, 3 Suggestion
+//run changeMunicipalityofAuthority for exactly 6 User, 6 Report,6 Client,1 ReportManager,4 Municipality, 4 Location,1 InformationManager,3 Statistics, 1 Suggestion
+//run newReport for exactly 4 User, 6 Report,4 Client ,1 ReportManager,4 Municipality, 4 Location, 1 InformationManager,1 Statistics,1 Suggestion
+run showUser for exactly 4 User, 6 Report, 4 Client,1 ReportManager,2 Municipality, 4 Location, 1 InformationManager, 3 Statistics, 3 Suggestion
 
 check notifyReportBasedOnType
 check notifyReportBasedOnMunicipality
