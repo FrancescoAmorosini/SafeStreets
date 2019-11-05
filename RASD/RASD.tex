@@ -33,26 +33,26 @@ In addition, the municipality could offer a service that takes the information a
 \subsection{Goals}
 \begin{itemize}
     \item {[G.1]} Access the functionalities of the application from different locations and devices.
-	\item {[G.2]} Allow to authenticate either as Authority or Citizen.
-    \item {[G.3]} Document traffic violations and accidents by compiling a Report.
-    \item {[G.4]} Stores the reports provided by the Citizens.
+	\item {[G.2]} Allow Guests to authenticate either as Authority or Citizen.
+    \item {[G.3]} Allow the User to document traffic violations and accidents by compiling a Report.
+    \item {[G.4]} Store the reports provided by the Citizens.
     \begin{itemize}
     		\item {[G.4.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm to read it from the submitted picture.
 		\end{itemize}     
 	\item {[G.5]} Allow Autorities to consult the reports submitted by the Citizens.
-    \item {[G.6]} Analyze the stored information to detect unsafe areas.
+    \item {[G.6]} Analyze the stored information to build statistics.
     \begin{itemize}
     		\item {[G.6.1]}If allowed by the Municiplaity, SafeStreets can cross their information about accidents with its own in order to improve the analysis.
 	\end{itemize}  
-	\item {[G.7]} Detects unsafe areas through statistics.
+	\item {[G.7]} Detect unsafe areas through statistics.
 	\begin{itemize}
 		\item {[G.7.1]}Suggest possible interventions to the Authorities.
 	\end{itemize}
-	\item{[G.8]} Access the information about issued tickets to build statistics and evaluate its effectiveness (if the Municiplaity gives the permission).
+	\item{[G.8]}Build statistics on iussued tickets if the Municiplaity allows SafeStreets to access such data.
     \begin{itemize}
-        \item {[G.8.1]} Ensures that the chain of custody of the information coming from the Citizens is never broken.
+        \item {[G.8.1]} Ensure that the chain of custody of the information coming from the Citizens is never broken.
 	\end{itemize}
-	\item {[G.9]} Consult statistics
+	\item {[G.9]} Allow the Users to consult statistics.
 	\begin{itemize}
 		\item {[G.9.1]} Offer different levels of visibility to different roles.
 	\end{itemize}
@@ -134,7 +134,7 @@ This document is presented as it follows:
 \begin{enumerate}
 	\item {\textbf{Introduction}} contains a general description of the system and its goals, presenting the problem in an informal way.
 	\item{\textbf{Overall description}} gives a general description of the application, focusing on the context of the system and giving further details about shared phenomena. Furthermore, we will provide the specifications of constraints, dependencies and assumptions, that show how the System is integrated with the real world.
-	\item{\textbf{Specific requirements}} goes into details about functional and non-functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
+	\item{\textbf{Specific requirements}} goes into details about functional and non functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
 	\item {\textbf{Formal analysis using Alloy}} contains the Alloy model of some critical aspects of the System with all the related comments. A proof of consistency and an example of the generated world are also provided.
 	\item {\textbf{Effort spent}} shows the time spent writing this document by each member of the team.
 	\item {\textbf{References}}
@@ -223,19 +223,19 @@ The character are:
 \begin{itemize}
 	\item {[D.1]} The registration mail is assumed to be correctly recieved by the User.
 	\item {[D.2]} The System internal clock time used to provide notifications is correct.
-	\item {[D.3]} The Authorities notifications are assumed to be made only in case of parking violations. Indeed, if a little accident occurs there is no need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
+	\item {[D.3]} When a little accident occurs there is no need to contact the Authorities, whereas when a dangerous accident happens Users are supposed to phone call the Autorithies for a promptly intervention.
 	\item {[D.4]} The Authorities are assumed to  take measures when they are notified about a new report.
-	\item {[D.5]} After the first time, the System does not need to request the access to the Municipality's’ DBMS as long as the permission is still valid.
+	\item {[D.5]} After the first time, the System does not need to request the access to the Municipality's DBMS as long as its permission is valid.
 	\item {[D.6]} The statistics and suggestions are assumed to be consulted by Authorities periodically, in order to provide a better service.
-	\item {[D.7]} Only specific component of the System is able to decrypt sensible data.
+	\item {[D.7]} Only specific components of the System is able to decrypt sensible data.
 	\item {[D.8]} SafeStreets is not responsible of the traffic tickets generated by Authorities.
 \end{itemize}
 \subsection{Dependencies}
 \begin{itemize}
-	\item DBMS needed in order to store and retrieve Users’ Reports.
+	\item A DBMS is needed in order to store and retrieve Users’ Reports.
 	\item Information on issued tickets are provided by the Authorities' DBMS, which has limited access. 
 	\item The OCR tool is provided by external thrid party services.
-	\item The Map service is provided by external an third party (which can be different by the one that provides the OCR) tool.
+	\item The Map service is provided by external an third party (which can be different by the one that provides the OCR tool).
 \end{itemize}
 \subsection{Constraints} \label{constraints}
 \begin{itemize}
@@ -643,7 +643,7 @@ In the following section are explained the functional requirements of the applic
 		\item {[D.1]} The registration mail is assumed to be correctly recieved by the User.
 	\end{itemize}
 	\vspace{3mm}
-	\textbf{\item {[G.2]} Allow to authenticate either as Authority or Citizen.}
+	\textbf{\item {[G.2]} Allow Guests to authenticate either as Authority or Citizen.}
 \begin{center}\large{\textit{Requirements}}\end{center}
     \begin{itemize}
 		\item {[R.4]} Allow to log in using personal credentials.
@@ -651,7 +651,7 @@ In the following section are explained the functional requirements of the applic
     	\item {[R.15]} Allow to see the personal position in a map.
 	\end{itemize}
 	\vspace{3mm}
-    \item \textbf{{[G.3]} Document traffic violations and accidents by compiling a Report.}
+    \item \textbf{{[G.3]} Allow the User to document traffic violations and accidents by compiling a Report.}
 \begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
 		\item {[R.8]} The User must be allowed to create reports, specifying:
@@ -666,7 +666,7 @@ In the following section are explained the functional requirements of the applic
 		\item {[R.14]} Allow the Citizen to consult the history of its personal reports.
 	\end{itemize} 
 	\vspace{3mm}
-	\item \textbf{{[G.4]} Stores the reports provided by the Citizens.
+	\item \textbf{{[G.4]} Store the reports provided by the Citizens.
 		\begin{itemize}
 			\item {[G.4.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm to read it from the submitted picture.
 		\end{itemize}}
@@ -681,7 +681,7 @@ In the following section are explained the functional requirements of the applic
 	\begin{itemize}
 		\item {[D.2]} The System internal clock time used to provide notifications is correct.
 		\item {[D.3]}
-		 The Authorities notifications are assumed to be made only in \\case of parking violations. Indeed, if a little accident occurs there is no \\need to contact the Authorities. Instead if a dangerous accident happens it is better to call the Autorithies for a promptly intervention. The System uses accident report only to make statistics.
+		 When a little accident occurs there is no need to contact the Authorities, whereas when a dangerous accident happens Users are supposed to phone call the Autorithies for a promptly intervention.
 	\end{itemize}
 	\vspace{3mm} 
 	\item \textbf{{[G.5]} Allow Autorities to consult the reports submitted by the Citizens.}
@@ -696,7 +696,7 @@ In the following section are explained the functional requirements of the applic
 		\item {[D.4]} The Authorities are assumed to take measures when they are notified about a new report.
 	\end{itemize} 
 	\vspace{3mm}
-	\item \textbf{{[G.6]} Analyzes the stored information to build statistics.
+	\item \textbf{{[G.6]} Analyze the stored information to build statistics.
 	\begin{itemize}
 		\item {[G.6.1]}If allowed by the Municiplaity, SafeStreets can cross their information about accidents with its own in order to improve the analysis.
 	\end{itemize}}
@@ -712,12 +712,12 @@ In the following section are explained the functional requirements of the applic
 	\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
-		\item {[D.5]} After the first time, the System does not need to request the access to the Municipality's’ DBMS as long as the permission is still valid..
+		\item {[D.5]} After the first time, the System does not need to request the access to the Municipality's DBMS as long as its permission is valid.
     	\item {[D.6]} The statistics and suggestions are assumed to be consulted by Authorities periodically, in order to provide a better service.
     	\item {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.
 	\end{itemize}
 	\vspace{3mm}    
-	\item \textbf{{[G.7]} Detect unsafe areas.
+	\item \textbf{{[G.7]} Detect unsafe areas through statistics.
 		\begin{itemize}
 			\item {[G.7.1]} Suggest possible interventions to the Authorities.
 		\end{itemize}}
@@ -726,9 +726,9 @@ In the following section are explained the functional requirements of the applic
 		\item {[D.6]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service. 
 	\end{itemize}
 	\vspace{3mm}
-    \item \textbf{{[G.8]} Access the information about issued tickets to build statistics and evaluate its effectiveness (if the Municiplaity gives the permission).
+    \item \textbf{{[G.8]} Build statistics on iussued tickets if the Municiplaity allows SafeStreets to access such data.
     \begin{itemize}
-        \item {[G.8.1]} Ensures that the chain of custody of the information coming from the Citizens is never broken.
+        \item {[G.8.1]} Ensure that the chain of custody of the information coming from the Citizens is never broken.
 	\end{itemize}}
 \begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
@@ -739,7 +739,7 @@ In the following section are explained the functional requirements of the applic
         \item {[D.7]} Only specific component of the System is able to decrypt sensible data.
 	\end{itemize}
 	\vspace{3mm}
-	\item \textbf{{[G.9]} Allows to consult statistics
+	\item \textbf{{[G.9]} Allow the Users to consult statistics.
 	\begin{itemize}
 		\item {[G.9.1]} Offer different levels of visibility to different roles.
 	\end{itemize}}
@@ -782,8 +782,8 @@ The System (and all its components) should guarantees a 99\% of reliability. In 
 The System must guarantee an high availability, indeed it has to offer a continuous service 24/7. 
 \subsection{Security} \label{sec:security}
 User credentials and data will be stored in a DBMS that should guarantee an high level of security. To reach this goal the passwords stored in the DBMS are salted and hashed, in this way a sequence of generic characters of any length is concatenated to the password, hashed it all and stored in the DBMS.
-Hash is used also to stored the report so that the informations cannot be altered by anyone. So as soon as a report arrives to the Report Manager, the hash of the report is computed, encrypted to form a digital signature and then it is stored. In this way we create a snapshot of the report ensuring the identity, authenticity and non-tampered state of the informations.
-As mentioned before, the System uses HTTP over SSL protocol (HTTPS) to comunicate with all the services in order to guarantee privacy and protection of the exchanged informations.
+Hash is used also to stored the report so that the information cannot be altered by anyone. So as soon as a report arrives to the Report Manager, the hash of the report is computed, encrypted to form a digital signature and then it is stored. In this way we create a snapshot of the report ensuring the identity, authenticity and non-tampered state of the information.
+As mentioned before, the System uses HTTP over SSL protocol (HTTPS) to comunicate with all the services in order to guarantee privacy and protection of the exchanged information.
 \newline
 If someone break into the OCR tool or the Map service, the System is not responsible in case of damage, due to the fact that its functionalities are provided by third-part services.  
 \subsection{Maintainability}
