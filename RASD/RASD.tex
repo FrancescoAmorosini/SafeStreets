@@ -14,6 +14,10 @@
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{alloy-style}
+
 
 
 \titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\Huge}
@@ -792,4 +796,137 @@ The System will have a modular architecture: Report Manager, Login Manager and I
 SafeStreets is developed in terms of a native application on Android and iOS.
 
 \chapter{Formal Analysis Using Alloy}
+In this section a description of the model is given by using Alloy language.
+\begin{lstlisting}[language=alloy]
+
+	----------SIGNATURES---------
+abstract sig ReportType{}
+abstract sig Client {}
+
+sig Municipality{
+	authority : Authority,
+	location : some Location
+}
+sig Location{
+	municipality: one Municipality,
+	report: Report
+}
+lone abstract sig Incident extends ReportType{}
+lone abstract sig TrafficViolation extends ReportType{}
+
+sig Guest extends Client {}
+abstract sig User extends Client {
+	id: one Int
+} {id >0}
+sig Citizen extends User {
+	send: Report -> ReportManager 
+}
+sig Authority extends User {
+	badgeNumber: one Int,
+	municipality: one Municipality
+}{badgeNumber>0}
+
+sig Report {
+	type: one ReportType,
+	location: one Location,
+	sender: one Citizen,
+}
+sig ReportManager{
+	notify: Report-> Authority,
+	store: Report -> DBMS
+}
+sig Statistics{}
+sig Suggestion{}
+
+one sig DBMS{
+}
+sig InformationManager{
+	retrieve: DBMS,
+	build: some Statistics,
+	compute: some Suggestion
+}
+	----------FACT---------
+--a Citizen send to the Report Manger only the reports he wrote
+fact ReportSender{
+	all r:Report, c:Citizen,rm:ReportManager | (r.sender=c) <=>( r->rm in c.send)
+}
+--all reports are stored in the DBMS
+fact ReportStore{
+	all rm:ReportManager, r:Report, db:DBMS | r->db in rm.store
+}
+--the Report Manager notifies all the report that are not Incident type to the Authorities whose municipality is the same as where the violation occurred. 
+fact NotifyReportBasedOnTypeAndMunicipality{
+	all a:Authority,r:Report,rm:ReportManager | ((r.type = TrafficViolation) and (r.location.municipality =a.municipality)) <=> (r->a in rm.notify) 
+}
+-- the users have different id. Furthermore the id and the badgeNumber of the Authority are different.
+fact IdsAndBadgesDifferent{
+	all disj u1,u2:User | u1.id!=u2.id 
+	all c1:Citizen, a1:Authority | (c1.id!=a1.badgeNumber) and (a1.id!=a1.badgeNumber)
+	all disj a1,a2:Authority | a1.badgeNumber!=a2.badgeNumber 
+}
+-- A location has only one Municipality.
+fact differentLocationSameMunicipality{
+	no disj m1,m2:Municipality, l:Location | l.municipality=m1 and l.municipality=m2 
+}
+-- there are no report without municipality.
+fact noReportNoMunicipality{
+	all m:Municipality, a:Authority | m in a.municipality <=> a in m.authority
+}
+-- there are no report without location viceversa
+fact noReportNoLocation{
+	all l:Location,r:Report | l in r.location <=> r in l.report
+}
+-- there are no municipality without location and viceversa
+fact noMunicipalityNoLocation{
+	all l:Location, m:Municipality | l in m.location <=> m in l.municipality
+}
+-- Statistics exist only if it exist Information Manager
+fact noInfoManagerNoStatistics{
+	no s:Statistics, i:InformationManager  | no (s & i.build)
+}
+-- Suggestions exist only if it exist Information Manager
+fact noInfoManagerNoSuggestion{
+	all s:Suggestion,i:InformationManager | s in i.compute
+}
+	----------ASSERTION---------
+-- Report Manager doesn't notify the Authorities that aren't in the municipality of the report.
+assert notifyReportBasedOnMunicipality{
+	no r :Report, a: Authority, rm: ReportManager | (r->a in rm.notify) and (r.location.municipality != a.municipality) 
+}
+-- Report Manager doesn't notify if type of Report is \textit{Incident}.
+assert notifyReportBasedOnType{
+	no r :Report, a: Authority, rm: ReportManager | (r->a in rm.notify) and (r.type = Incident)
+}
+-- A report can only be written by a Citizen.
+assert WriterReportDifferent{
+	no disj c1,c2:Citizen, r:Report | r.sender=c1 and r.sender=c2
+}
+-- An Authority can't be in two different municipality simultaneously.
+assert OneMunicipalityOneAuthority{
+	no disj m1,m2:Municipality, a:Authority | a.municipality=m1 and a.municipality=m2
+}
+	----------PREDICATE---------
+pred show{}
+-- A Citizen write a new Report.
+pred newReport[r:Report, c:Citizen, rm:ReportManager]{
+	c.send=c.send + (r -> rm)
+
+}
+--An Authority change his municipality.
+pred changeMunicipalityofAuthority[a:Authority,m:Municipality]{
+	a.municipality=m
+}
+	\end{lstlisting}
+\subsection{Model Check}
+\subsection{Generated World}
+\begin{lstlisting}[language=alloy]
+run show for exactly 4 User, 6 Report, 4 Client,1 ReportManager,2 Municipality, 4 Location, 1 InformationManager, 3 Statistics, 3 Suggestion
+\end{lstlisting}
+\begin{figure}[ht!]
+	\begin{center}
+	\includegraphics[width=\textwidth]{./img/Alloy1.png}
+	\end{center}
+	\caption{User write Report and send it to Report Manager that notifies the Authorities}
+	\label{fig:Alloy1}
+	\end{figure}
 \end{document}
