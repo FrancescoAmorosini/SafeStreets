@@ -45,7 +45,7 @@ lone sig InformationManager{
 }
 lone sig LoginManager{
 	guests : set Guest,
-	logged : seq User
+	logged : Int -> User
 }
 
 /*FUNCTIONS*/
@@ -84,7 +84,21 @@ fact allClientsInLM{
 	all u:User | one lm:LoginManager | u.id -> u in lm.logged
 	//no i1:Int, i2:Int, u:User, lm:LoginManager| (i1->u in lm.logged) and (i2->u in lm.logged)
 }
-
+fact PositiveId{
+	all i:Int, u:User, lm:LoginManager |  i->u in lm.logged => i>0 
+}
+fact SingleId{
+	 no disj i1,i2:Int, u:User, lm:LoginManager | i1->u in lm.logged and i2->u in lm.logged 
+	//all c:Citizen,lm:LoginManager | #lm.logged.indsOf[c] =1	 
+	//#lm.logged.indsOf[u] =1
+}
+fact IDBadge{
+all a:Authority,i:Int | one lm:LoginManager | i->a in lm.logged implies a.badgeNumber!=a.id
+}
+fact fact2{
+	no v:TrafficViolation| ( no r: Report | r.type = v)
+	no i:Incident| ( no r: Report | r.type = i)	
+}
 /*ASSERTIONS*/
 assert notifyReportBasedOnMunicipality{
 	no r :Report, a: Authority, rm: ReportManager | (r->a in rm.notify) and (r.location.municipality != a.municipality) 
@@ -98,6 +112,10 @@ assert WriterReportDifferent{
 assert OneMunicipalityOneAuthority{
 	no disj m1,m2:Municipality, a:Authority | a.municipality=m1 and a.municipality=m2
 }
+assert aa{
+no a:Authority | a.id = a.badgeNumber
+}
+
 
 /*PREDICATES*/
 pred newReport[r:Report, c:Citizen, rm:ReportManager]{
@@ -107,17 +125,21 @@ pred newReport[r:Report, c:Citizen, rm:ReportManager]{
 	#ReportManager = 1
 	#Citizen = 3
 	#Authority = 3
+
 }
 pred changeMunicipalityofAuthority[a:Authority,m:Municipality]{
 	a.municipality=m
 }
 pred loginUser[u:User, id:Int, lm:LoginManager]{
 	#lm.guests = #lm.guests - 1
-	lm.logged = lm.logged + (id -> u)
+	lm.logged = lm.logged + (id -> u) 
+	
+	
 
 	#InformationManager = 0
 	#ReportManager = 0
 	#LoginManager = 1
+
 }
 
 pred showUser{
@@ -135,10 +157,11 @@ pred giveStatistics[u:User, im:InformationManager]{
 }
 
 /*EXECUTION*/
-run changeMunicipalityofAuthority for exactly 6 User, 6 Report,6 Client,1 ReportManager,4 Municipality, 4 Location,1 InformationManager,3 Statistics, 1 Suggestions
-run newReport for exactly 6 User, 6 Report,6 Client ,1 ReportManager,4 Municipality, 4 Location, 0 InformationManager,0 Statistics,0 Suggestions
-run giveStatistics for exactly 6 User, 0 Report, 6 Client,0 ReportManager,4 Municipality, 4 Location, 1 InformationManager
-run loginUser
+//run changeMunicipalityofAuthority for exactly 6 User, 6 Report,6 Client,1 ReportManager,4 Municipality, 4 Location,1 InformationManager,3 Statistics, 1 Suggestions
+//run newReport for exactly 6 User, 6 Report,6 Client ,1 ReportManager,4 Municipality, 4 Location, 0 InformationManager,0 Statistics,0 Suggestions
+//run giveStatistics for exactly 6 User, 0 Report, 6 Client,0 ReportManager,4 Municipality, 4 Location, 1 InformationManager
+//run loginUser for 4
+
 run showUser 
 
 check notifyReportBasedOnType
