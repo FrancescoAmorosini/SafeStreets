@@ -1,6 +1,7 @@
 \documentclass{report}
 \usepackage[utf8]{inputenc}
 \usepackage{natbib}
+\usepackage[dvipsnames]{xcolor}
 \usepackage[pagestyles]{titlesec}
 \usepackage[hidelinks]{hyperref}
 \usepackage{pdfpages}
@@ -11,13 +12,12 @@
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{ltablex}
-\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
-\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
-\usepackage[dvipsnames]{xcolor}
 \usepackage{listings}
 \usepackage{alloy-style}
 
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 
 
 \titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\Huge}
@@ -152,8 +152,7 @@ We are going to analyze all the shared phenomena that are listed in the previous
 A Guest can sign up to the application or log in, if already registered. 
 In the case of a new submit, the System provides a form which the Guest have to fill with his data, specifying if he/she is 
 a Citizien or an Authority.\\ \vspace{2mm}
-
-\noindent\textbf{Commit of a report} (world controlled, machine observed)\\
+\noindent\textbf{Commit of a report} (World controlled, Machine observed)\\
 A Citizen can send a Report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the compiled fields are consistent and complete, then it will encrypt the Report and send it to the DBMS (Figure \ref{fig:State1}). \\ \vspace{2mm}
 
 \noindent\textbf{Send Notification} (Machine controlled, World observed)\\
@@ -339,7 +338,7 @@ In the following section are explained the functional requirements of the applic
 	\item {[R.22]} Provide protection of data using encryption.
 	\item {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.
 	\item {[R.24]} Cross the data coming from external DBMS with its own data.
-	\item {[R.25]} Cross data from different Reports in order to establish their truthfulness
+	\item {[R.25]} Cross data from different Reports in order to establish their truthfulness.
 \end{itemize}
 
 \newpage
@@ -796,7 +795,8 @@ The System will have a modular architecture: Report Manager, Login Manager and I
 SafeStreets is developed in terms of a native application on Android and iOS.
 
 \chapter{Formal Analysis Using Alloy}
-In this section a description of the model is given by using Alloy language.
+In this section a description of the model is given by using the Alloy modeling language.
+\section{AAA}
 \begin{lstlisting}[language=alloy]
 
 	----------SIGNATURES---------
