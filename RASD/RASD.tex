@@ -141,7 +141,6 @@ This document is presented as it follows:
 	\item{\textbf{Specific requirements}} goes into details about functional and non functional requirements and a list of all possible interctions with the System is provided using use cases and sequence diagrams.
 	\item {\textbf{Formal analysis using Alloy}} contains the Alloy model of some critical aspects of the System with all the related comments. A proof of consistency and an example of the generated world are also provided.
 	\item {\textbf{Effort spent}} shows the time spent writing this document by each member of the team.
-	\item {\textbf{References}}
 \end{enumerate}
 
 \chapter{Overall Description}
@@ -776,7 +775,6 @@ tions:
 	\item 2 GB of RAM
 	\item GPS
 \end{itemize}
-\newpage
 \section{Software System Attributes}
 This section will cover the non-functional requirements that might be used to evaluate the software performances. All of the covered requirements are part of the ISO/IEC 9126-1:2001 (see Section \ref{docs}).
 \subsection{Reliability}
@@ -1145,6 +1143,7 @@ run loginUser for 6 but 4 Int
 
 	\end{lstlisting}
 \chapter{Effort Spent}
+\textbf{Francesco Amorosini}
 \begin{table}[!ht]
 	\begin{tabular}{|C{.60\textwidth}||C{.20\textwidth}|}
 		\toprule
@@ -1155,17 +1154,32 @@ run loginUser for 6 but 4 Int
 		\midrule
 		Tools and Github setup for the project & 2\\
 		\midrule
-		Analysis of goals & 2\\
+		Purpose and Scope & 2.5\\
 		\midrule
-		Product Perspective & 2.5\\ 
-		\midrule			
-		Statechart Diagrams & 2\\
+		Product Functions& 2.5\\ 
 		\midrule
-		Meeting to review first chapter & 2\\
+		\small{\textbf{Mid-Phase Call}}: & \\
+		\vspace{.2mm}
+		$\bullet$ Functional requirements and Assumptions & \vspace{.2mm} 3\\
+		$\bullet$ Goal Mapping on Requirements & 3\\
+		\midrule
+		Performance requirements & 1.5\\
+		\midrule
+		Design constraints & 2.5\\
+		\midrule
+		Software System Attributes & 1\\
+		\midrule
+		Alloy modeling & 2.5\\
+		\midrule
+		Alloy chapter & 4.5\\
+		\midrule
+		Images and tables polishing & 2\\
+		\midrule
+		Grammar correction and global review & 4.5\\
+		\midrule
+		& \textbf{Total:} 35.5\\
 		\bottomrule
 	\end{tabular}
-	\caption{In the table above, \textit{1} refers to shared phenomena controlled by the world and observed by the machine, whereas \textit{2} refers to the phenomena controlled by the machine and observed by the world}.
-	\label{tab:multicol}
 \end{table}
 
 \end{document}
