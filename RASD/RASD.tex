@@ -303,16 +303,15 @@ In the following section are explained the functional requirements of the applic
 			\item the username is not already taken by another registered User.
 			\item the email is in the right format.
 			\item the password has a minimum length.
-			\item the municipality, if it is an Authority.
+			\item the badge matches the municipality, if the Guest is an Authority.
 		\end{itemize}
-		If credentials are correct, the System sends a confirmation email.
-	\item {[R.3]} Store all User data such as personal information and credentials.
+	\item {[R.3]} If credentials are valid, the System sends a confirmation email..
 	\item {[R.4]} Allow to log in using personal credentials.
 	\item {[R.5]} Allow to change username, only if the new username is not already in use by another User, email, only if the
 	new email is in a correct format and password, only if the new password is different from the precedent and respects the minimum length.
 	\item {[R.6]} Send a confirmation email if username, email or password is changed (similarly to the registration process). 
 	\item {[R.7]} Allow to change password if it has been forgotten, through the personal email.
-	\item {[R.8]} The User must be allowed to create reports, specifying:
+	\item {[R.8]} The Citizen must be allowed to create reports, specifying:
 		\begin{itemize}
 			\item The type of report (violation/accident).
 			\item The location of the violation/accident.
@@ -320,23 +319,26 @@ In the following section are explained the functional requirements of the applic
 			\item The time of the violation/accident.
 			\item A picture of the violation/accident (not mandatory).
 		\end{itemize}
-	\item {[R.9]} Check if the Report created by the User is correct.
+	\item {[R.9]} Check if the Report created by the Citizen is valid.
 	\item {[R.10]} Notify the Authorities whenever a new Report involving their municipality is submitted. 
 	\item {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
-	\item {[R.12]} Allow to consult the statistics.
-	\item {[R.13]} Provides a recognition system of badge number.
+	\item {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics.
+	\item {[R.13]} Provide a recognition system of badge number.
 	\item {[R.14]} Allow the Citizen to consult the history of its personal reports.
 	\item {[R.15]} Allow Users to see the their position in a map.
-	\item {[R.16]} Notify a copy of a report about traffic violation to Authorities.
-	\item {[R.17]} Provides a list of the most recent reports submitted to the Authorities.
-	\item {[R.18]} Provides an history of reports submitted to the Authorities.
-	\item {[R.19]} Interact with the Municipality to get the permission for using their data.
+	\item {[R.16]} All traffic violations must be notified to Authorities according to their municipality.
+	\item {[R.17]} Provide the Authorities with a list of the most recent reports submitted.
+	\item {[R.18]} Allow Authorities to also consult older Reports.
+	\item {[R.19]} Interact with the Municipality's System to get the permission for using their data.
 	\item {[R.20]} Use third party services to enable some functions (OCR and Mapping System).
-	\item {[R.21]} Update the statistics periodically.
+	\item {[R.21]} Statistics and suggestions have to be periodically recomputed.
 	\item {[R.22]} Provide protection of data using encryption.
 	\item {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.
-	\item {[R.24]} Cross the data coming from external DBMS with its own data.
+	\item {[R.24]} Cross the data coming from external DBMS with the System's own data.
 	\item {[R.25]} Cross data from different Reports in order to establish their truthfulness.
+	\item {[R.26]} Unsafe areas are detected by means of an artificial intelligence.
+	\item {[R.27]} Safety suggestions are computed by means of an artificial intelligence.
+	\item {[R.28]} After its validation, no one should be able to modify a submitted Report.
 \end{itemize}
 
 \newpage
@@ -628,10 +630,10 @@ In the following section are explained the functional requirements of the applic
 	        \begin{itemize}
 	            \item the email is in the right format.
 	            \item the password has a minimum length.
-	            \item the municipality, if it is an Authority.
+	            \item the badge matches the municipality, if the Guest is an Authority.
 	            \item the username is not already taken by another registered User.
 	        \end{itemize}
-		\item {[R.3]} Store all User data such as personal information and credentials.
+		\item {[R.3]} If credentials are valid, the System sends a confirmation email..
 		\item {[R.5]} 
 		Allow to change username, but only if the new username is not already in use by another User, email, but only if the\\
 		new email is in a correct format, and password, only if the new password is different from the precedent and respects \\ 
@@ -649,14 +651,15 @@ In the following section are explained the functional requirements of the applic
 \begin{center}\large{\textit{Requirements}}\end{center}
     \begin{itemize}
 		\item {[R.4]} Allow to log in using personal credentials.
-		\item {[R.13]} Provides a recognition system of badge number.
+		\item {[R.13]} Provide a recognition system of badge number.
     	\item {[R.15]} Allow Users to see the their position in a map.
+    	\item {[R.20]} Use third party services to enable some functions (Mapping System).
 	\end{itemize}
 	\vspace{3mm}
     \item \textbf{{[G.3]} Allow the User to document traffic violations and accidents by compiling a Report.}
 \begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
-		\item {[R.8]} The User must be allowed to create reports, specifying:
+		\item {[R.8]} The Citizen must be allowed to create reports, specifying:
 	        \begin{itemize}
 	            \item The type of report (violation/accident).
 	            \item The location of the violation/accident.
@@ -664,7 +667,7 @@ In the following section are explained the functional requirements of the applic
 	            \item The time of the violation/accident.
 	            \item A picture of the violation/accident (not mandatory).
 	        \end{itemize}
-		\item {[R.9]} Check if the Report created by the User is correct.
+		\item {[R.9]} Check if the Report created by the Citizen is valid.
 		\item {[R.14]} Allow the Citizen to consult the history of its personal reports.
 	\end{itemize} 
 	\vspace{3mm}
@@ -677,21 +680,21 @@ In the following section are explained the functional requirements of the applic
 		\item {[R.10]}
 		Notify the Authorities whenever a new Report involving their municipality is submitted. 
 		\item {[R.20]}
-		Use third party services to enable some functions (OCR and Mapping System).
+		Use third party services to enable some functions (OCR).
 	\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
-		\item {[D.2]} The System internal clock time used to provide notifications is correct.
+		\item {[D.2]} The System's internal clock time used to provide notifications is correct.
 		\item {[D.3]}
 		 When a little accident occurs there is no need to contact the Authorities, whereas when a dangerous accident happens Users are supposed to phone call the Autorithies for a promptly intervention.
 	\end{itemize}
 	\vspace{3mm} 
-	\item \textbf{{[G.5]} Allow Autorities to consult the reports submitted by the Citizens.}
+	\item \textbf{{[G.5]} Allow Authorities to consult the reports submitted by the Citizens.}
 \begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
-		\item {[R.16]} Notify a copy of a report about traffic violation to Authorities.
-		\item {[R.17]} Provide a list of the most recent reports submitted to the Authorities.
-    	\item {[R.18]} Provide an history of reports submitted to the Authorities.
+		\item {[R.16]} All traffic violations must be notified to Authorities according to their municipality.
+		\item {[R.17]} Provide the Authorities with a list of the most recent reports submitted.
+		\item {[R.18]} Allow Authorities to also consult older Reports.
 	\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
@@ -704,12 +707,9 @@ In the following section are explained the functional requirements of the applic
 	\end{itemize}}
 \begin{center}\large{\textit{Requirements}}\end{center}
     \begin{itemize}
-		\item {[R.11]}
-		Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with \\private data.
-    	\item {[R.12]} Allow to consult the statistics.
-    	\item {[R.19]} Interact with the Municipality to get the permission for using their data.
-		\item {[R.21]} Update the statistics periodically.
-		\item {[R.24]} Cross the data coming from external DBMS with its own data.
+    	\item {[R.19]} Interact with the Municipality's System to get the permission for using their data.
+		\item {[R.21]} Statistics have to be periodically recomputed.
+		\item {[R.24]} Cross the data coming from external DBMS with the System's own data.
 		\item {[R.25]} Cross data from different Reports in order to establish their truthfulness
 	\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
@@ -723,6 +723,12 @@ In the following section are explained the functional requirements of the applic
 		\begin{itemize}
 			\item {[G.7.1]} Suggest possible interventions to the Authorities.
 		\end{itemize}}
+	\begin{center}\large{\textit{Requirements}}\end{center}
+		\begin{itemize}
+			\item {[R.21]} Suggestions have to be periodically recomputed.
+			\item {[R.26]} Unsafe areas are detected by means of an artificial intelligence.
+			\item {[R.27]} Safety suggestions are computed by means of an artificial intelligence.
+		\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
 		\item {[D.6]} The statistics and suggestions are assumed to be consult by Authorities periodically, in order to provide a better service. 
@@ -735,6 +741,7 @@ In the following section are explained the functional requirements of the applic
 \begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
 		\item {[R.22]} Provide protection of data using encryption.
+		\item {[R.28]} After its validation, no one should be able to modify a submitted Report.
 	\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
@@ -747,8 +754,10 @@ In the following section are explained the functional requirements of the applic
 	\end{itemize}}
 \begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
-		\item {[R.12]} Allow to consult the statistics.
-		\item {[R.21]} Update the statistics periodically.
+		\item {[R.11]}
+		Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
+		\item {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics.
+		\item {[R.21]} Statistics and suggestions have to be periodically recomputed.
 	\end{itemize}
 \end{itemize}
 
@@ -800,7 +809,7 @@ The main aspects of the System and its relationships with the World are represen
 	\begin{center}
 	\includegraphics[width=\textwidth]{./img/Prova.pdf}
 	\label{fig:all-oy}
-	\caption{}
+	\caption{Alloy-generated world that shows all the possible interactions.}
 	\end{center}
 \end{figure}\\
 In such world the Users are modeled either as Citizen or Authority, and each of them has a unique ID (and badge number, if Authority) for which the following facts hold:
@@ -820,9 +829,9 @@ In such world the Users are modeled either as Citizen or Authority, and each of 
 The Login Manager is in charge of providing the login functionality, as well as keeping a list of all the Users and the Guests who wants to log in to the application. In the Figure \ref{fig:allogin} it is shown the result of a login procedure: the Guest who requested the login in gets disconnected from the Login Manager and a new User makes its appearance in the set of the logged Users. The login manager also has to provide an ID to the new User, which has to be different from all the IDs and the badge numbers already existent.
 \begin{figure}[ht!]
 	\begin{center}
-	\includegraphics[width=.8\textwidth]{./img/Login.pdf}
+	\includegraphics[width=.7\textwidth]{./img/Login.pdf}
 	\label{fig:allogin}
-	\caption{}
+	\caption{Alloy-generated world that shows how the login works.}
 	\end{center}
 \end{figure}\\
 Below is the predicate which led to the Figure \ref{fig:allogin} and all the facts involved:
@@ -854,12 +863,12 @@ Below is the predicate which led to the Figure \ref{fig:allogin} and all the fac
 The Report Manager's job is to collect all the Reports send by the Users, store them into the database, and notify the Authorities of the same Municipality in which the violation took place. As previously mentioned, unlike the other violations, accidents are not notified to Authorities.
 \begin{figure}[ht!]
 	\begin{center}
-	\includegraphics[width=.75\textwidth]{./img/NewReport.pdf}
+	\includegraphics[width=.7\textwidth]{./img/NewReport.pdf}
 	\label{fig:alloyreport}
-	\caption{}
+	\caption{Alloy-generated world that shows what happens when a new report is submitted.}
 	\end{center}
 \end{figure}\\
-Here are shown all the facts that involve Reports, as well as the predicate which generates a new one:
+Here are shown all the facts that involve Reports, as well as the predicate which generates a new one:\vfill
 \begin{lstlisting}[language=alloy]
 	-- Predicate used to add a new Report --
 	pred newReport[r:Report, c:Citizen, rm:ReportManager]{
@@ -891,15 +900,15 @@ Here are shown all the facts that involve Reports, as well as the predicate whic
 	run newReport for 6 but 4 Int
 \end{lstlisting}
 \subsection{Information Manager}
-The Information manager retrives from the DBMS the information stored by the Report Manager, builds statistics, computes suggestions, and makes them all available to the Users. Only Authorities have the permission to see safety suggestions, as they are the ones who are supposed to apply them.
+The Information manager retrives from the DBMS the information stored by the Report Manager, builds statistics, computes suggestions, and makes them all available to the Users. Only Authorities have the permission to see safety suggestions, as they are the ones who are supposed to apply them.\vfill
 \begin{figure}[ht!]
 	\begin{center}
 	\includegraphics[width=.8\textwidth]{./img/giveAll.pdf}
 	\label{fig:allgive}
-	\caption{}
+	\caption{Alloy-generated world that shows how the statistics and suggestions are distributed.}
 	\end{center}
-\end{figure}\\
-Here are shown the facts involving statistics, suggestions and the predicates that makes them available to the Users:
+\end{figure}
+\noindent Here are shown the facts involving statistics, suggestions and the predicates that makes them available to the Users:
 \begin{lstlisting}[language=alloy]
 	-- Predicate used to give Suggestions and Statistics --
 	pred giveStatistics[u:User, im:InformationManager, s:Statistics, sugg:Suggestions]{
@@ -1193,15 +1202,15 @@ run loginUser for 6 but 4 Int
 		\midrule
 		Tools and Github setup for the project & 2\\
 		\midrule
-		Discussion on goals & 1.5\\
+		Goals discussion & 2\\
 		\midrule
-		Product Perspective & 2.5\\ 
+		Product Perspective & 3\\ 
 		\midrule
-		Statechart Diagrams & 2\\
+		Statechart Diagrams & 3.5\\
 		\midrule
-		First approach on assumptions, dependencies and constraints & 1\\
+		First approach on assumptions, dependencies and constraints & 1.5\\
 		\midrule
-		Functional Requirements & 2.5\\ 
+		Functional Requirements & 3.5\\ 
 		\midrule
 		\small{\textbf{Mid-Phase Call}}: & \\
 		\vspace{.2mm}
@@ -1217,7 +1226,7 @@ run loginUser for 6 but 4 Int
 		User interface with Mockup & 3.5\\
 		\midrule
 		Final revision & 2\\
-		& \textbf{Total:} 31\\
+		& \textbf{Total:} 35\\
 		\bottomrule
 	\end{tabular}
 \end{table}
