@@ -66,7 +66,7 @@ According to the \textit{World} and \textit{Machine} paradigm, proposed by M. Ja
 \newline
 In this context, the most relevant phenomena are organized as in the following table.
 \clearpage
-\begin{table}[!ht]
+\begin{table}[p]
 		%{pix.acc.} & {mean.acc.} & {mean.IoU} & {f.w.IoU}
 		\begin{center}
 		%\hspace{-4.5cm}
@@ -149,6 +149,7 @@ We are going to analyze all the shared phenomena that are listed in the previous
 A Guest can sign up to the application or log in, if already registered. 
 In the case of a new submit, the System provides a form which the Guest have to fill with his data, specifying if he/she is 
 a Citizien or an Authority.\\ \vspace{2mm}
+
 \noindent\textbf{Commit of a report} (World controlled, Machine observed)\\
 A Citizen can send a Report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the compiled fields are consistent and complete, then it will encrypt the Report and send it to the DBMS (Figure \ref{fig:State1}). \\ \vspace{2mm}
 
@@ -233,17 +234,18 @@ The character are:
 \subsection{Dependencies}
 \begin{itemize}
 	\item A DBMS is needed in order to store and retrieve Users’ Reports.
-	\item Information on issued tickets are provided by the Authorities' DBMS, which has limited access. 
+	\item Information on issued tickets (and possibly accidents) are provided by the Authorities' DBMS, which has limited access. 
 	\item The OCR tool is provided by external thrid party services.
 	\item The Map service is provided by external an third party (which can be different by the one that provides the OCR tool).
+	\item The system relies on an AI to analyze the data, build statistics and compute suggestions.
 \end{itemize}
 \subsection{Constraints} \label{constraints}
 \begin{itemize}
 	\item Smartphone equipped with an OS compatible with the application.
-	\item Working Internet connection.
-	\item The permission to acquire and store personal data must be given from the User. 
-	\item Offer the possibility to the Users to delete their personal account.
-	\item Provides statistics on issued tickets but it is impossible to know if the tickets are generated thanks to the service, or if they are independent from Safestreets.
+	\item Properly working Internet connection.
+	\item The permission to acquire and store personal data must be given by the User. 
+	\item Offer the possibility to the Users to delete their account.
+	\item It is impossible to know if the tickets are generated thanks to SafeStreets, or if they are independent from the service.
 	
 \end{itemize}
 
@@ -257,21 +259,20 @@ SafeStreets is a mobile based application. In the following sections a more deta
 	\end{center}
 	\caption{Guest signup interface and login interface.}
 \end{figure}
-
-\begin{figure}[!ht]
+\begin{figure}[!htp]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/CitizensInterface.png}
 	\end{center}
 	\caption{Citizens interfaces to make new report (violation or accident), and to consult statistics menu.}
 \end{figure}
-
 \begin{figure}[!ht]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/NewReportcutted.png}
 	\end{center}
 	\caption{Authorities interface to see new report, to consult statistics and suggestions menu.}
+	\vfill
 \end{figure}
-
+\clearpage
 \begin{figure}[!ht]
 	\begin{center}
 	\includegraphics[width=0.7\textwidth]{img/StatisticsInterfaces.jpg}
@@ -325,12 +326,12 @@ In the following section are explained the functional requirements of the applic
 	\item {[R.12]} Allow to consult the statistics.
 	\item {[R.13]} Provides a recognition system of badge number.
 	\item {[R.14]} Allow the Citizen to consult the history of its personal reports.
-	\item {[R.15]} Allow to see the personal position in a map.
+	\item {[R.15]} Allow Users to see the their position in a map.
 	\item {[R.16]} Notify a copy of a report about traffic violation to Authorities.
 	\item {[R.17]} Provides a list of the most recent reports submitted to the Authorities.
 	\item {[R.18]} Provides an history of reports submitted to the Authorities.
 	\item {[R.19]} Interact with the Municipality to get the permission for using their data.
-	\item {[R.20]} Can use third party services to enable some of its functions.
+	\item {[R.20]} Use third party services to enable some functions (OCR and Mapping System).
 	\item {[R.21]} Update the statistics periodically.
 	\item {[R.22]} Provide protection of data using encryption.
 	\item {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.
@@ -518,7 +519,7 @@ In the following section are explained the functional requirements of the applic
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
-			\item If the type of the Report recived by the \textbf{\textit{Report Manager}} is \textit{Accident} the report is not notify to the authority but it is only stored in the database. 
+			\item If the type of the Report recived by the \textbf{\textit{Report Manager}} is \textit{Accident} the report is not notified to the authorities, but it is only stored in the database. 
 		\end{enumerate}}\\
 	
 	\hline
@@ -558,9 +559,10 @@ In the following section are explained the functional requirements of the applic
 			\item The \textbf{\textit{System}} displays a menu with all the possible statistic options to compute.
 			\item The \textbf{\textit{User}} chooses the statistics in which he/she is interested in.
 			
-			\item The \textbf{\textit{Information Manager}} loads the statistics that the user selected and the application shows. 
+			\item The \textbf{\textit{Information Manager}} loads the statistics that the user selected and the application shows them. 
 			\begin{itemize}
 				\item The application may use external services to show some statistics on a map.
+				\item If the \textbf{\textit{User}} who requested to see the statistics is a Citizen, he/she should not be able to see statistics on sensible data.
 				\item If the \textbf{\textit{User}} who requested to see the statistics is an Authority, the \textbf{\textit{Information Manager}} will also show him/her the latest safety suggestions (if available).
 			\end{itemize}
 			
@@ -571,7 +573,7 @@ In the following section are explained the functional requirements of the applic
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
-			\item If the \textbf{\textit{Municipality}} doesn't allow the System access traffic ticket information, the \textbf{\textit{Information Manager}} can't retrieve this type of data and the The \textbf{\textit{User}} can't visualize the traffic tickets statistics. In this case, a message saying \textit{Statistic Unavailable} is shown to the The \textbf{\textit{User}}. The flow restart from point 3.  
+			\item If the \textbf{\textit{Municipality}} doesn't allow the System access traffic ticket information, the \textbf{\textit{Information Manager}} can't retrieve this type of data. In this case, a message saying \textit{Statistic Unavailable} is shown to the The \textbf{\textit{User}}. The flow restart from point 3.  
 		\end{enumerate}}\\
 	
 	\hline
@@ -617,7 +619,7 @@ In the following section are explained the functional requirements of the applic
 \subsection{Goals Mapping on Requirements and Assumptions}
 %Intro
 \begin{itemize}
-	\item \textbf{{[G.1]} Access the functionalities of the application from different locations and devices.}
+	\item \textbf{{[G.1]} Allow the Users to access the functionalities of the application from different locations and devices.}
 \begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
 		\item{[R.1]} 
@@ -648,7 +650,7 @@ In the following section are explained the functional requirements of the applic
     \begin{itemize}
 		\item {[R.4]} Allow to log in using personal credentials.
 		\item {[R.13]} Provides a recognition system of badge number.
-    	\item {[R.15]} Allow to see the personal position in a map.
+    	\item {[R.15]} Allow Users to see the their position in a map.
 	\end{itemize}
 	\vspace{3mm}
     \item \textbf{{[G.3]} Allow the User to document traffic violations and accidents by compiling a Report.}
@@ -675,7 +677,7 @@ In the following section are explained the functional requirements of the applic
 		\item {[R.10]}
 		Notify the Authorities whenever a new Report involving their municipality is submitted. 
 		\item {[R.20]}
-		Use third part services to read the license plate from the pictures.
+		Use third party services to enable some functions (OCR and Mapping System).
 	\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
@@ -755,9 +757,9 @@ In the following section are explained the functional requirements of the applic
 \section{Performance Requirements}
 SafeStreets is an application who's main job is to compute statistics and show the results to its Users. The collection of the data and the computation of the statistics are operations carried out by two distinct modules (respectively the Report Manager and the Information Manager) which write and read the database independently and asynchronously. This design is thought to benefit the performances: in conditions of high traffic the Report Manager can store the recieved Reports into a buffer and export later into secondary memory, whereas the Information Manager can suspend the computation of statistics and present to the requesting Users older results previously computed.
 \section{Design Constraint}
-As already mentioned in Section \ref{constraints}, since the System is not designed to provide a function to generate official traffic tickets, we can only assume that the Authorities will handle the reported traffic violations properly. For this reason, the System is not aware of whether or not the violation is being handled, at least as long as a corresponding traffic ticket is generated by an Authority (and the System has the authorization to access such data). However, the System cannot distinguish a traffic ticket generated with the help of SafeStreets by one that is not.
+As already mentioned in Section \ref{constraints}, since the System is not designed to provide a function to generate official traffic tickets, we can only assume that the Authorities will handle the reported traffic violations properly. For this reason, the System is not aware of whether or not the violation is being handled, at least as long as a corresponding traffic ticket is generated by an Authority (and the System has the authorization to access such data). Even then, the System cannot distinguish a traffic ticket generated with the help of SafeStreets by one that is not.
 \\
-Moreover, the System is not designed to communicate with any registry office, thus every user is identified by their username, mail and associated ID. This limitation is one of the reasons for which the System does not notify authorities when an accident is notified: in fact, small accidents are not technically traffic violations and often there's no need to call Authorities, whereas in case of serious accidents the Citizen is encouraged to call the police by phone call. In the latter case, the local police will collect the Citizen's testimony and generalities (which are not available in SafeStreets' user profiles) and hopefully will intervene as soon as possible. 
+Moreover, the System is not designed to communicate with any registry office, thus every user is identified by their username, mail and associated ID. This limitation is one of the reasons for which the System does not notify authorities when an accident is notified: in fact, small accidents are not technically traffic violations and often there's no need to call Authorities, whereas in case of serious accidents the Citizen is encouraged to call the police via phone call. In the latter case, the local police will collect the Citizen's testimony and generalities (which are not available in SafeStreets' user profiles) and hopefully will intervene as soon as possible. 
 \subsection{Standards Compliance}
 \begin{itemize}
 	\item \textbf{GDPR} with regard to the processing of the User's personal data.
