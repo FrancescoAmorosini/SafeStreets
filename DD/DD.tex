@@ -18,13 +18,52 @@
 \maketitle
 
 \chapter{Introduction}
+\section{Purpose}
 While the RASD presented a general view of the SafeStreets appliction and its features, this document aims to further analyze the system's design and architecture, by describing for each of its components their runtime behaviour, integration, interfaces, implementation and testing plans.
 This document is mainly intended to be used by the test and development teams as a guidance in the development process, but also to prevent structural degradation during maintainance and extension phases. Nonetheless, the document is also addressed to all the stakeholders who are interested in supervising the development process.
 
-\section{Purpose}
-%Frase generata automaticamente da overleaf ma non per questo meno vera:
-``I always thought something was fundamentally wrong with the universe'' 
-
 \section{Scope}
+SafeStreets: an application that aims to improve the safety of urban areas by giving its Users the possibility to report traffic violations to Authorities. Users are logged in either as Citizen, those who report the violations, and Authorities, those who are notified about newly reported violations and are supposed to take action on them.\\
+The system is in charge of collecting all the Reports, storing them, and notifying the Authorities about them. The stored Reports are then used to build statistics, find unsafe areas, and compute suggestions on how to improve the safety of such areas. The system can also communicate local Municipalities' Systems in order to retrieve information about accidents and iussued traffic ticket: in this case some of the above functions are enhanced, and some new functions are enabled (g.e computing statistics on traffic ticked).\\
+\newline
+Further information about the scope of the application can be found in the Chapter 1 of the RASD.
 
+\section{Definitions, Acronyms and Abbreviations}
+\subsection{Definitions}
+\begin{itemize}
+    \item \textit{Client}: a piece of computer hardware or software that accesses a resource or a service made available by a Server.
+    \item \textit{Server}: a device or a computer program that provides resources or functionalities to other programs or devices.
+    \item \textit{Reverse Proxy}: particular proxys that are responsible of forwarding requests to one or more Servers which will handle it.
+    \item \textit{Firewall}: a network security systems that monitors incoming and outcoming network traffic, applying predefined predefined security rules.
+    \item \textit{Port}: %To remove if undefined
+\end{itemize}
+\subsection{Acronyms}
+\begin{itemize}
+    \item \textbf{RASD}: \textit{Requirement Analysis and Specification Document}, the document in which all the requirements and goals of the application are throughly described.
+    \item \textbf{API}: \textit{Application Programming Interface}, interface, or communication protocol between Client and Server intendend to simplify the building of the Client-side software.
+    \item \textbf{OCR}: \textit{Optical Character Recognition}, software dedicated to the detection of characters contained in a document and to their transfer to digital text that can be read by a machine. In this context, OCR will be used to read license plates.
+    \item \textbf{UML}: \textit{Unified Modeling Language}, is a standard visual modeling language intended to be used for analysis, design, and implementation of software-based systems.
+    \item \textbf{GPS}: \textit{Global Positioning system}, technology widely used to get the user's position.
+    \item \textbf{DBMS}: \textit{Data Base Management system}, software that provides organized space memory to store information.
+    \end{itemize}
+\subsection{Abbreviations}
+\begin{itemize}
+    \item {[R$_{i}$]}: i-th requirement.
+    \end{itemize}
+\section{Reference Documents}
+\begin{itemize}
+    \item Specification document: \textit{SafeStreets Mandatory Project Assignment.pdf}.
+    \item Requirement Analysis and Specification Document: \textit{RASD.pdf}.
+\end{itemize}
+\section{Document Structure}
+This document is presented as it follows:
+\begin{enumerate}
+    \item \textbf{Introduction} presents a general overview, the scope and the purpose of the document.
+    \item \textbf{Architectural Design} shows the main components of the system and their relationships. This section will also discuss the arichitectural choices of the design process.
+    \item \textbf{Algorithm Design} presents and discusses the algorithms that will enable the system's functionalities.
+    \item \textbf{User Interface Design} provides some further details on the user interface defined in the RASD.
+    \item \textbf{Requirement Traceability} maps all the functional requirements defined in the RASD over the components that will accomplish them.
+    \item \textbf{Implementation, Integration and Testing Plans} shows the order in which the implementation and the integration of the components will occur, and how the testing phase will be carryed out.
+    \item {\textbf{Effort spent}} displays the time spent writing this document by each member of the team.
+\end{enumerate}
 \end{document}
