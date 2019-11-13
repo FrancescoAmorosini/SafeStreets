@@ -27,4 +27,47 @@ This document is mainly intended to be used by the test and development teams as
 
 \section{Scope}
 
+\chapter{Architectural Design}
+\section{Overview}
+In this chapter we are going to discuss the architectural structure of the System. In Figure 1 is represented an high-level view of the components and their interactions. The details are explained in the next sections.
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/HighLevelOverview.png}
+	\end{center}
+	\caption{Overview of the System.}
+\end{figure}
+
+\section{Component view}
+
+\section{Deployment view}
+
+\section{Runtime view}
+
+\section{Component interfaces}
+
+\section{Selected architectural	styles and patterns}
+The following architecture are used for the structure of the System.
+\subsection{Client-Server Architecture}
+In this structure there are two main role with different duties, the client uses data and services offered by the server.
+ The server stores all data in order to provide them to the client.\\
+\textbf{Motivations:} this pattern dues to several advantages. Server can be replicated to have more scalability. 
+Accessibility: users can use the services without the need for a specialized​ ​device​ ​or​ ​client.
+The security is granted because the server allows only registered user to consult data.
+Furthermore, it is easy to update, replace, repair, move a server without affecting clients.
+\subsection{Three-tiered Architecture}
+This type of architecture is a client-server architecture where three tiers are phisically separated.\\
+The \textit{presentation tier} provide an interface to allow the user to consult data and result of services executed in a different layer. 
+It is the top-most tier and the only one accessible from the client.\\
+The \textit{application tier} executes the logic of the application throw functions that elaborate data. 
+The reverse proxy is needed to handle the client requests and to balance the workload, the requests are forwarded to 
+the application serves in order to provide the right data.\\
+The \textit{database tier} includes the data persistence mechanisms and the data access layer that encapsulates 
+the persistence mechanisms and exposes the data.
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/TiersArchitecture.png}
+	\end{center}
+	\caption{Overview of the System.}
+\end{figure}
+
 \end{document}
