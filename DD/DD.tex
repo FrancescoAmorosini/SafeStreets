@@ -87,25 +87,29 @@ In this chapter the architectural structure of the system will be discussed at m
 \section{Component interfaces}
 
 \section{Selected architectural	styles and patterns}
-The following architectural patterns are used to build the structure of the system in order to provide all the services of SafeStreets application.
-\subsection{Client-Server Architecture}
-In this structure there are two main roles with different jobs: the Client uses data and services offered by the Server, whereas the Server stores all data in order to provide them to the Client.\\
-\textbf{Motivations:} this structure provides several advantages. The Server can be replicated to have more scalability. 
+The following architectural patterns are used to build the structure of the system in order to provide all the services of SafeStreets application.\\
+
+\begin{center}\large{\textbf{Client-Server Architecture}}\end{center}
+Client-Server architecture is a computing model that features two roles: a Server that hosts, delivers and manages most of the resources and services, and a client which exploits them.
+\begin{center}\large{\textit{Motivations}}\end{center}
+\noindent This structure provides several advantages.The Server can be replicated to have more scalability. 
 Accessibility: users can use the services without the need for a specialized device or Client.
 The security is granted because the server allows only registered user to consult data.
-Furthermore, it is easy to update, replace, repair, move a server without affecting Clients.
-\subsection{Three-tiered Architecture}
-This type of architecture is a Client-Server architecture where three tiers are phisically separated.
+Furthermore, it is easy to update, replace, repair, move a server without affecting Clients.\\
+
+\begin{center}\large{\textbf{Three-tiered Architecture}}\end{center}
+This type of architecture is a kind of Client-Server paradigm where three tiers are phisically separated:
 \begin{itemize}
-	\item The \textit{presentation tier} provide an interface to allow the user to consult data and result of services executed in a different layer. 
+	\item The \textit{presentation tier} provides an interface that allows the users to consult data and result of services executed in a different layer. 
 	It is the top-most tier and the only one accessible from the Client.
 	\item The \textit{application tier} executes the logic of the application throw functions that elaborate data. 
-	The reverse proxy is needed to handle the Client requests and to balance the workload, the requests are forwarded to 
+	A reverse proxy is needed to handle the Client requests and to balance the workload, the requests are forwarded to 
 	the application serves in order to provide the right data.
 	\item The \textit{database tier} includes the data persistence mechanisms and the data access layer that encapsulates 
 	the persistence mechanisms and exposes the data.
 \end{itemize}
-\textbf{Motivations:} A multi-tier application architecture provides a model with several advantages: developers can create flexible and reusable 
+\begin{center}\large{\textit{Motivations}}\end{center}
+A multi-tier application architecture provides a model with several advantages: developers can create flexible and reusable 
 applications and acquire the option of modifying or adding a specific layer, instead of reworking the entire application.
 
 \begin{figure}[!ht]
@@ -115,26 +119,29 @@ applications and acquire the option of modifying or adding a specific layer, ins
 	\caption{Overview of the system.}
 \end{figure}
 
-\subsection{Thin Client}
+\begin{center}\large{\textbf{Thin Client}}\end{center}
 A thin client is a lightweight computer which does most of the computation in a remote server. The servers takes care of several duties as storage 
 of data and performing calculations.\\
-\textbf{Motivations:} in this case the application is thought for mobile phone which could not have great power of computation. Whit 
+\begin{center}\large{\textit{Motivations}}\end{center} 
+In this case the application is thought for mobile phone which could not have great power of computation. Whit 
 a thin client is sufficient to have internet connection to use the application and not an ultimate generation phone. Furthermore, 
 this architecture semplify the client-side shifting most of the execution to the server.
 
-\subsection{MVC Design Pattern}
+\begin{center}\large{\textbf{MVC Design Pattern}}\end{center}
 Model-View-Controller is a software design pattern particulary usefull to develope user interfaces. Indeed, this pattern is used for the frontend implementation of the application. 
 It divides the program logic in three interconnected elements: \textit{model} that directly manages data and rules of the application, \textit{view} which handles any representation of data, \textit{controller} that 
 accepts input and converts it to commands for the model or view. This is done to separate internal representations of information 
 from the ways information is presented to and accepted from the user. \\
-\textbf{Motivations:} MVC allows full encapsulation of object. This means that each component can be changed without creating issues to other components.
+\begin{center}\large{\textit{Motivations}}\end{center} 
+MVC allows full encapsulation of object. This means that each component can be changed without creating issues to other components.
 Furthermore, with MVC developers are able to work in parallel on different components without blocking another.
 
-\subsection{Reverse Proxy Design Pattern}
+\begin{center}\large{\textbf{Reverse Proxy Design Pattern}}\end{center}
 A simple proxy act as an interface to refere an object in another machine. The reverse proxy offers a single point of access (with HTTP) 
 to multiple client which want access to several application servers. In practice, it is a wrapper of an object behind the scenes. 
 An extra functionality is also caching of data and security throw a firewall on client-side.\\
-\textbf{Motivations:} It is useful to organize the requests of multiple clients and to save frequent requested informations. 
+\begin{center}\large{\textit{Motivations}}\end{center} 
+It is useful to organize the requests of multiple clients and to save frequent requested informations. 
 It protects also the application servers from external attack.
 
 \end{document}
