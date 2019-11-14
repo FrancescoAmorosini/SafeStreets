@@ -85,27 +85,41 @@ In this chapter we are going to discuss the architectural structure of the Syste
 \section{Component interfaces}
 
 \section{Selected architectural	styles and patterns}
-The following architecture are used for the structure of the System.
+The following architecture are used for the structure of the System in order to provide all the services of SafeStreets application.
 \subsection{Client-Server Architecture}
 In this structure there are two main role with different duties, the client uses data and services offered by the server.
 The server stores all data in order to provide them to the client.\\
-\textbf{Motivations:} this pattern dues to several advantages. Server can be replicated to have more scalability. 
+\textbf{Motivations:} this structure dues to several advantages. Server can be replicated to have more scalability. 
 Accessibility: users can use the services without hte need for a specialized device or client.
 The security is granted because the server allows only registered user to consult data.
 Furthermore, it is easy to update, replace, repair, move a server without affecting clients.
 \subsection{Three-tiered Architecture}
-This type of architecture is a client-server architecture where three tiers are phisically separated.\\
-The \textit{presentation tier} provide an interface to allow the user to consult data and result of services executed in a different layer. 
-It is the top-most tier and the only one accessible from the client.\\
-The \textit{application tier} executes the logic of the application throw functions that elaborate data. 
-The reverse proxy is needed to handle the client requests and to balance the workload, the requests are forwarded to 
-the application serves in order to provide the right data.\\
-The \textit{database tier} includes the data persistence mechanisms and the data access layer that encapsulates 
-the persistence mechanisms and exposes the data.
+This type of architecture is a client-server architecture where three tiers are phisically separated.
+\begin{itemize}
+	\item The \textit{presentation tier} provide an interface to allow the user to consult data and result of services executed in a different layer. 
+	It is the top-most tier and the only one accessible from the client.
+	\item The \textit{application tier} executes the logic of the application throw functions that elaborate data. 
+	The reverse proxy is needed to handle the client requests and to balance the workload, the requests are forwarded to 
+	the application serves in order to provide the right data.
+	\item The \textit{database tier} includes the data persistence mechanisms and the data access layer that encapsulates 
+	the persistence mechanisms and exposes the data.
+\end{itemize}
+\textbf{Motivations:} A multi-tier application architecture provides a model with several advantages: developers can create flexible and reusable 
+applications and acquire the option of modifying or adding a specific layer, instead of reworking the entire application.
+
 \begin{figure}[!ht]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/TiersArchitecture.png}
 	\end{center}
 	\caption{Overview of the System.}
 \end{figure}
+
+\subsection{MVC Design Pattern}
+Model-View-Controller is a software design pattern particulary usefull to develope user interfaces. Indeed, this pattern is used for the frontend implementation of the application. 
+It divides the program logic in three interconnected elements: \textit{model} that directly manages data and rules of the application, \textit{view} which handles any representation of data, \textit{controller} that 
+accepts input and converts it to commands for the model or view. This is done to separate internal representations of information 
+from the ways information is presented to and accepted from the user. \\
+\textbf{Motivations:} MVC allows full encapsulation of object. This means that each component can be changed without creating issues to other components.
+Furthermore, with MVC developers are able to work in parallel on different components without blocking another.
+
 \end{document}
