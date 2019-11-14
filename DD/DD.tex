@@ -115,6 +115,13 @@ applications and acquire the option of modifying or adding a specific layer, ins
 	\caption{Overview of the system.}
 \end{figure}
 
+\subsection{Thin Client}
+A thin client is a lightweight computer which does most of the computation in a remote server. The servers takes care of several duties as storage 
+of data and performing calculations.\\
+\textbf{Motivations:} in this case the application is thought for mobile phone which could not have great power of computation. Whit 
+a thin client is sufficient to have internet connection to use the application and not an ultimate generation phone. Furthermore, 
+this architecture semplify the client-side shifting most of the execution to the server.
+
 \subsection{MVC Design Pattern}
 Model-View-Controller is a software design pattern particulary usefull to develope user interfaces. Indeed, this pattern is used for the frontend implementation of the application. 
 It divides the program logic in three interconnected elements: \textit{model} that directly manages data and rules of the application, \textit{view} which handles any representation of data, \textit{controller} that 
@@ -122,5 +129,12 @@ accepts input and converts it to commands for the model or view. This is done to
 from the ways information is presented to and accepted from the user. \\
 \textbf{Motivations:} MVC allows full encapsulation of object. This means that each component can be changed without creating issues to other components.
 Furthermore, with MVC developers are able to work in parallel on different components without blocking another.
+
+\subsection{Reverse Proxy Design Pattern}
+A simple proxy act as an interface to refere an object in another machine. The reverse proxy offers a single point of access (with HTTP) 
+to multiple client which want access to several application servers. In practice, it is a wrapper of an object behind the scenes. 
+An extra functionality is also caching of data and security throw a firewall on client-side.\\
+\textbf{Motivations:} It is useful to organize the requests of multiple clients and to save frequent requested informations. 
+It protects also the application servers from external attack.
 
 \end{document}
