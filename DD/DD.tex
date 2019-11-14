@@ -3,6 +3,7 @@
 \usepackage{natbib}
 \usepackage{graphicx}
 \usepackage[pagestyles]{titlesec}
+\usepackage{pdfpages}
 
 \title{Design Document}
 \author{AmorosiniCasaliFioravanti}
@@ -15,7 +16,7 @@
 
 \begin{document}
 
-\maketitle
+\includepdf[pages={1}]{./img/FrontPage}
 
 \chapter{Introduction}
 \section{Purpose}
@@ -68,12 +69,13 @@ This document is presented as it follows:
 \end{enumerate}
 \chapter{Architectural Design}
 \section{Overview}
-In this chapter we are going to discuss the architectural structure of the System. In Figure 1 is represented an high-level view of the components and their interactions. The details are explained in the next sections.
+In this chapter the architectural structure of the system will be discussed at multiple levels of abstraction. A high-level view of the components and their interactions is represented in Figure \ref{fig:overview}. The details will be explained in the next sections.
 \begin{figure}[!ht]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/HighLevelOverview.png}
-	\end{center}
-	\caption{Overview of the System.}
+    \end{center}
+    \label{fig:overview}
+	\caption{Overview of the system.}
 \end{figure}
 
 \section{Component view}
@@ -85,9 +87,9 @@ In this chapter we are going to discuss the architectural structure of the Syste
 \section{Component interfaces}
 
 \section{Selected architectural	styles and patterns}
-The following architecture are used for the structure of the System.
+The following architectural patterns are used for defining the structure of the system:
 \subsection{Client-Server Architecture}
-In this structure there are two main role with different duties, the client uses data and services offered by the server.
+In this structure there are two main roles with different duties, the client uses data and services offered by the server.
 The server stores all data in order to provide them to the client.\\
 \textbf{Motivations:} this pattern dues to several advantages. Server can be replicated to have more scalability. 
 Accessibility: users can use the services without hte need for a specialized device or client.
@@ -106,6 +108,6 @@ the persistence mechanisms and exposes the data.
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/TiersArchitecture.png}
 	\end{center}
-	\caption{Overview of the System.}
+	\caption{Overview of the system.}
 \end{figure}
 \end{document}
