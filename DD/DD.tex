@@ -81,6 +81,32 @@ In this chapter the architectural structure of the system will be discussed at m
 \section{Component view}
 
 \section{Deployment view}
+In this section it is described the deployment view of the components inside the system.
+The deployment diagram describes the distribution of components of the hardware.
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/DeploymentView.png}
+    \end{center}
+    \label{fig:deploymentview}
+	\caption{Deployment diagram of the system.}
+\end{figure}\\
+The system is composed of a multitier architecture, each specific role is clarified below.\\
+\begin{itemize}
+    \item \textbf{Client}\\
+    The first tier contains the client mobile machines which have installed SafeStreets application
+    to access all its functionalities.\\
+    \item \textbf{Reverse Proxy}\\
+    The second tier contains a reverse proxy to implement load balancing on the several requests to access the application servers.
+    Further, it is a cacheble component who can speed-up the most frequent requests.
+    We decide to use a Linux machine for safety and semplicity reasons. \\
+    \item \textbf{Application servers}\\
+    This is the middleware level of the application where all the computations happen. The servers
+    are distributed to increase the scalability of the network, they are also part of the second tier.\\
+    \item \textbf{Firewall}\\
+    The access to the Database is protected from a firewall to avoid unauthorized accesses to sensible data.\\
+    \item \textbf{Database Server}\\
+    This is the last layer of the architecture. All the data are stored here structured in a relational DBMS.
+\end{itemize}
 
 \section{Runtime view}
 
