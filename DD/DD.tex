@@ -78,10 +78,34 @@ In this chapter the architectural structure of the system will be discussed at m
     \label{fig:overview}
 	\caption{High-level overview of the system.}
 \end{figure}
-
+\newpage
 \section{Component view}
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/ComponentDiagram1.png}
+    \end{center}
+    \label{fig:componentdiagram}
+	\caption{Component diagram of the system.}
+\end{figure}
+The UML component diagram aims at capturing the internal modular structure of the components, showing how they are connected together in order to form larger components. Components are wired together by using an assem-
+bly connector to connect the required interface of one component with the provided interface of another component.
+Below is a description of each component:
+\begin{itemize}
+    
+\item \textbf{Mobile Client}: This component represent the client machine that access to the functionalities of the entire system. It is implemented as thin client as explained below.
 
-\section{Deployment view}
+\item \textbf{User Controller}: This component takes care of all the operation related to the user data. It exposed methods to change account credentials and to send the new report of the user. Furthermore, it manages the data stored in the
+DB using the Storage Interface.
+\item \textbf{Auth Controller}: This component takes care of all the authentication-related operation: it is responsible both for the log in and the registration of the User and uses the \textit{Storage Interface} to retrieve and store data in the DB. It also uses the \textit{Mail Service Interface} in order to communicate with the Mailing Service to send registration emails.   
+\item \textbf{Report Manager}:This component is a \textit{subsystem} component, indeed it is composed of several subcomponents:
+\begin{itemize}
+    \item \textbf{Report Interface}: this component exposes to the User the interface of the report's form to be compiled.
+    \item \textbf{Report Controller}: this component aims to check the consistency of the report sent. To do this it uses the Report Interface to know how the report form is and how the report sent has been compiled.
+    \item \textbf{Notify Controller}: the role of this component is to notify the correct authorities based on their municipality, using his \textit{AuthorityList}. It depends on the Report Controller, in the sense that it will notify the authorities only if the check of the report is successful and the type of the report is \textit{Traffic Violation}.
+    \item \textbf{Security Manager}: this component takes care of the security side: as specified in the Security section of the RASD, before being stored, the report is encrypted and then stored in the DB. This task is accomplished by this specific component, that also depends on the Report Controller due to the fact that if the report doesn't pass the check verification, it will never be stored and therefore never encrypted.
+\end{itemize}
+\end{itemize}
+\section{Dep\item \textbf{Report Interface}: this component exposes to the User the interface of the form of the loyment view}
 In this section it is described the deployment view of the components inside the system.
 The deployment diagram describes the distribution of components of the hardware.
 \begin{figure}[!ht]
