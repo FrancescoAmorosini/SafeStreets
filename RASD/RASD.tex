@@ -42,7 +42,7 @@ Independently from Safestreets, the municipality could offer a service that take
     \begin{itemize}
     		\item {[G.4.1]} If the Citizen has not provided any information about the license plate, the System runs an algorithm to read it from the submitted picture.
 		\end{itemize}     
-	\item {[G.5]} Allow Autorities to consult the reports submitted by the Citizens.
+	\item {[G.5]} Allow Authorities to consult the reports submitted by the Citizens.
     \item {[G.6]} Analyze the stored information to build statistics.
     \begin{itemize}
     		\item {[G.6.1]}If allowed by the Municiplaity, SafeStreets can cross their information about accidents with its own in order to improve the analysis.
@@ -65,7 +65,7 @@ Independently from Safestreets, the municipality could offer a service that take
 According to the \textit{World} and \textit{Machine} paradigm, proposed by M. Jackson and P. Zave in 1995, we can distinguish the \textit{Machine}, that is the portion of the system to be developed, from the \textit{World}, that is the portion of the real-world affected by the machine. In this way, we can classify the phenomena in three different types: World, Machine and \textit{Shared} phenomena, where the latter type of phenomena can be controlled by the world and observed by the machine or controlled by the machine and observed by the world:
 \newline
 In this context, the most relevant phenomena are organized as in the following table.
-\clearpage
+
 \begin{table}[p]
 		%{pix.acc.} & {mean.acc.} & {mean.IoU} & {f.w.IoU}
 		\begin{center}
@@ -79,18 +79,18 @@ In this context, the most relevant phenomena are organized as in the following t
 			\midrule
 			\textbf{Accident}: event that caused damage to things or people.&\textbf{Commit of a report}$^{1}$: action of sending a report documenting a traffic violation or an accident.&\textbf{API queries}: request for third-part services.\\
 			\midrule
-			&\textbf{Send notifications}$^{2}$: to notify the Autorithies when a report is submitted.&\textbf{Encrypt data}: to compute the hash function to ensure that reports are never altered and that user's credentials are safe.\\
+			&\textbf{Send notifications}$^{2}$: to notify the Authorities when a report is submitted.&\textbf{Encrypt data}: to compute the hash function to ensure that reports are never altered and that user's credentials are safe.\\
 			\midrule
 			&\textbf{Build statistics}$^{2}$: computation of statistics to find unsafe areas, to see which veichles commit multiple infractions and also to monitor the trend of issued tickets.&\textbf{Role Isolation}: to grant different levels of visibility to Citizen and Authorities\\ 
 			\midrule			
-			&\textbf{Safety suggestions}$^{2}$: to give suggestions for possible safe interventions (e.g add a barrier).&\\
+			&\textbf{Safety Suggestionss}$^{2}$: to give suggestions for possible safe interventions (e.g add a barrier).&\\
 			\bottomrule
 		\end{tabular}
 		\end{center}
 		\caption{In the table above, \textit{1} refers to shared phenomena controlled by the world and observed by the machine, whereas \textit{2} refers to the phenomena controlled by the machine and observed by the world}.
 		\label{tab:multicol}
 	\end{table}
-
+\clearpage
 \section{Definitions, Acronyms and Abbreviations}
 \subsection{Definitions}
 \begin{itemize}
@@ -103,6 +103,7 @@ In this context, the most relevant phenomena are organized as in the following t
 	\end{itemize} 
 	\item \textit{Municipality}: a single administrative division with its own local government. It stores sensitive information about the Authorities and their work (g.e. traffic tickets).
     \item \textit{Traffic violation}: occurrence of drivers that violate laws that regulate vehicle operation on streets and highways(e.g double-way parking).
+    \item \textit{Safety Suggestion}: recommendation to improve the safety of urban areas. It is computed by analyzing the statistics built by the system.
     \item \textit{Report}: documentation of a traffic violation. It contains a picture of the violation, the date, time, position, and type of violation. Some fields can be omitted in case an accident is being reported.
     \item \textit{Hash}: a mathematical algorithm that maps data of arbitrary size to a bit string of fixed size. It is a one-way function, that is, a function which is practically infeasible to invert.
     \item \textit{Chain of custody}: chronological documentation that records the sequence of custody, control, transfer, analysis, and disposition of physical or electronic evidence.
@@ -151,7 +152,7 @@ In the case of a new submit, the System provides a form which the Guest have to 
 a Citizien or an Authority.\\ \vspace{2mm}
 
 \noindent\textbf{Commit of a report} (World controlled, Machine observed)\\
-A Citizen can send a Report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the compiled fields are consistent and complete, then it will encrypt the Report and send it to the DBMS (Figure \ref{fig:State1}). \\ \vspace{2mm}
+A Citizen can send a Report with a description of the violation compiling a structured field. He/she has the possibility to  attach a picture. The System will check if the compiled fields are consistent and complete, then it will encrypt the Report and send it to the Storage Manager (Figure \ref{fig:State1}). \\ \vspace{2mm}
 
 \noindent\textbf{Send Notification} (Machine controlled, World observed)\\
 The System notifies the Authorities whenever a new Report is submitted by a Citizen. 
@@ -167,7 +168,7 @@ We assume that the notified Authorities will accordingly handle the violation re
 \noindent\textbf{Build statistics} (Machine controlled, World observed)\\
 The System analyzes the stored data and computes general statistics on the violations. In this way, the System is able to find unsafe areas and which vehicles commit the most violations. All Users can access general statistics, however only Authorities can request statistics on private information such as traffic tickets. If the System is allowed to access Municipality's data, statistics can be enhanced by crossing it with SafeStreets' information (Figure \ref{fig:State2}).  \\ \vspace{2mm}
 
-\noindent\textbf{Safety suggestions} (Machine controlled, World observed)\\
+\noindent\textbf{Safety Suggestionss} (Machine controlled, World observed)\\
 The System gives Authorities suggestions for possible safe interventions. His knowledge is based on the statistics previously computed (Figure \ref{fig:State2}).
 
 \begin{figure}[!ht]
@@ -179,7 +180,7 @@ The System gives Authorities suggestions for possible safe interventions. His kn
 \end{figure}
 \newpage
 \subsection{Class Diagram}
-The class diagram in Figure \ref{fig:UML} shows a possible representation of the Safe Streets' architecture. Notice that the Municipality's DBMS is only accessible by the System if SafeStreets is authorized by the AccessController. It's also important to outline that the System is not designed to provide a function to generate official traffic tickets, since only real world authorities (g.e. local police) can generate traffic tickets with legal validity.
+The class diagram in Figure \ref{fig:UML} shows a possible representation of the Safe Streets' architecture. Notice that the Municipality's database is only accessible by the System if SafeStreets is authorized by the Municipality Manager. It's also important to outline that the System is not designed to provide a function to generate official traffic tickets, since only real world authorities (g.e. local police) can generate traffic tickets with legal validity.
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=\textwidth]{./img/SWE1.png}
@@ -194,9 +195,9 @@ In this section the most important features of the application are extensively e
 \begin{itemize}
 	\item \textbf{Commit of a Report}: the System allows a Citizen to notify Authorities whenever a traffic violations occur. This function is achieved by compiling a Report with a picture of the violation, the date, time, position, and type of violation. Not all of these fields are always compulsory: for example, in the case the type of violation is \textit{accident}, only date, time and position are required. Once all the information is gathered and the report is sent to SafeStreets, the Report Manager goes in the \texttt{Verifying Information} status: it checks if all the obligatory fields have been compiled correctly, and then adds some useful metadata to the Report. Among the additional metadata, the systems takes note of whether or not the position has been provided by GPS, and also if the sender has added any license plate in the \texttt{Checking License Plate} status. If no license plate has been inserted, the Report Manager runs an OCR algorithm to retrive it from the picture provided (\texttt{Running OCR} status). \\
 	After all the steps above, the Report is validated (\texttt{Validating Report} status) and a copy of it is notified to the Authorities, which we assume are going to handle it properly (g.e. dispatching a local police patrol). It is important to outline that the System is only designed to inform Authorities whenever a new report is confirmed, but by no means it provides a function which generates official traffic tickets or dispatches patrols in case of accidents. Also, it's relevant to notice that the Report Manager contains a list of all the Authorities, so it can notify all and only those Authorities who are on duty in the involved municipality. Finally, the Report is encrypted by means of a hash function (\texttt{Encrypting Report} status), thus no one can alter the information after its confirmation (see Section \ref{sec:security} for more details on security). \\
-	Once the Report has been validated and encrypted the System is ready to store it: the Report is saved into a local buffer and there awaits to be exported into SafeStreets' database. Each day at a set time (g.e. between day/night shifts of the police) the System permanently stores all the Reports into the database. This mechanism takes advantages of the fact that one does not need fresh data to do general statistics, and in return it gives the possibility to schedule the Report storage when the System is not busy.
+	Once the Report has been validated and encrypted the System is ready to store it: the Report is sent to the Storage Manager, where it's stored into a local buffer and there awaits to be exported into SafeStreets' database. Each day at a set time (g.e. between day/night shifts of the police) the System permanently stores all the Reports into the database. This mechanism takes advantages of the fact that one does not need fresh data to do general statistics, and in return it gives the possibility to schedule the Report storage when the System is not busy.
 
-	\item \textbf{Build statistics}: the System analyzes the stored data to compute general statistics and returns useful information to the Users. This function is carried out by an Information Manager, which is in charge of retrieving, decrypting and elaborating the information stored by the Report Manager. In particular, the Information Manager periodically executes the following functions:
+	\item \textbf{Build statistics}: the System analyzes the stored data to compute general statistics and returns useful information to the Users. This function is carried out by an Information Manager, which is in charge of retrieving, decrypting and elaborating the information available to the Storage Manager. In particular, the Information Manager periodically executes the following functions:
 	\begin{enumerate}
 		\item Compute a statistic which highlights the areas and vehicles with the highest frequency of violations.
 		\item \label{func2} Identify potentially unsafe areas by analyzing Reports of accidents, and suggest possible interventions.
@@ -204,7 +205,7 @@ In this section the most important features of the application are extensively e
 	\end{enumerate}
 	Every User can request to see the latest result of the functions above as soon as they are available. Since both Citizen and Authorities have access to those results, it's really important to give them different levels of visibility, so that classified information doesn't end up in the hands of civilians (g.e vehicles with the highest frequency of violations and most recurrent offenders). It is also worth noting that some of the above functions are enhanced, or even enabled, only if the Municipality grants the Information Manager access to their database. In particular, the Function \ref{func2} can be enhanced by crossing Authorities' accident information with SafeStreets', whereas Function \ref{func3} is entirely enabled only if the System has access to traffic tickets data.
 
-	\item \textbf{Safety suggestions}: the System is able to give Authorities suggestions to improve the safety of urban areas. This function is enabled by the Information Manager and the statistics previously built. In fact, observing for each area which kind of violations are more frequent and the trends of the accidents, the Information Manager runs an artificial intelligence to detect which solution is the most suitable for a given problem. Just like for the report storing process, these suggestions are updated when the System is less busy (g.e. at night) and a sufficient amount of fresh data is added to the database. Safety suggestions are downloaded by SafeStreets' application togeter with the latest statistics results, whenever they are requested. Despite this, it should be noted that only Authorities have access to such data, as they are assumed to be those who implement the suggestions in order to improve their service.
+	\item \textbf{Safety Suggestionss}: the System is able to give Authorities suggestions to improve the safety of urban areas. This function is enabled by the Information Manager and the statistics previously built. In fact, observing for each area which kind of violations are more frequent and the trends of the accidents, the Information Manager runs an artificial intelligence to detect which solution is the most suitable for a given problem. Just like for the report storing process, these suggestions are updated when the System is less busy (g.e. at night) and a sufficient amount of fresh data is added to the database. Safety Suggestionss are downloaded by SafeStreets' application togeter with the latest statistics results, whenever they are requested. Despite this, it should be noted that only Authorities have access to such data, as they are assumed to be those who implement the suggestions in order to improve their service.
 \end{itemize}
 
 \section{User Characteristics}
@@ -224,9 +225,9 @@ The character are:
 \begin{itemize}
 	\item {[D.1]} The registration mail is assumed to be correctly recieved by the User.
 	\item {[D.2]} The System internal clock time used to provide notifications is correct.
-	\item {[D.3]} When a little accident occurs there is no need to contact the Authorities, whereas when a dangerous accident happens Users are supposed to phone call the Autorithies for a promptly intervention.
+	\item {[D.3]} When a little accident occurs there is no need to contact the Authorities, whereas when a dangerous accident happens Users are supposed to phone call the Authorities for a promptly intervention.
 	\item {[D.4]} The Authorities are assumed to  take measures when they are notified about a new report.
-	\item {[D.5]} After the first time, the System does not need to request the access to the Municipality's DBMS as long as its permission is valid.
+	\item {[D.5]} After the first time, the System does not need to request the access to the Municipality's database as long as its permission is valid.
 	\item {[D.6]} The statistics and suggestions are assumed to be consulted by Authorities periodically, in order to provide a better service.
 	\item {[D.7]} Only specific components of the System is able to decrypt sensible data.
 	\item {[D.8]} SafeStreets is not responsible of the traffic tickets generated by Authorities.
@@ -234,8 +235,9 @@ The character are:
 \subsection{Dependencies}
 \begin{itemize}
 	\item A DBMS is needed in order to store and retrieve Users’ Reports.
-	\item Information on issued tickets (and possibly accidents) are provided by the Authorities' DBMS, which has limited access. 
+	\item Information on issued tickets (and possibly accidents) are provided by the Municipalities' database, which has limited access. 
 	\item The OCR tool is provided by external thrid party services.
+	\item An external Mailing Service is used to send confirmation mails.
 	\item The Map service is provided by external an third party (which can be different by the one that provides the OCR tool).
 	\item The system relies on an AI to analyze the data, build statistics and compute suggestions.
 \end{itemize}
@@ -289,8 +291,8 @@ The application is avaiable for mobile devices that guarantee Internet access wi
 \item Web Server application.
 \item DBMS.
 \item \textbf{Report System}: use third part services as OCR.
-\item \textbf{Mailing System}: APIs to send emails to the User.
-\item \textbf{Mapping System}: APIs to locate the position of the traffic violation.
+\item \textbf{Mailing Service}: APIs to send emails to the User.
+\item \textbf{Mapping Service}: APIs to locate the position of the traffic violation.
 \end{itemize}
 \subsection{Communication Interface}
 The application runs over HTTPS protocol for the communication over the Internet and with the DBMS.
@@ -303,7 +305,7 @@ In the following section are explained the functional requirements of the applic
 			\item the username is not already taken by another registered User.
 			\item the email is in the right format.
 			\item the password has a minimum length.
-			\item the badge matches the municipality, if the Guest is an Authority.
+			\item the badge is valid and matches the municipality, if the Guest is an Authority.
 		\end{itemize}
 	\item {[R.3]} If credentials are valid, the System sends a confirmation email..
 	\item {[R.4]} Allow to log in using personal credentials.
@@ -323,7 +325,7 @@ In the following section are explained the functional requirements of the applic
 	\item {[R.10]} Notify the Authorities whenever a new Report involving their municipality is submitted. 
 	\item {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
 	\item {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics.
-	\item {[R.13]} Provide a recognition system of badge number.
+	\item {[R.13]} Provide a recognition system of badge number (this may involve communication with the Municipality).
 	\item {[R.14]} Allow the Citizen to consult the history of its personal reports.
 	\item {[R.15]} Allow Users to see the their position in a map.
 	\item {[R.16]} All traffic violations must be notified to Authorities according to their municipality.
@@ -337,7 +339,7 @@ In the following section are explained the functional requirements of the applic
 	\item {[R.24]} Cross the data coming from external DBMS with the System's own data.
 	\item {[R.25]} Cross data from different Reports in order to establish their truthfulness.
 	\item {[R.26]} Unsafe areas are detected by means of an artificial intelligence.
-	\item {[R.27]} Safety suggestions are computed by means of an artificial intelligence.
+	\item {[R.27]} Safety Suggestions are computed by means of an artificial intelligence.
 	\item {[R.28]} After its validation, no one should be able to modify a submitted Report.
 \end{itemize}
 
@@ -365,7 +367,10 @@ In the following section are explained the functional requirements of the applic
 	\textbf{Description} & The \textbf{\textit{Guest}} wants to create an account for the application.\\
 	
 	\hline
-	\textbf{Actors} & \textbf{\textit{Guest}}, \textbf{\textit{Login Manager}} and \textbf{\textit{Mailing System}}\\
+	\textbf{Achieved Goals} & {[G.1]}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Guest}}, \textbf{\textit{Login Manager}} and \textbf{\textit{Mailing Service}}\\
 	
 	\hline
 	\textbf{Preconditions} & The \textbf{\textit{Guest}} downloads and opens the application.\\
@@ -374,14 +379,14 @@ In the following section are explained the functional requirements of the applic
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
 		\begin{enumerate}
 			\item The \textbf{\textit{Guest}} taps the Sign Up button and and selects a role between Citizen or Authority.
-			\item Based on the \textbf{\textit{Guests'}} decision, the \textbf{\textit{Login Manager}} provides the appropriate form to enter all the required data: username, email address and password. In the Authoritys' form the username corresponds to the badge number, and the municipality of belonging must be inserted as well. 
+			\item Based on the \textbf{\textit{Guests'}} decision, the \textbf{\textit{Login Manager}} provides the appropriate form to enter all the required data: username, email address and password. In the Authority's form the username corresponds to the badge number, and the municipality of belonging must be inserted as well. 
 			\item The \textbf{\textit{Guest}} fills the form with all the required information and then confirms the entries. The same procedure will be used for future logins.
 			\begin{itemize}
 				\item If the \textbf{\textit{Guest}} is an Authority, he/she has to insert his/her badge number as username and provide the municipality of belonging.
 			\end{itemize}	
 			\item The \textbf{\textit{Login Manager}} checks if all the informa-
 			tions are correct, in which case it generates a random activation
-			URL and asks the \textbf{\textit{Mailing System}} to forward the URL to the email address of the \textbf{\textit{Guest}}.
+			URL and asks the \textbf{\textit{Mailing Service}} to forward the URL to the email address of the \textbf{\textit{Guest}}.
 			\item The \textbf{\textit{Guest}} receives the mail and clicks on the URL. \item The \textbf{\textit{Login Manager}} accepts the registration and stores the data provided by the \textbf{\textit{User}} .
 	\end{enumerate}}\\
 	
@@ -409,6 +414,9 @@ In the following section are explained the functional requirements of the applic
 	
 	\hline
 	\textbf{Description} & The \textbf{\textit{Guest}} wants to log in to the application.\\
+
+	\hline
+	\textbf{Achieved Goals} & {[G.1]} and {[G.2]}\\
 	
 	\hline
 	\textbf{Actors} & \textbf{\textit{Guest}} and \textbf{\textit{Login Manager}} \\
@@ -459,6 +467,9 @@ In the following section are explained the functional requirements of the applic
 	\textbf{Description} & A \textbf{\textit{Citizen}} reports a traffic violation.\\
 	
 	\hline
+	\textbf{Achieved Goals} & {[G.3]} and {[G.4]}\\
+
+	\hline
 	\textbf{Actors} & \textbf{\textit{Citizen}} and \textbf{\textit{Report Manager}}\\
 	
 	\hline
@@ -478,7 +489,7 @@ In the following section are explained the functional requirements of the applic
 	\end{enumerate}}\\
 	
 	\hline
-	\textbf{Postconditions} & The report is sent and the \textbf{\textit{Citizen}} recives a message that confirms the sending was successfull.\\
+	\textbf{Postconditions} & The report is sent and the \textbf{\textit{Citizen}} recives a message that confirms the sending was successful.\\
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
@@ -501,7 +512,10 @@ In the following section are explained the functional requirements of the applic
 	\textbf{Description} & The \textbf{\textit{Report Manager}} recieves a report from a Citizen and notifies the Authorities about it. Then the report is stored in a database.\\
 	
 	\hline
-	\textbf{Actors} & \textbf{\textit{Report Manager}}\\
+	\textbf{Achieved Goals} & {[G.4]} and {[G.5]}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Report Manager}} and \textbf{\textit{Storage Manager}}\\
 	
 	\hline
 	\textbf{Preconditions} & The \textbf{\textit{Report Manager}} recives a valid report (see UC3).\\
@@ -512,12 +526,13 @@ In the following section are explained the functional requirements of the applic
 			\item The \textbf{\textit{Report Manager}} runs an API call to retrieve any information about the license plate by means of an external OCR.
 			\item The \textbf{\textit{Report Manager}} notifies the Authorities of the municipality where the violation occurred about the report.
 			\item The \textbf{\textit{Report Manager}} encrypts the report.	
-			\item The \textbf{\textit{Report Manager}} stores the report in the database.
+			\item The \textbf{\textit{Report Manager}} sends the report to the \textbf{\textit{Storage Manager}}.
+			\item The \textbf{\textit{Storage Manager}} stores the reports in the DBMS according to its schedule.
 			
 	\end{enumerate}}\\
 	
 	\hline
-	\textbf{Postconditions} & The \textbf{\textit{Authorities}} are notified about the report and the Report is avaiable to be taken from the database by the \textbf{\textit{Information Manger}}.\\
+	\textbf{Postconditions} & The \textbf{\textit{Authorities}} are notified about the Report, which is now stored into the DBMS and ready to be analyzed for building statistics.\\
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
@@ -550,6 +565,9 @@ In the following section are explained the functional requirements of the applic
 	\textbf{Description} & A \textbf{\textit{User}} wants to see some statistics (e.g the safety of a certain area) and ask the \textbf{\textit{Information Manager}} about them.\\
 	
 	\hline
+	\textbf{Achieved Goals} & {[G.6]}, {[G.7]}, {[G.8]}, and {[G.9]}\\
+
+	\hline
 	\textbf{Actors} & \textbf{\textit{User}} and \textbf{\textit{Information Manager}}\\
 	
 	\hline
@@ -575,7 +593,7 @@ In the following section are explained the functional requirements of the applic
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
-			\item If the \textbf{\textit{Municipality}} doesn't allow the System access traffic ticket information, the \textbf{\textit{Information Manager}} can't retrieve this type of data. In this case, a message saying \textit{Statistic Unavailable} is shown to the \textbf{\textit{User}}. The flow restart from point 3.  
+			\item If the Municipality doesn't allow the Storage Manager to access their information, the \textbf{\textit{Information Manager}} use those data to build statistics. In this case, a message saying \textit{Statistic Unavailable} is shown to the \textbf{\textit{User}} who requests to see statistics about iussued traffic tickets. The flow restart from point 3.  
 		\end{enumerate}}\\
 	
 	\hline
@@ -630,7 +648,7 @@ In the following section are explained the functional requirements of the applic
 	        \begin{itemize}
 	            \item the email is in the right format.
 	            \item the password has a minimum length.
-	            \item the badge matches the municipality, if the Guest is an Authority.
+	            \item the badge is valid and matches the municipality, if the Guest is an Authority.
 	            \item the username is not already taken by another registered User.
 	        \end{itemize}
 		\item {[R.3]} If credentials are valid, the System sends a confirmation email..
@@ -651,7 +669,7 @@ In the following section are explained the functional requirements of the applic
 \begin{center}\large{\textit{Requirements}}\end{center}
     \begin{itemize}
 		\item {[R.4]} Allow to log in using personal credentials.
-		\item {[R.13]} Provide a recognition system of badge number.
+		\item {[R.13]} Provide a recognition system of badge number (this may involve communication with the Municipality).
     	\item {[R.15]} Allow Users to see the their position in a map.
     	\item {[R.20]} Use third party services to enable some functions (Mapping System).
 	\end{itemize}
@@ -686,7 +704,7 @@ In the following section are explained the functional requirements of the applic
 	\begin{itemize}
 		\item {[D.2]} The System's internal clock time used to provide notifications is correct.
 		\item {[D.3]}
-		 When a little accident occurs there is no need to contact the Authorities, whereas when a dangerous accident happens Users are supposed to phone call the Autorithies for a promptly intervention.
+		 When a little accident occurs there is no need to contact the Authorities, whereas when a dangerous accident happens Users are supposed to phone call the Authorities for a promptly intervention.
 	\end{itemize}
 	\vspace{3mm} 
 	\item \textbf{{[G.5]} Allow Authorities to consult the reports submitted by the Citizens.}
@@ -714,7 +732,7 @@ In the following section are explained the functional requirements of the applic
 	\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
-		\item {[D.5]} After the first time, the System does not need to request the access to the Municipality's DBMS as long as its permission is valid.
+		\item {[D.5]} After the first time, the System does not need to request the access to the Municipality's database as long as its permission is valid.
     	\item {[D.6]} The statistics and suggestions are assumed to be consulted by Authorities periodically, in order to provide a better service.
     	\item {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.
 	\end{itemize}
@@ -727,7 +745,7 @@ In the following section are explained the functional requirements of the applic
 		\begin{itemize}
 			\item {[R.21]} Suggestions have to be periodically recomputed.
 			\item {[R.26]} Unsafe areas are detected by means of an artificial intelligence.
-			\item {[R.27]} Safety suggestions are computed by means of an artificial intelligence.
+			\item {[R.27]} Safety Suggestionss are computed by means of an artificial intelligence.
 		\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
 	\begin{itemize}
@@ -795,7 +813,7 @@ User credentials and data will be stored in a DBMS that should guarantee an high
 Hash is used also to stored the report so that the information cannot be altered by anyone. So as soon as a report arrives to the Report Manager, the hash of the report is computed, encrypted to form a digital signature and then it is stored. In this way we create a snapshot of the report ensuring the identity, authenticity and non-tampered state of the information.
 As mentioned before, the System uses HTTP over SSL protocol (HTTPS) to comunicate with all the services in order to guarantee privacy and protection of the exchanged information.
 \newline
-If someone break into the OCR tool or the Map service, the System is not responsible in case of damage, due to the fact that its functionalities are provided by third-part services.  
+If someone breaks into the OCR tool or the Map service, SafeStreets is not responsible in case of damage, due to the fact that its functionalities are provided by third-part services.  
 \subsection{Maintainability}
 The System will have a modular architecture: Report Manager, Login Manager and Information Manager are designed to work separately in an asynchronous way, thus the maintenance process will be sped up in case of failure of one module.
 \subsection{Portability}
@@ -900,7 +918,7 @@ Here are shown all the facts that involve Reports, as well as the predicate whic
 	run newReport for 6 but 4 Int
 \end{lstlisting}
 \subsection{Information Manager}
-The Information manager retrives from the DBMS the information stored by the Report Manager, builds statistics, computes suggestions, and makes them all available to the Users. Only Authorities have the permission to see safety suggestions, as they are the ones who are supposed to apply them.\vfill
+The Information manager retrives from the Storage Manager the information it needs, it builds statistics, computes suggestions, and makes them all available to the Users. Only Authorities have the permission to see safety suggestions, as they are the ones who are supposed to apply them.\vfill
 \begin{figure}[ht!]
 	\begin{center}
 	\includegraphics[width=.8\textwidth]{./img/giveAll.pdf}
