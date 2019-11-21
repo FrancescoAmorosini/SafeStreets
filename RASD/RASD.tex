@@ -124,6 +124,23 @@ In this context, the most relevant phenomena are organized as in the following t
 \item {[R$_{i}$]}: i-th requirement.
 \item {[D$_{i}$]}: i-th domain assumption.
 \end{itemize}
+\section{Revision History}
+\begin{table}[!ht]
+	\begin{tabular}{|C{.14\textwidth}|C{.12\textwidth}||C{.60\textwidth}|}
+		\toprule
+		\textbf{Date} & \textbf{Version} & \textbf{Changes}\\
+		\midrule
+		\midrule
+		\vfill 10.11.2019 \vfill & \vfill 1.0 \vfill & \vfill First release \vfill\\
+		\midrule
+		\vspace{1.3cm} 22.11.2019 \vfill & \vspace{1.3cm} 1.1 \vfill & \begin{itemize}
+			\item UML Class Diagram adjustments: added StorageManager and other minor changes.
+			\item Goal mapping is now explicit in Use Case Templates.
+			\item General review for achieving consistency with the Design Document.
+		\end{itemize}\\
+		\bottomrule
+	\end{tabular}
+\end{table}
 \section{Reference Documents} \label{docs}
 \begin{itemize}
 	\item Specification document: \textit{SafeStreets Mandatory Project Assignment.pdf}.
@@ -336,7 +353,7 @@ In the following section are explained the functional requirements of the applic
 	\item {[R.21]} Statistics and suggestions have to be periodically recomputed.
 	\item {[R.22]} Provide protection of data using encryption.
 	\item {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.
-	\item {[R.24]} Cross the data coming from external DBMS with the System's own data.
+	\item {[R.24]} Cross the data coming from external DBMSs with the System's own data.
 	\item {[R.25]} Cross data from different Reports in order to establish their truthfulness.
 	\item {[R.26]} Unsafe areas are detected by means of an artificial intelligence.
 	\item {[R.27]} Safety Suggestions are computed by means of an artificial intelligence.
@@ -727,7 +744,7 @@ In the following section are explained the functional requirements of the applic
     \begin{itemize}
     	\item {[R.19]} Interact with the Municipality's System to get the permission for using their data.
 		\item {[R.21]} Statistics have to be periodically recomputed.
-		\item {[R.24]} Cross the data coming from external DBMS with the System's own data.
+		\item {[R.24]} Cross the data coming from external DBMSs with the System's own data.
 		\item {[R.25]} Cross data from different Reports in order to establish their truthfulness
 	\end{itemize}
 \begin{center}\large{\textit{Domain Assumptions}}\end{center}
@@ -805,12 +822,12 @@ tions:
 \section{Software System Attributes}
 This section will cover the non-functional requirements that might be used to evaluate the software performances. All of the covered requirements are part of the ISO/IEC 9126-1:2001 (see Section \ref{docs}).
 \subsection{Reliability}
-The System (and all its components) should guarantees a 99\% of reliability. In order to guarantee the continuity of the service, it must be ensured that the System is fault tolerant.
+The System (and all its components) should guarantees a 99.9\% (\textit{"three-nines"}) of reliability, so that only 10.08 minutes of downtime per week are allowed. In order to guarantee the continuity of the service, it must be ensured that the System is fault tolerant.
 \subsection{Availability}
 The System must guarantee an high availability, indeed it has to offer a continuous service 24/7. 
 \subsection{Security} \label{sec:security}
-User credentials and data will be stored in a DBMS that should guarantee an high level of security. To reach this goal the passwords stored in the DBMS are salted and hashed, in this way a sequence of generic characters of any length is concatenated to the password, hashed it all and stored in the DBMS.
-Hash is used also to stored the report so that the information cannot be altered by anyone. So as soon as a report arrives to the Report Manager, the hash of the report is computed, encrypted to form a digital signature and then it is stored. In this way we create a snapshot of the report ensuring the identity, authenticity and non-tampered state of the information.
+User credentials and data will be stored in a DBMS that should guarantee an high level of security. To reach this goal the passwords stored in the database are salted and hashed, so that a sequence of generic characters of any length is concatenated to the password.
+Hash is also used to store the report so that the information cannot be altered by anyone except specific system components. Thus as soon as a report arrives to the Report Manager and it's validated, it gets encrypted by means of the hash function to form a digital signature and then it is stored. In this way we create a snapshot of the report ensuring the identity, authenticity, and the non-tampered state of the information.
 As mentioned before, the System uses HTTP over SSL protocol (HTTPS) to comunicate with all the services in order to guarantee privacy and protection of the exchanged information.
 \newline
 If someone breaks into the OCR tool or the Map service, SafeStreets is not responsible in case of damage, due to the fact that its functionalities are provided by third-part services.  
@@ -898,7 +915,7 @@ Here are shown all the facts that involve Reports, as well as the predicate whic
 		all r:Report, c:Citizen |one rm:ReportManager | (r.sender=c) <=>( r->rm in c.send)
 	}
 	fact reportStore{
-		all rm:ReportManager, r:Report |one db:DBMS | r->db in rm.store
+		all rm:ReportManager, r:Report |one db:StorageManager | r->db in rm.store
 	}
 	-- The Report Manager notifies Authorities with only traffic violations that involve their municipality --
 		fact notifyReportBasedOnTypeAndMunicipality{
@@ -981,8 +998,8 @@ The Information manager retrives from the Storage Manager the information it nee
 	assert allUsersLoggedWithID{
 		no u:User, lm:LoginManager, i:Int | (i->u in lm.logged) and (i != u.id)
 	}
-	assert onlyRMandIMaccessDBMS{
-		no d:DBMS, rm:ReportManager, im:InformationManager | rm = none and im = none and d != none
+	assert onlyRMandIMaccessStorageManager{
+		no d:StorageManager, rm:ReportManager, im:InformationManager | rm = none and im = none and d != none
 	}
 \end{lstlisting}
 \begin{figure}[ht!]
@@ -1008,7 +1025,7 @@ The Information manager retrives from the Storage Manager the information it nee
 	lone abstract sig TrafficViolation extends ReportType{}
 	lone sig Statistics{}
 	lone sig Suggestions{}
-	lone sig DBMS{}
+	lone sig StorageManager{}
 	
 	sig Municipality{}
 	sig Location{
@@ -1036,10 +1053,10 @@ The Information manager retrives from the Storage Manager the information it nee
 	
 	lone sig ReportManager{
 		notify: Report-> Authority,
-		store: Report -> DBMS
+		store: Report -> StorageManager
 	}
 	lone sig InformationManager{
-		retrieve: DBMS,
+		retrieve: StorageManager,
 		build: lone Statistics,
 		compute: lone Suggestions,
 		giveStats: Statistics -> User,
@@ -1060,7 +1077,7 @@ The Information manager retrives from the Storage Manager the information it nee
 		all r:Report, c:Citizen |one rm:ReportManager | (r.sender=c) <=>( r->rm in c.send)
 	}
 	fact reportStore{
-		all rm:ReportManager, r:Report |one db:DBMS | r->db in rm.store
+		all rm:ReportManager, r:Report |one db:StorageManager | r->db in rm.store
 	}
 	fact notifyReportBasedOnTypeAndMunicipality{
 		all a:Authority,r:Report |one rm:ReportManager | ((r.type = TrafficViolation) and (r.location.municipality =a.municipality)) <=> (r->a in rm.notify) 
@@ -1101,8 +1118,8 @@ The Information manager retrives from the Storage Manager the information it nee
 		no v:TrafficViolation| ( no r: Report | r.type = v)
 		no i:Incident| ( no r: Report | r.type = i)	
 	}
-	fact aloneDBMS{
-		(#InformationManager = 0 and #ReportManager = 0) implies #DBMS = 0
+	fact aloneStorageManager{
+		(#InformationManager = 0 and #ReportManager = 0) implies #StorageManager = 0
 	}
 	
 	-- ASSERTIONS -- 
@@ -1136,8 +1153,8 @@ The Information manager retrives from the Storage Manager the information it nee
 	assert allUsersLoggedWithID{
 		no u:User, lm:LoginManager, i:Int | (i->u in lm.logged) and (i != u.id)
 	}
-	assert onlyRMandIMaccessDBMS{
-		no d:DBMS, rm:ReportManager, im:InformationManager | rm = none and im = none and d != none
+	assert onlyRMandIMaccessStorageManager{
+		no d:StorageManager, rm:ReportManager, im:InformationManager | rm = none and im = none and d != none
 	}
 	
 	-- PREDICATES -- 
@@ -1204,7 +1221,9 @@ run loginUser for 6 but 4 Int
 		\midrule
 		Grammar correction and global review & 5.5\\
 		\midrule
-		& \textbf{Total:} 40\\
+		Upgrade to v1.1 & 3\\
+		\midrule
+		& \textbf{Total:} 43\\
 		\bottomrule
 	\end{tabular}
 \end{table}
