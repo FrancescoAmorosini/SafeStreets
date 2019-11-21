@@ -89,8 +89,11 @@ The UML component diagram aims at capturing the internal modular structure of th
 Below is a description of each component:
 \begin{itemize}
 \item \textbf{Mobile Client}: the client device that accesses to the functionalities of the entire system. It is implemented as thin client as explained below.
-\item \textbf{User Controller}: it takes care of all the operation related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
-\item \textbf{Auth Controller}: it takes care of all the authentication-related operations: it is responsible both for the log in and the registration process, and it also uses the \textit{Storage Interface} to retrieve and store new users' credentials in the databse. During the registration process, the Auth Controller uses the \textit{Mail Service Interface} to communicate with the Mailing Service in order to send registration emails.   
+\item \textbf{Login Manager}: it takes care of all the operation related to the registration, login, checking credentials... . It is composed by 2 main components:
+\begin{itemize}
+    \item \textbf{User Controller}: it takes care of all the operation related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
+\item \textbf{Auth Controller}: it takes care of all the authentication-related operations: it is responsible both for the log in and the registration process, and it also uses the \textit{Storage Interface} to retrieve and store new users' credentials in the databse. During the registration process, the Auth Controller uses the \textit{Mail Service Interface} to communicate with the Mailing Service in order to send registration emails.
+\end{itemize}
 \item \textbf{Report Manager}: it's a \textit{subsystem} component in charge of all the processing functions on the newly recieved reports:
 \begin{itemize}
     \item \textbf{Report Interface}: it exposes to the User an interface in the form of a blank report to be compiled.
@@ -100,7 +103,7 @@ Below is a description of each component:
 \end{itemize}
 \item \textbf{Storage Interface}: its main purpose is to retrive the reports from the database, decopuling the other components of the system from the particular data sources. This component is also in charge of authenticating the system with local municipalities' systems, and eventually crossing their data with SafeStreets' own information.
 \item \textbf{DB}: this component represent the DBMS, which provides an interface to read and store data. Both user credentials and submitted reports are stored in the database.
-\item \textbf{Notification Interface}: it's goal is to send push notifications to all the authorities identified by the \textit{Notification Controller}.
+%\item \textbf{Notification Interface}: it's goal is to send push notifications to all the authorities identified by the \textit{Notification Controller}.
 \item \textbf{Information Manager}: a \textit{subsystem} in charge of building statistics, compute safety suggestions and deploy them to the users who requested them.
     \begin{itemize}
         \item \textbf{StatisticsSuggestions Interface}: it exposes to the users the latest statistics and safety suggestions. As aready mentioned in the RASD, the exposed data may be different according to the level of visibility granted to different users.
@@ -108,6 +111,7 @@ Below is a description of each component:
         \item \textbf{AI Controller}: its role is to analye previously built statistics and compute safety suggestions. These suggestions are addressed to the authorities who use the SafeStreets application.
         \item \textbf{Security Manager}: similarly to the one described in the Report Manager subsystem, this component is in charge of decrypting stored reports so that they can be analyzed. To ensure that no report is ever altered, this component can perform read-only operations, whereas the one in the Report Manager is the ony one which disposes of write permissions.
     \end{itemize}
+\item \textbf{Municipality Interface}: it is a component external respect to the system. It deals with interfacing with the Authentication Control to confirm the validity of the badge number of the authorities and it is useful to retrieve data relative to the traffic tickets, in this case only if the Municipality gives the permission to treat this data.
 \item \textbf{External Services Interfaces}: it's a set of components whose main task is to make an API call to the corresponding third party service.
     \begin{itemize}
         \item \textbf{Mail service Interface}: it's an interface towards the mailing service, which is in charge of sending confirmation mails at the end of the registration process.
@@ -153,7 +157,9 @@ The system is composed of a multitier architecture, each specific role is clarif
     \label{fig:RegistrationSD}
 	\caption{Registration Runtime View.}
 \end{figure}
-\newpage
+The Guest has to register before accessing the functionalities of the application. The Guest fills a form containing the necessary information. The information are sent to the Application Server through an HTTP POST. The \textit{Authentication Controller} handles the request, verifies if the information are correct and complete. Then it generates an URL, that it is forwarded by the external mailing system to the Guest. Once the Guest confirms the registration clicking on the URL link, the \textit{Storage Interface} insert the new User with its credentials in the Database, so from this moment on the new User is able to authenticate and to use the functionalities of the application.
+In the event that is an Authority to register, once the Authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to be sure that the entered badge number is correct. If the Municipality Interface replies that the provided badge number is correct, the registering procedure is the same as before; otherwise an HTTP Error is send back to the Guest that has sent the information.    
+%\newpage
 \subsection{Login Runtime View}
 \begin{figure}[!ht]
 	\begin{center}
@@ -162,7 +168,8 @@ The system is composed of a multitier architecture, each specific role is clarif
     \label{fig:LoginSD}
 	\caption{Login Runtime View.}
 \end{figure}
-\newpage
+The Client to access the functionalities of the application has to log in (clearly as specified before he/she must be registered). The Client fill the Log in form with his/her credentials. The provided information are sent to the Application Server through an HTTP POST. The \textit{Authentication Controller} handles the request and checks the information. It interfaces with the \textit{Storage Interface} that runs a SELECT query on the Database to verify the existence of the User. If the query return a result an HTTP Success message is return to the Client that now is able to access to the functionalities of the application, otherwise an HTTP Error is send back to the Client that is not able to log in successfully.
+%\newpage
 \subsection{Send Report Runtime View}
 \begin{figure}[!ht]
 	\begin{center}
@@ -171,6 +178,10 @@ The system is composed of a multitier architecture, each specific role is clarif
     \label{fig:SendReportSD}
 	\caption{Send Report Runtime View.}
 \end{figure}
+The User (Citizen in this case) is logged in and opens the section to send the report. The \textit{Report Interface} provides the report form that has to be filled. The \textit{Report Interface} interfaces also with the \textit{Report Controller}, so once the report is compiled and sent by the User, the Report Interface shows it to the Report Controller so that it can checks its consistency. 
+If the User has not inserted the license plate in the report, the Report Controller uses an external OCR service system, that execute an OCR algorithm to retrieve the license plate from the picture provided by the User.
+At this point, when all the information are avaiable, the report is shared with the \textit{Notify Controller} which will check its Authority list to notify the right Authority.
+Then using the \textit{Security Manager} the report is encrypted and stored in the Database using the \textit{Storage Interface}, that runs an INSERT query. 
 \newpage
 \subsection{Compute Statistics Runtime View}
 \begin{figure}[!ht]
@@ -180,6 +191,10 @@ The system is composed of a multitier architecture, each specific role is clarif
     \label{fig:ComputeStatisticSD}
 	\caption{Compute Statistics Runtime View.}
 \end{figure}
+The procedure to compute the statistics and the suggestions is performed by the \textit{Information Manager}. In particular the \textit{
+Security Manager} uses the Storage Interface to retrieve all the report. So it decrypt them and requests the \textit{Statistic Controller} to compute the statistics on them. If the Municipality has given the permission to process the data relative to the traffic tickets, the Storage Interface retrieve them contacting the \textit{Municipality Interface} (external to the system). As soon as the statistics are available, the Statistic Controller provides them to the StatisticsSuggestions Interface and moreover provides them to the \textit{AI Controller} that runs some algorithm to compute useful suggestions based on the avaiable statistics.
+When avaiable, the suggestions, as the statistics, are provided to the StatisticsSuggestions Interface. So when an User goes in to the Statistics section, the StatisticsSuggestions Interface shows him everything. 
+In particular if the User is an Authority, suggestions are also shown.  
 \section{Component interfaces}
 
 \section{Selected architectural	styles and patterns}
