@@ -81,7 +81,7 @@ In this chapter the architectural structure of the system will be discussed at m
 The UML component diagram aims at capturing the internal modular structure of the components, showing how they are connected together in order to form larger components. Components are wired together by using an assembly connector to connect the required interface of one component with the provided interface of another component.
 \begin{figure}[!ht]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/ComponentDiagram1.png}
+	\includegraphics[width=\textwidth]{img/Component2.png}
     \end{center}
     \label{fig:componentdiagram}
 	\caption{Component diagram of the system.}
@@ -142,9 +142,44 @@ The system is composed of a multitier architecture, each specific role is clarif
     \item \textbf{Database Server}\\
     This is the last layer of the architecture. All the data are stored here structured in a relational DBMS.
 \end{itemize}
-
+\newpage
 \section{Runtime view}
 
+\subsection{Registration Runtime View}
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/Registration.png}
+    \end{center}
+    \label{fig:RegistrationSD}
+	\caption{Registration Runtime View.}
+\end{figure}
+\newpage
+\subsection{Login Runtime View}
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/Login.png}
+    \end{center}
+    \label{fig:LoginSD}
+	\caption{Login Runtime View.}
+\end{figure}
+\newpage
+\subsection{Send Report Runtime View}
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/SendReport.png}
+    \end{center}
+    \label{fig:SendReportSD}
+	\caption{Send Report Runtime View.}
+\end{figure}
+\newpage
+\subsection{Compute Statistics Runtime View}
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/ComputeStatistics.png}
+    \end{center}
+    \label{fig:ComputeStatisticSD}
+	\caption{Compute Statistics Runtime View.}
+\end{figure}
 \section{Component interfaces}
 
 \section{Selected architectural	styles and patterns}
