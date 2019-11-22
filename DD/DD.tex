@@ -92,11 +92,11 @@ Below is a description of each component:
 \item \textbf{Mobile Client}: the client device that accesses to the functionalities of the entire system. It is implemented as thin client as explained below.
 \item \textbf{User Controller}: it takes care of all the operation related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
 \item \textbf{Auth Controller}: it takes care of all the authentication-related operations: it is responsible both for the log in and the registration process, and it also uses the \textit{Storage Interface} to retrieve and store new users' credentials in the databse. During the registration process, the Auth Controller uses the \textit{Mail Service Interface} to communicate with the Mailing Service in order to send registration emails.   
-\item \textbf{Report Manager}: it's a \textit{subsystem} component in charge of all the processing functions on the newly recieved reports:
+\item \textbf{Report Manager}: it's a \textit{subsystem} component in charge of all the processing functions on the newly received reports:
 \begin{itemize}
     \item \textbf{Report Interface}: it exposes to the User an interface in the form of a blank report to be compiled.
     \item \textbf{Report Controller}: it aims to check the consistency of the report sent. To do this it uses the Report Interface to know how the report form is and how the report sent has been compiled.
-    \item \textbf{Notify Controller}: the role of this component is to notify the correct authorities based on their municipality, using his \textit{AuthorityList}. It depends on the Report Controller, in the sense that it will notify the authorities only if the check of the report is successful and the type of the report is \textit{Traffic Violation}.
+    \item \textbf{Notify Controller}: the role of this component is to notify the correct authorities based on their municipality, using its \textit{AuthorityList}. It depends on the Report Controller, in the sense that it will notify the authorities only if the check of the report is successful and the type of the report is \textit{Traffic Violation}.
     \item \textbf{Security Manager}: it takes care of the security side: as specified in the Security section of the RASD, before being stored, the report is encrypted and then stored in the database. This task is accomplished by this specific component, that also depends on the Report Controller due to the fact that if the report doesn't pass the check verification, it will be discarded and therefore never encrypted.
 \end{itemize}
 \item \textbf{Information Manager}: a \textit{subsystem} in charge of building statistics, compute safety suggestions and deploy them to the users who requested them.
@@ -116,8 +116,7 @@ Below is a description of each component:
 \end{itemize} 
 \end{itemize}
 \section{Deployment view}
-In this section it is described the deployment view of the components inside the system.
-The deployment diagram describes the distribution of components of the hardware.
+In this section it is described the deployment view of the components inside the system. The deployment diagram shows the distribution of components of the hardware.
 \begin{figure}[!ht]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/DeploymentView.png}
@@ -125,7 +124,7 @@ The deployment diagram describes the distribution of components of the hardware.
     \label{fig:deploymentview}
 	\caption{Deployment diagram of the system.}
 \end{figure}\\
-The system is composed of a multitier architecture, each specific role is clarified below.\\
+The system is composed of a multitier architecture and each specific role is clarified below.\\
 \begin{itemize}
     \item \textbf{Client}\\
     The first tier contains the client mobile machines which have installed SafeStreets application
