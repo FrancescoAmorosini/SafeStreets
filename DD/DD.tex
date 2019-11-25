@@ -203,6 +203,24 @@ The \textit{Authentication Controller} provides methods for login and registrati
 This Controller also makes the check on the authority credential calling the methods inside \textit{Municipality Interface}.
 The Authentication Controller exposes the following methods: \\
 
+\begin{center}{\textbf{Registration}}\end{center}
+\begin{tabular}{| l | p{8cm} |}
+    \hline
+    \textbf{Endpoint} & */auth/register \\
+    \hline
+    \textbf{Method} & POST \\
+    \hline
+    \textbf{Data Params} & username: [string] \newline email: [string] \newline password: [string] \newline If the user is an authority: \newline municipality: [string]\\
+    \hline
+    \textbf{Success Response} & code: 200 \newline content: {message: "Registration successful"}\\
+    \hline
+    \textbf{Error Response} & \newline code: 422 UNPROCESSABLE ENTRY \newline body: {error: "Registration data not correct"} \newline\newline code: 401 \newline body: {"error": "Provided email does not exist"}   \\
+    \hline
+    \textbf{Notes} & Allows the user to request the registration as citizen or authority. \\
+    \hline
+\end{tabular}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{center}{\textbf{Login}}\end{center}
 \begin{tabular}{| l | p{8cm} |}
 	\hline
@@ -212,13 +230,73 @@ The Authentication Controller exposes the following methods: \\
 	\hline
 	\textbf{Data Params} & username: [string] \newline password: [string]\\
 	\hline
-	\textbf{Success Response} & code: 200 \newline content: {"userType": [string]}\\
+	\textbf{Success Response} & code: 200 \newline content: {accessToken: [string]}\\
 	\hline
-	\textbf{Error Response} & code: 400 \newline content: {"error": "Malformed request"} \newline \newline code: 401 \newline body: {"error": "Account not activated"} \newline \newline code: 401 \newline body: {"error": "Wrong password"} \newline\newline code: 401 \newline body: {"error": "Provided email does not exist"}   \\
+	\textbf{Error Response} & \newline code: 422 UNPROCESSABLE ENTRY \newline body: {error: "Login data not correct"} \newline \newline code: 401 UNAUTHORIZED \newline body: {error: "wrong Username or Password"} \\
 	\hline
 	\textbf{Notes} & Allows the client to obtain an authentication Token \\
 	\hline
 \end{tabular}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}{\textbf{Activate Account}}\end{center}
+    \begin{tabular}{| l | p{8cm} |}
+        \hline
+        \textbf{Endpoint} & */auth/activate \\
+        \hline
+        \textbf{Method} & GET \\
+        \hline
+        \textbf{Data Params} & \\
+        \hline
+        \textbf{Success Response} & code: 200 \newline content: {message: "Account activated"}\\
+        \hline
+        \textbf{Error Response} & code: 404 NOT FOUND \newline content: {error: "Incorrect activation code"} \newline \newline code: 401 \newline body: {"error": "Account not activated"} \newline \newline code: 401 \newline body: {error: "Wrong password"} \ \newline code: 401 \newline body: {error: "Provided email does not exist"}   \\
+        \hline
+        \textbf{Notes} & Allows a Client to activate the account \\
+        \hline
+    \end{tabular}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}\large{\textbf{Report Controller}}\end{center}
+    The \textit{Report Controller} provides methods to check and send consistet reports to the \textit{Notify Controller}.
+    The Authentication Controller exposes the following methods: 
+
+\begin{center}{\textbf{Send Report}}\end{center}
+    \begin{tabular}{| l | p{8cm} |}
+        \hline
+        \textbf{Endpoint} & */send \\
+        \hline
+        \textbf{Method} & POST \\
+        \hline
+        \textbf{Data Params} & data: [string] \newline time: [string] \newline license plate: [string] \newline picture: [png/jpg]\\
+        \hline
+        \textbf{Success Response} & code: 200 \newline content: {message: "Registration successful"}\\
+        \hline
+        \textbf{Error Response} & \newline code: 400 BAD REQUEST \newline body: {error: "Data not correct"}\\
+        \hline
+        \textbf{Notes} & Allows the user to request the registration as citizen or authority. \\
+        \hline
+    \end{tabular}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}{\textbf{Send Report}}\end{center}
+    \begin{tabular}{| l | p{8cm} |}
+        \hline
+        \textbf{Endpoint} & */send \\
+        \hline
+        \textbf{Method} & POST \\
+        \hline
+        \textbf{Data Params} & data: [string] \newline time: [string] \newline license plate: [string] \newline picture: [png/jpg]\\
+        \hline
+        \textbf{Success Response} & code: 200 \newline content: {message: "Registration successful"}\\
+        \hline
+        \textbf{Error Response} & \newline code: 400 BAD REQUEST \newline body: {error: "Data not correct"}\\
+        \hline
+        \textbf{Notes} & Allows the user to request the registration as citizen or authority. \\
+        \hline
+    \end{tabular}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \section{Selected architectural	styles and patterns}
 The following architectural patterns are used to build the structure of the system in order to provide all the services of SafeStreets application.\\
@@ -258,7 +336,7 @@ applications that can be modified, enhanced or maintained just by operating on a
 A thin Client is a lightweight computer which does most of the computation in a remote Server. In this paradigm in fact, since the Servers take care of several duties such as storage 
 of data and performing calculations, the Client does not need to have a large memory or powerful computing capabilities to run the application.
 \begin{center}\large{\textit{Motivations}}\end{center} 
-The application is thought for mobile phones which do not have great computing power or very large memories. Thanks to a thin client a internet connection is virtually the only requirements to use the application. Furthermore, this architecture simplify the front-end implementation by shifting most of the execution to the servers.
+The application is thought mostly for mobile phones which do not have great computing power or very large memories. Thanks to a thin client a internet connection is virtually the only requirements to use the application. Furthermore, this architecture simplify the front-end implementation by shifting most of the execution to the servers.
 
 \begin{center}\large{\textbf{MVC Design Pattern}}\end{center}
 Model-View-Controller is a software design pattern commonly used to develop user interfaces. Indeed, this pattern is used for the front-end implementation of the application. It divides the program logic in three interconnected elements: \textit{model} that directly manages data and rules of the application, \textit{view} which handles any representation of data, \textit{controller} that 
