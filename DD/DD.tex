@@ -194,7 +194,31 @@ The procedure to compute the statistics and the suggestions is performed by the 
 Security Manager} uses the Storage Interface to retrieve all the report. So it decrypt them and requests the \textit{Statistic Controller} to compute the statistics on them. If the Municipality has given the permission to process the data relative to the traffic tickets, the Storage Interface retrieve them contacting the \textit{Municipality Interface} (external to the system). As soon as the statistics are available, the Statistic Controller provides them to the StatisticsSuggestions Interface and moreover provides them to the \textit{AI Controller} that runs some algorithm to compute useful suggestions based on the avaiable statistics.
 When avaiable, the suggestions, as the statistics, are provided to the StatisticsSuggestions Interface. So when an User goes in to the Statistics section, the StatisticsSuggestions Interface shows him everything. 
 In particular if the User is an Authority, suggestions are also shown.  
+
+
 \section{Component interfaces}
+\subsection{API REST}
+\begin{center}\large{\textbf{Authentication Controller}}\end{center}
+The \textit{Authentication Controller} provides methods for login and registration.
+This Controller also makes the check on the authority credential calling the methods inside \textit{Municipality Interface}.
+The Authentication Controller exposes the following methods: \\
+
+\begin{center}{\textbf{Login}}\end{center}
+\begin{tabular}{| l | p{8cm} |}
+	\hline
+	\textbf{Endpoint} & */auth/login \\
+	\hline
+	\textbf{Method} & POST \\
+	\hline
+	\textbf{Data Params} & username: [string] \newline password: [string]\\
+	\hline
+	\textbf{Success Response} & code: 200 \newline content: {"userType": [string]}\\
+	\hline
+	\textbf{Error Response} & code: 400 \newline content: {"error": "Malformed request"} \newline \newline code: 401 \newline body: {"error": "Account not activated"} \newline \newline code: 401 \newline body: {"error": "Wrong password"} \newline\newline code: 401 \newline body: {"error": "Provided email does not exist"}   \\
+	\hline
+	\textbf{Notes} & Allows the client to obtain an authentication Token \\
+	\hline
+\end{tabular}
 
 \section{Selected architectural	styles and patterns}
 The following architectural patterns are used to build the structure of the system in order to provide all the services of SafeStreets application.\\
@@ -248,5 +272,12 @@ A simple proxy acts as an interface to refer an object in another machine. The r
 Proxies also provides extra functionalities such as data caching (g.e. store the newest statistics available) and security (g.e. client-side firewall).\\
 \begin{center}\large{\textit{Motivations}}\end{center} 
 It is useful to organize the requests of multiple clients and to save frequent requested informations. It also protects the application servers from external attack and slightly improve the overall performances.
+
+\section{Other Architecture}
+\begin{center}\large{\textbf{REpresentational State Transfer}}\end{center}
+REST is an architectural software type that has become a standard in the creation of Web API. REST describes all type of interfaces capable of exchange data through HTTP, without using auxiliary technologies like cookies or other protocols. This architecture make the communication client-server totally stateless (every request is independent from the others).\\ An HTTP method show the operation to do for accessing an URL. The requests are written in JSON code.
+\begin{center}\large{\textit{Motivations}}\end{center}
+We decide to use REST to simplify the design and the implementation of the application. Indeed, the developers do not need to take in account the traceability of states.
+
 
 \end{document}
