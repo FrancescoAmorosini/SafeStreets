@@ -131,8 +131,12 @@ In this section it is described the deployment view of the components inside the
 The system is composed of a multitier architecture and each specific role is clarified below.\\
 \begin{itemize}
     \item \textbf{Client}\\
-    The first tier contains the client mobile machines which have installed SafeStreets application
-    to access all its functionalities.\\
+    The first tier contains the mobile client which have installed SafeStreets application
+    to access all its functionalities, and the PC that accesses to SafeStreets through the Web Browser.\\
+    \item \textbf{Web Server}\\
+    A web server is used to store, process and deliver web pages to desktop
+    clients. The communication between client and server takes place using the
+    Hypertext Transfer Protocol (HTTP).
     \item \textbf{Reverse Proxy}\\
     The second tier contains a reverse proxy to implement load balancing on the several requests to access the application servers.
     Furthermore, it is a cacheble component who can speed-up the most frequent requests.
@@ -196,11 +200,10 @@ When avaiable, the suggestions, as the statistics, are provided to the Statistic
 In particular if the User is an Authority, suggestions are also shown.  
 
 
-\section{Component interfaces}
+\section{Component Interfaces}
 \subsection{API REST}
 \begin{center}\large{\textbf{Authentication Controller}}\end{center}
 The \textit{Authentication Controller} provides methods for login and registration.
-This Controller also makes the check on the authority credential calling the methods inside \textit{Municipality Interface}.
 The Authentication Controller exposes the following methods: \\
 
 \begin{center}{\textbf{Registration}}\end{center}
@@ -212,11 +215,11 @@ The Authentication Controller exposes the following methods: \\
     \hline
     \textbf{Data Params} & username: [string] \newline email: [string] \newline password: [string] \newline If the user is an authority: \newline municipality: [string]\\
     \hline
-    \textbf{Success Response} & code: 200 \newline content: {message: "Registration successful"}\\
+    \textbf{Success Response} & code: 200 \newline body: {message: "Registration successful"} \newline \newline code:202 \newline body: {message: "Accepted request"}\\
     \hline
-    \textbf{Error Response} & \newline code: 422 UNPROCESSABLE ENTRY \newline body: {error: "Registration data not correct"} \newline\newline code: 401 \newline body: {"error": "Provided email does not exist"}   \\
+    \textbf{Error Response} & \newline code: 401 \newline body: {error: "Unauthorized access"} \\
     \hline
-    \textbf{Notes} & Allows the user to request the registration as citizen or authority. \\
+    \textbf{Notes} & Allows the user to request the registration as citizen or authority \\
     \hline
 \end{tabular}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -232,7 +235,7 @@ The Authentication Controller exposes the following methods: \\
 	\hline
 	\textbf{Success Response} & code: 200 \newline content: {accessToken: [string]}\\
 	\hline
-	\textbf{Error Response} & \newline code: 422 UNPROCESSABLE ENTRY \newline body: {error: "Login data not correct"} \newline \newline code: 401 UNAUTHORIZED \newline body: {error: "wrong Username or Password"} \\
+    \textbf{Error Response} & \newline code: 401 \newline body: {error: "Unauthorized access"} \\
 	\hline
 	\textbf{Notes} & Allows the client to obtain an authentication Token \\
 	\hline
@@ -250,7 +253,7 @@ The Authentication Controller exposes the following methods: \\
         \hline
         \textbf{Success Response} & code: 200 \newline content: {message: "Account activated"}\\
         \hline
-        \textbf{Error Response} & code: 404 NOT FOUND \newline content: {error: "Incorrect activation code"} \newline \newline code: 401 \newline body: {"error": "Account not activated"} \newline \newline code: 401 \newline body: {error: "Wrong password"} \ \newline code: 401 \newline body: {error: "Provided email does not exist"}   \\
+        \textbf{Error Response} & code: 404 NOT FOUND \newline content: {error: "Incorrect activation code"} \newline \newline code: 401 \newline body: {"error": "Account not activated"} \newline \newline code: 401 \newline body: {error: "Wrong password"} \newline \newline code: 401 \newline body: {error: "Provided email does not exist"}   \\
         \hline
         \textbf{Notes} & Allows a Client to activate the account \\
         \hline
@@ -258,8 +261,8 @@ The Authentication Controller exposes the following methods: \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{center}\large{\textbf{Report Controller}}\end{center}
-    The \textit{Report Controller} provides methods to check and send consistet reports to the \textit{Notify Controller}.
-    The Authentication Controller exposes the following methods: 
+The \textit{Report Controller} handles the submission of the User, in this case the Citizen. The use of the send method is condi-
+tional on the Citizen authentication which is handled by the \textit{Authentication Controller}.
 
 \begin{center}{\textbf{Send Report}}\end{center}
     \begin{tabular}{| l | p{8cm} |}
@@ -270,29 +273,11 @@ The Authentication Controller exposes the following methods: \\
         \hline
         \textbf{Data Params} & data: [string] \newline time: [string] \newline license plate: [string] \newline picture: [png/jpg]\\
         \hline
-        \textbf{Success Response} & code: 200 \newline content: {message: "Registration successful"}\\
+        \textbf{Success Response} & code: 200 \newline content: {message: "Report received successfully"}\\
         \hline
         \textbf{Error Response} & \newline code: 400 BAD REQUEST \newline body: {error: "Data not correct"}\\
         \hline
-        \textbf{Notes} & Allows the user to request the registration as citizen or authority. \\
-        \hline
-    \end{tabular}
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{center}{\textbf{Send Report}}\end{center}
-    \begin{tabular}{| l | p{8cm} |}
-        \hline
-        \textbf{Endpoint} & */send \\
-        \hline
-        \textbf{Method} & POST \\
-        \hline
-        \textbf{Data Params} & data: [string] \newline time: [string] \newline license plate: [string] \newline picture: [png/jpg]\\
-        \hline
-        \textbf{Success Response} & code: 200 \newline content: {message: "Registration successful"}\\
-        \hline
-        \textbf{Error Response} & \newline code: 400 BAD REQUEST \newline body: {error: "Data not correct"}\\
-        \hline
-        \textbf{Notes} & Allows the user to request the registration as citizen or authority. \\
+        \textbf{Notes} & Allows the Citizen to send a report to the system. \\
         \hline
     \end{tabular}
 %%%%%%%%%%%%%%%%%%%%%%%%%%
