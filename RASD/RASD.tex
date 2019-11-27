@@ -270,7 +270,7 @@ The character are:
 
 \chapter{Specific Requirements}
 \section{External Interface Requirement}
-SafeStreets is a mobile based application. In the following sections a more detailed description of the application is given in terms of hardware, software and communication interfaces. There are also present some prototypes of User Interface through mockups.
+SafeStreets is a mobile based application, even though it can be also consulted using a web browser. In the following sections a more detailed description of the application is given in terms of hardware, software and communication interfaces. There are also present some prototypes of User Interface for mobile users, by means of mockups.
 \subsection{User Interface}
 \begin{figure}[!ht]
 	\begin{center}
@@ -823,9 +823,9 @@ tions:
 \section{Software System Attributes}
 This section will cover the non-functional requirements that might be used to evaluate the software performances. All of the covered requirements are part of the ISO/IEC 9126-1:2001 (see Section \ref{docs}).
 \subsection{Reliability}
-The System (and all its components) should guarantees a 99.9\% (\textit{"three-nines"}) of reliability, so that only 10.08 minutes of downtime per week are allowed. In order to guarantee the continuity of the service, it must be ensured that the System is fault tolerant.
+The System (and all its components) should guarantees a 99\% of reliability. In order to guarantee the continuity of the service, it must be ensured that the System is fault tolerant.
 \subsection{Availability}
-The System must guarantee an high availability, indeed it has to offer a continuous service 24/7. 
+The System must guarantee 99.9\% (\textit{"three-nines"}) of availability, so that only 10.08 minutes of downtime per week are allowed. 
 \subsection{Security} \label{sec:security}
 User credentials and data will be stored in a DBMS that should guarantee an high level of security. To reach this goal the passwords stored in the database are salted and hashed, so that a sequence of generic characters of any length is concatenated to the password.
 Hash is also used to store the report so that the information cannot be altered by anyone except specific system components. Thus as soon as a report arrives to the Report Manager and it's validated, it gets encrypted by means of the hash function to form a digital signature and then it is stored. In this way we create a snapshot of the report ensuring the identity, authenticity, and the non-tampered state of the information.
@@ -833,9 +833,9 @@ As mentioned before, the System uses HTTP over SSL protocol (HTTPS) to comunicat
 \newline
 If someone breaks into the OCR tool or the Map service, SafeStreets is not responsible in case of damage, due to the fact that its functionalities are provided by third-part services.  
 \subsection{Maintainability}
-The System will have a modular architecture: Report Manager, Login Manager and Information Manager are designed to work separately in an asynchronous way, thus the maintenance process will be sped up in case of failure of one module.
+As explained in the Design Document, the System will have a modular architecture: Report Manager, Login Manager and Information Manager are designed to work separately in an asynchronous way, thus the maintenance process will be sped up in case of failure of one module.
 \subsection{Portability}
-SafeStreets is developed in terms of a native application on Android and iOS.
+SafeStreets is developed in terms of a native application on Android and iOS, but any device with a web browser can access its features.
 
 \chapter{Formal Analysis Using Alloy}
 In this section a description of the model is given by using the Alloy modeling language.
