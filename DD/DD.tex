@@ -7,9 +7,8 @@
 \usepackage{pdfpages}
 \usepackage{booktabs}
 \usepackage{array}
-\usepackage{tabularx}
 \usepackage{ltablex}
-\usepackage{longtable}
+\usepackage{multicol}
 
 \title{Design Document}
 \author{AmorosiniCasaliFioravanti}
@@ -23,6 +22,8 @@
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\newcommand\mc{\multicolumn{1}{c}{}}
 
 \begin{document}
 
@@ -57,6 +58,7 @@ Further information about the scope of the application can be found in the Chapt
     \item \textbf{OCR}: \textit{Optical Character Recognition}, software dedicated to the detection of characters contained in a document and to their transfer to digital text that can be read by a machine. In this context, OCR will be used to read license plates.
     \item \textbf{UML}: \textit{Unified Modeling Language}, a standard visual modeling language intended to be used for analysis, design, and implementation of software-based systems.
     \item \textbf{MVC}: \textit{Model View Controller}, a software design pattern commonly used to provide user interfaces.
+    \item \textbf{UX}: \textit{User eXperience}, a diagram used to describe the interfaces provided by the application.
     \end{itemize}
 \subsection{Abbreviations}
 \begin{itemize}
@@ -93,7 +95,7 @@ In this chapter the architectural structure of the system will be discussed at m
 The UML component diagram aims at capturing the internal modular structure of the components, showing how they are connected together in order to form larger components. Components are wired together by using an assembly connector to connect the required interface of one component with the provided interface of another component.
 \begin{figure}[!ht]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/Component2_2.png}
+	\includegraphics[width=\textwidth]{img/Component2.png}
     \end{center}
     \label{fig:componentdiagram}
 	\caption{Component diagram of the system.}
@@ -101,10 +103,11 @@ The UML component diagram aims at capturing the internal modular structure of th
 Below is a description of each component:
 \begin{itemize}
 \item \textbf{Mobile Client}: the client device that accesses to the functionalities of the entire system. It is implemented as thin client as explained below.
-
-\item \textbf{User Controller}: it takes care of all the operation related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
+\item \textbf{Login Manager}: it takes care of all the operation related to the registration, login, checking credentials... . It is composed by 2 main components:
+\begin{itemize}
+    \item \textbf{User Controller}: it takes care of all the operation related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
 \item \textbf{Auth Controller}: it takes care of all the authentication-related operations: it is responsible both for the log in and the registration process, and it also uses the \textit{Storage Interface} to retrieve and store new users' credentials in the databse. During the registration process, the Auth Controller uses the \textit{Mail Service Interface} to communicate with the Mailing Service in order to send registration emails.
-\item \textbf{History Manager}: its function is to retrieve and show to the Client his personal report's history.
+\end{itemize}
 \item \textbf{Report Manager}: it's a \textit{subsystem} component in charge of all the processing functions on the newly recieved reports:
 \begin{itemize}
     \item \textbf{Report Interface}: it exposes to the User an interface in the form of a blank report to be compiled.
@@ -354,6 +357,32 @@ REST is an architectural software type that has become a standard in the creatio
 We decide to use REST to simplify the design and the implementation of the application. Indeed, the developers do not need to take in account the traceability of states.
 
 \chapter{User Interface Design}
+\section{Mockup}
+The mockups of the mobile application can be found in the RASD in the chapter \textit{Specific Requirements}. Here we present an hypothetical view of the web application.
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/MockupAppWeb.png}
+	\end{center}
+	\caption{Web page graphics.}
+\end{figure}
+
+\section{User Experience Diagram}
+The User Experience diagram (UX) diagrams reported below provide additional information about the User
+Interface that the application provides. The diagrams show the basic core actions
+that can be performed by the user through the mobile application. 
+
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/AuthoritiesUX.png}
+	\end{center}
+    \caption{UX flow of an authority user.}
+    
+\end{figure}\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/CitizenUX.png}
+	\end{center}
+	\caption{UX flow of a citizen user.}
+\end{figure}
 
 \chapter{Requirements Traceability}
 All the decisions and the architectural choices taken in this document aim to achieve all the requirements defined in chapter 3 of the RASD. In this chapter it will be shown, for each requirement, which component or part of the system will accomplish them.
@@ -361,84 +390,93 @@ All the decisions and the architectural choices taken in this document aim to ac
 \section{Functional Requirements}
 In the following table it is shown which components of the system are in charge of carrying out the functional requirements defined in section 3.2 of the RASD.
 
-\begin{table}[!ht]
-	\begin{longtable}{C{.30\textwidth}||L{.60\textwidth}}
-		\toprule
-		\textbf{Component(DD)} & \textbf{Requirement(RASD)}\\
-		\midrule
-		\midrule
-		Auth Controller & $\bullet$ {[R.1]} A visitor must be able to register. During the registration the System will ask to provide some credentials. \\
+\begin{tabularx}{\linewidth}{| c || X |}
+    \hline
+    \endfoot
 
-		& $\bullet$ {[R.2]} Check if the Guest credentials are valid \\
+    \hline
+	\textbf{Component(DD)} & \textbf{Requirement(RASD)}\\
+	\hline
+	\hline
+    \large{Auth Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
+    $\bullet$ {[R.1]} A visitor must be able to register. During the registration the System will ask to provide some credentials. \\
 
-		& $\bullet$ {[R.3]} If credentials are valid, the System sends a confirmation email \\
+	 $\bullet$ {[R.2]} Check if the Guest credentials are valid \\
 
-		& $\bullet$ {[R.4]} Allow to log in using personal credentials. \\
+	 $\bullet$ {[R.3]} If credentials are valid, the System sends a confirmation email \\
 
-		& $\bullet$ {[R.13]} Provide a recognition system of badge number (this may involve communication with the Municipality).
-		\\
-		\midrule
+	 $\bullet$ {[R.4]} Allow to log in using personal credentials. \\
+
+	 $\bullet$ {[R.13]} Provide a recognition system of badge number (this may involve communication with the Municipality).\\}\\
 		
-		User Controller &  $\bullet$ {[R.5]} Allow to change username, only if the new username is not already in use by another User, email, only if the new email is in a correct format and password, only if the new password is different from the precedent and respects the minimum length. \\
+    \hline
+    \large{User Controller} & \parbox{0.45\textwidth}{ \vspace{2mm} 
+    $\bullet$ {[R.5]} Allow to change username, only if the new username is not already in use by another User, email, only if the new email is in a correct format and password, only if the new password is different from the precedent and respects the minimum length. \\
 
-		& $\bullet$ {[R.6]} Send a confirmation email if username, email or password is changed (similarly to the registration process). \\
+	$\bullet$ {[R.6]} Send a confirmation email if username, email or password is changed (similarly to the registration process). \\
 
-		& $\bullet$ {[R.7]} Allow to change password if it has been forgotten, through the personal email. \\
+	$\bullet$ {[R.7]} Allow to change password if it has been forgotten, through the personal email. \\
 
-		& $\bullet$ {[R.14]} Allow the Citizen to consult the history of its personal reports. \\
+	$\bullet$ {[R.14]} Allow the Citizen to consult the history of its personal reports.\\} \\
 		
-		\midrule
-		Report Interface & $\bullet$ {[R.8]} The Citizen must be allowed to create reports \\
+	\hline
+    \large{Report Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
+    $\bullet$ {[R.8]} The Citizen must be allowed to create reports \\
 
-		& $\bullet$ {[R.9]} Check if the Report created by the Citizen is valid. \\
+	$\bullet$ {[R.9]} Check if the Report created by the Citizen is valid. \\}\\
 
-		\midrule
-		Notify Controller & $\bullet$ {[R.10]} Notify the Authorities whenever a new Report involving their municipality is submitted. \\
+	\hline
+    \large{Notify Controller} & \parbox{0.45\textwidth}{ \vspace{2mm} 
+    $\bullet$ {[R.10]} Notify the Authorities whenever a new Report involving their municipality is submitted. \\
 
-		& $\bullet$ {[R.16]} All traffic violations must be notified to Authorities according to their municipality. \\
+	$\bullet$ {[R.16]} All traffic violations must be notified to Authorities according to their municipality.\\}\\
 
-		\midrule
-		StatisticsSuggestions Interface & $\bullet$ {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data. \\
+	\hline
+    \large{StatisticsSuggestions Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
+    $\bullet$ {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data. \\
 
-		& $\bullet$ {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics. \\
+	$\bullet$ {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics.\\}\\
 		
-		\midrule
-		Map Service Interface & {[R.15]} Allow Users to see the their position in a map.\\
-	\end{longtable}
-\end{table}
-\begin{table}[!ht]
-	\begin{longtable}{C{.30\textwidth}||L{.60\textwidth}}
-		\midrule
-		MISSING COMPONENT & $\bullet$ {[R.17]} Provide the Authorities with a list of the most recent reports submitted. \\
+	\hline
+    \large{Map Service Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
+    $\bullet$ {[R.15]} Allow Users to see the their position in a map.\\}\\
 
-		& $\bullet$ {[R.18]} Allow Authorities to also consult older Reports. \\
+	\hline
+	\large{MISSING COMPONENT} & \parbox{0.45\textwidth}{ \vspace{2mm}
+    $\bullet$ {[R.17]} Provide the Authorities with a list of the most recent reports submitted. \\
+
+	$\bullet$ {[R.18]} Allow Authorities to also consult older Reports. \\
 		
-		& $\bullet$ {[R.20]} Use third party services to enable some functions.\\
+	$\bullet$ {[R.20]} Use third party services to enable some functions.\\
 
-		& $\bullet$ {[R.21]} Statistics and suggestions have to be periodically recomputed.\\
+	$\bullet$ {[R.21]} Statistics and suggestions have to be periodically recomputed\\}\\
 
-		\midrule
-		Storage Interface & $\bullet$ {[R.19]} Interact with the Municipality's System to get the permission for using their data.\\
+	\hline
+    \large{Storage Interface} & \parbox{0.45\textwidth}{ \vspace{2mm}
+    $\bullet$ {[R.19]} Interact with the Municipality's System to get the permission for using their data.\\
 
-		& $\bullet$ {[R.24]} Cross the data coming from external DBMSs with the System's own data.\\
+	$\bullet$ {[R.24]} Cross the data coming from external DBMSs with the System's own data.\\}\\
 
-		\midrule
-		Security Manager & $\bullet$ {[R.22]} Provide protection of data using encryption.\\
+	\hline
+    \large{Security Manager} & \parbox{0.45\textwidth}{ \vspace{2mm}
+    $\bullet$ {[R.22]} Provide protection of data using encryption.\\
 
-		& $\bullet$ {[R.28]} After its validation, no one should be able to modify a submitted Report.\\
+	$\bullet$ {[R.28]} After its validation, no one should be able to modify a submitted Report.\\}\\
 
-		\midrule
-		Statistic Controller & $\bullet$ {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.\\
+	\hline
+    \large{Statistic Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
+    $\bullet$ {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.\\
 
-		& $\bullet$ {[R.25]} Cross data from different Reports in order to establish their truthfulness.\\
+    $\bullet$ {[R.25]} Cross data from different Reports in order to establish their truthfulness.\\}\\
 
-		\midrule
-		AI Controller & $\bullet$ {[R.26]} Unsafe areas are detected by means of an artificial intelligence.\\
+	\hline
+    \large{AI Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
+    $\bullet$ {[R.26]} Unsafe areas are detected by means of an artificial intelligence.\\
 
-		& $\bullet$ {[R.27]} Safety Suggestions are computed by means of an artificial intelligence.\\
-		\bottomrule
-	\end{longtable}
-\end{table}
+	$\bullet$ {[R.27]} Safety Suggestions are computed by means of an artificial intelligence.\\}\\
+    \hline
+    
+\end{tabularx}
 
 \chapter{Implementation, Integration and Test Plan}
 As previously illustrated in the Component Diagram, the System is composed by many components that can be divided into the following categories:
@@ -447,13 +485,12 @@ As previously illustrated in the Component Diagram, the System is composed by ma
 \item \textbf{Backend components}: User controller, Authentication controller, Report controller, History Manager, Notify controller, Security Manager, AI controller, Statistic controller, StatisticSuggestion Interface and Storage Interface.
 \item \textbf{External components}: DB, Mail service interface, OCR service interface, Map service Interface and Municipality Interface.
 \end{itemize}
-In order to implement, integrate and test the System, a bottom-up approach will be used, considering also the importance of the various functionalities. Infact as illustrated in the Figure \ref{fig:all-oy}, the component are grouped into subsystems, therefore the components of the same subsystem will be implemented, integrated and tested first and then the subsystems will be integrated and tested together in order to verify the correct behaviour of the System. As specified in the RASD, the System is not responsible for failures of the third parts services, so the components of the external subsystems don't need to be tested because they are considered reliable. Therefore the implementation and integration process will be performed in two levels:
+In order to implement, integrate and test the System, a bottom-up approach will be used, considering also the importance of the various functionalities. Infact as illustrated in the Figure ref\{fig:all-oy\}, the component are grouped into subsystems, therefore the components of the same subsystem will be implemented, integrated and tested first and then the subsystems will be integrated and tested together in order to verify the correct behaviour of the System. As specified in the RASD, the System is not responsible for failures of the third parts services, so the components of the external subsystems don't need to be tested because they are considered reliable. Therefore the implementation and integration process will be performed in two levels:
 \begin{itemize}
 \item Implementation and integration of each component of the same subsystem;
 \item Integration of different subsystems;
 \end{itemize}
 %The following table lists the main features avaiable, their importance and %implementation difficulty is shown below to better understand the decision about %implementation, testing and integration that will be taken in the rest of this section.
-
 
 Regarding the first phase, components integration of the same subsystem will be applied only for backend components. More specifically, the components to be integrated and tested together, as showed in the Component diagram, are:
 \begin{itemize}
@@ -526,4 +563,5 @@ When all the components of the backend are fully implemented, integrated and tes
     \label{fig:ClientSub}
 	\caption{Client subsystem.}
 \end{figure}
+
 \end{document}
