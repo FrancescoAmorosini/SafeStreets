@@ -3,7 +3,13 @@
 \usepackage{natbib}
 \usepackage{graphicx}
 \usepackage[pagestyles]{titlesec}
+\usepackage[hidelinks]{hyperref}
 \usepackage{pdfpages}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{ltablex}
+\usepackage{longtable}
 
 \title{Design Document}
 \author{AmorosiniCasaliFioravanti}
@@ -14,9 +20,15 @@
 {\sethead[\thepage][][\chaptertitle]{}{}{\thepage}}
 \pagestyle{mystyle}
 
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
 \begin{document}
 
 \includepdf[pages={1}]{./img/FrontPage}
+
+\tableofcontents
 
 \chapter{Introduction}
 \section{Purpose}
@@ -63,7 +75,7 @@ This document is presented as it follows:
     \item \textbf{Algorithm Design} presents and discusses the algorithms that will enable the system's functionalities.
     \item \textbf{user Interface Design} provides some further details on the user interface defined in the RASD.
     \item \textbf{Requirement Traceability} maps all the functional requirements defined in the RASD over the components that will accomplish them.
-    \item \textbf{Implementation, Integration and Testing Plans} shows the order in which the implementation and the integration of the components will occur, and how the testing phase will be carryed out.
+    \item \textbf{Implementation, Integration and Testing Plans} shows the order in which the implementation and the integration of the components will occur, and how the testing phase will be carried out.
     \item {\textbf{Effort spent}} displays the time spent writing this document by each member of the team.
 \end{enumerate}
 \chapter{Architectural Design}
@@ -217,7 +229,7 @@ The Authentication Controller exposes the following methods: \\
     \hline
     \textbf{Success Response} & code: 200 \newline body: {message: "Registration successful"} \newline \newline code:202 \newline body: {message: "Accepted request"}\\
     \hline
-    \textbf{Error Response} & \newline code: 401 \newline body: {error: "Unauthorized access"} \\
+    \textbf{Error Response} & code: 401 \newline body: {error: "Unauthorized access"} \\
     \hline
     \textbf{Notes} & Allows the user to request the registration as citizen or authority \\
     \hline
@@ -235,7 +247,7 @@ The Authentication Controller exposes the following methods: \\
 	\hline
 	\textbf{Success Response} & code: 200 \newline content: {accessToken: [string]}\\
 	\hline
-    \textbf{Error Response} & \newline code: 401 \newline body: {error: "Unauthorized access"} \\
+    \textbf{Error Response} & code: 401 \newline body: {error: "Unauthorized access"} \\
 	\hline
 	\textbf{Notes} & Allows the client to obtain an authentication Token \\
 	\hline
@@ -275,7 +287,7 @@ tional on the Citizen authentication which is handled by the \textit{Authenticat
         \hline
         \textbf{Success Response} & code: 200 \newline content: {message: "Report received successfully"}\\
         \hline
-        \textbf{Error Response} & \newline code: 400 BAD REQUEST \newline body: {error: "Data not correct"}\\
+        \textbf{Error Response} & code: 400 BAD REQUEST \newline body: {error: "Data not correct"}\\
         \hline
         \textbf{Notes} & Allows the Citizen to send a report to the system. \\
         \hline
@@ -342,5 +354,90 @@ REST is an architectural software type that has become a standard in the creatio
 \begin{center}\large{\textit{Motivations}}\end{center}
 We decide to use REST to simplify the design and the implementation of the application. Indeed, the developers do not need to take in account the traceability of states.
 
+\chapter{User Interface Design}
 
+\chapter{Requirements Traceability}
+All the decisions and the architectural choices taken in this document aim to achieve all the requirements defined in chapter 3 of the RASD. In this chapter it will be shown, for each requirement, which component or part of the system will accomplish them.
+
+\section{Functional Requirements}
+In the following table it is shown which components of the system are in charge of carrying out the functional requirements defined in section 3.2 of the RASD.
+
+\begin{table}[!ht]
+	\begin{longtable}{C{.30\textwidth}||L{.60\textwidth}}
+		\toprule
+		\textbf{Component(DD)} & \textbf{Requirement(RASD)}\\
+		\midrule
+		\midrule
+		Auth Controller & $\bullet$ {[R.1]} A visitor must be able to register. During the registration the System will ask to provide some credentials. \\
+
+		& $\bullet$ {[R.2]} Check if the Guest credentials are valid \\
+
+		& $\bullet$ {[R.3]} If credentials are valid, the System sends a confirmation email \\
+
+		& $\bullet$ {[R.4]} Allow to log in using personal credentials. \\
+
+		& $\bullet$ {[R.13]} Provide a recognition system of badge number (this may involve communication with the Municipality).
+		\\
+		\midrule
+		
+		User Controller &  $\bullet$ {[R.5]} Allow to change username, only if the new username is not already in use by another User, email, only if the new email is in a correct format and password, only if the new password is different from the precedent and respects the minimum length. \\
+
+		& $\bullet$ {[R.6]} Send a confirmation email if username, email or password is changed (similarly to the registration process). \\
+
+		& $\bullet$ {[R.7]} Allow to change password if it has been forgotten, through the personal email. \\
+
+		& $\bullet$ {[R.14]} Allow the Citizen to consult the history of its personal reports. \\
+		
+		\midrule
+		Report Interface & $\bullet$ {[R.8]} The Citizen must be allowed to create reports \\
+
+		& $\bullet$ {[R.9]} Check if the Report created by the Citizen is valid. \\
+
+		\midrule
+		Notify Controller & $\bullet$ {[R.10]} Notify the Authorities whenever a new Report involving their municipality is submitted. \\
+
+		& $\bullet$ {[R.16]} All traffic violations must be notified to Authorities according to their municipality. \\
+
+		\midrule
+		StatisticsSuggestions Interface & $\bullet$ {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data. \\
+
+		& $\bullet$ {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics. \\
+		
+		\midrule
+		Map Service Interface & {[R.15]} Allow Users to see the their position in a map.\\
+	\end{longtable}
+\end{table}
+\begin{table}[!ht]
+	\begin{longtable}{C{.30\textwidth}||L{.60\textwidth}}
+		\midrule
+		MISSING COMPONENT & $\bullet$ {[R.17]} Provide the Authorities with a list of the most recent reports submitted. \\
+
+		& $\bullet$ {[R.18]} Allow Authorities to also consult older Reports. \\
+		
+		& $\bullet$ {[R.20]} Use third party services to enable some functions.\\
+
+		& $\bullet$ {[R.21]} Statistics and suggestions have to be periodically recomputed.\\
+
+		\midrule
+		Storage Interface & $\bullet$ {[R.19]} Interact with the Municipality's System to get the permission for using their data.\\
+
+		& $\bullet$ {[R.24]} Cross the data coming from external DBMSs with the System's own data.\\
+
+		\midrule
+		Security Manager & $\bullet$ {[R.22]} Provide protection of data using encryption.\\
+
+		& $\bullet$ {[R.28]} After its validation, no one should be able to modify a submitted Report.\\
+
+		\midrule
+		Statistic Controller & $\bullet$ {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.\\
+
+		& $\bullet$ {[R.25]} Cross data from different Reports in order to establish their truthfulness.\\
+
+		\midrule
+		AI Controller & $\bullet$ {[R.26]} Unsafe areas are detected by means of an artificial intelligence.\\
+
+		& $\bullet$ {[R.27]} Safety Suggestions are computed by means of an artificial intelligence.\\
+		\bottomrule
+	\end{longtable}
+\end{table}
 \end{document}
