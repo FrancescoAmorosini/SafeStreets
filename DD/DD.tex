@@ -93,7 +93,7 @@ In this chapter the architectural structure of the system will be discussed at m
 The UML component diagram aims at capturing the internal modular structure of the components, showing how they are connected together in order to form larger components. Components are wired together by using an assembly connector to connect the required interface of one component with the provided interface of another component.
 \begin{figure}[!ht]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/Component2.png}
+	\includegraphics[width=\textwidth]{img/Component2_2.png}
     \end{center}
     \label{fig:componentdiagram}
 	\caption{Component diagram of the system.}
@@ -101,11 +101,10 @@ The UML component diagram aims at capturing the internal modular structure of th
 Below is a description of each component:
 \begin{itemize}
 \item \textbf{Mobile Client}: the client device that accesses to the functionalities of the entire system. It is implemented as thin client as explained below.
-\item \textbf{Login Manager}: it takes care of all the operation related to the registration, login, checking credentials... . It is composed by 2 main components:
-\begin{itemize}
-    \item \textbf{User Controller}: it takes care of all the operation related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
+
+\item \textbf{User Controller}: it takes care of all the operation related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
 \item \textbf{Auth Controller}: it takes care of all the authentication-related operations: it is responsible both for the log in and the registration process, and it also uses the \textit{Storage Interface} to retrieve and store new users' credentials in the databse. During the registration process, the Auth Controller uses the \textit{Mail Service Interface} to communicate with the Mailing Service in order to send registration emails.
-\end{itemize}
+\item \textbf{History Manager}: its function is to retrieve and show to the Client his personal report's history.
 \item \textbf{Report Manager}: it's a \textit{subsystem} component in charge of all the processing functions on the newly recieved reports:
 \begin{itemize}
     \item \textbf{Report Interface}: it exposes to the User an interface in the form of a blank report to be compiled.
@@ -440,4 +439,91 @@ In the following table it is shown which components of the system are in charge 
 		\bottomrule
 	\end{longtable}
 \end{table}
+
+\chapter{Implementation, Integration and Test Plan}
+As previously illustrated in the Component Diagram, the System is composed by many components that can be divided into the following categories:
+\begin{itemize}
+\item \textbf{Frontend components}: Client application.
+\item \textbf{Backend components}: User controller, Authentication controller, Report controller, History Manager, Notify controller, Security Manager, AI controller, Statistic controller, StatisticSuggestion Interface and Storage Interface.
+\item \textbf{External components}: DB, Mail service interface, OCR service interface, Map service Interface and Municipality Interface.
+\end{itemize}
+In order to implement, integrate and test the System, a bottom-up approach will be used, considering also the importance of the various functionalities. Infact as illustrated in the Figure \ref{fig:all-oy}, the component are grouped into subsystems, therefore the components of the same subsystem will be implemented, integrated and tested first and then the subsystems will be integrated and tested together in order to verify the correct behaviour of the System. As specified in the RASD, the System is not responsible for failures of the third parts services, so the components of the external subsystems don't need to be tested because they are considered reliable. Therefore the implementation and integration process will be performed in two levels:
+\begin{itemize}
+\item Implementation and integration of each component of the same subsystem;
+\item Integration of different subsystems;
+\end{itemize}
+%The following table lists the main features avaiable, their importance and %implementation difficulty is shown below to better understand the decision about %implementation, testing and integration that will be taken in the rest of this section.
+
+
+Regarding the first phase, components integration of the same subsystem will be applied only for backend components. More specifically, the components to be integrated and tested together, as showed in the Component diagram, are:
+\begin{itemize}
+\item User Controller and Storage Interface, forming the \textit{User subsystem};
+\item Authentication Controller and Storage Interface, forming the \textit{Authentication subsystem};
+\item History Controller and Storage Interface, forming the \textit{HistoryReport subsystem}
+\item Report Interface, Report Controller, Notify Controller and Security Manager, forming the \textit{Report Manager subsystem}.;
+\item AI Controller, StatisticSuggestion Interface, Statistic Controller and Security Manager, forming the \textit{Information Manager subsystem}.
+\end{itemize}
+Also the Report Manager and Information Manager, as well as the first three subsystems listed above, will use the Storage Interface to interact with the DB. Moreover, the User and the Authentication subsystems use the \textit{Mail Service Interface}; the latter one interact also with the \textit{Municipality Interface}. Finally the Report Manager could use the \textit{OCR Service Interface}. So in the implementation and integration process these components must also be taken into account. 
+Considering that the Storage interface is used by a lot of components and therefore also by many subsystems, it will be useful to implement and test it first and then try to integrate it with the other components/subsystems. 
+\newline
+\newline
+For the second step all higher-level subsystems will be integrated. In particular, this integration activity involves the Business Logic and the Client subsystem.
+\newline
+It is important that the verification and validation processes starts as soon as the development of the system begins in order to find errors as quickly as possible. As specified above, an incremental approach is used for the integration process, so that bug tracking is more easier. Moreover, also scaffolding techniques must be used when needed: in particular due to the fact that the frontend and the external subsystems are independent, the external services will be used in place of stubs to test the interfaces.
+\newline
+At the end, when the integration system is completed, the whole system is tested: for this purpose a fundamental type of test is the performance test that is useful to identify bottlenecks affecting the response time, the utilization and the throughput. It identifies also inefficient algorithms, Hardware/Network issues and Query optimimzation possibilities and this is very important since in this system there are a lot of interactions with the database. 
+\newpage
+\section{Sequence of Component Integration}
+The following diagrams describe the process of implementation, integration
+and testing. The arrow goes from the used component/subsystem to the
+component/subsystem that uses it.
+\subsection{Integration of the backend subsystem}
+All the components are first implemented and unit tested. Then some of the components are integrated into subsystem and integration tests will be performed. The integrations are the following:
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/UserSub.png}
+    \end{center}
+    \label{fig:UserSub}
+	\caption{User subsystem.}
+\end{figure}
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/AuthSub.png}
+    \end{center}
+    \label{fig:AuthSub}
+	\caption{Authentication subsystem.}
+\end{figure}
+
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/HistorySub.png}
+    \end{center}
+    \label{fig:HistorySub}
+	\caption{HistoryReport subsystem.}
+\end{figure}
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/ReportSub.png}
+    \end{center}
+    \label{fig:ReportSub}
+	\caption{Report Manager subsystem.}
+\end{figure}
+
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/InfoSub.png}
+    \end{center}
+    \label{fig:InfoSub}
+	\caption{Information Manager subsystem.}
+\end{figure}
+
+\subsection{Integration of backend and frontend}
+When all the components of the backend are fully implemented, integrated and tested, the frontend will be integrated and tested with the backend: in particular it will be integrated the Client subsystem with the Report Manager subsystem, Information Manager subsystem, HistoryReport subsystem, User subsystem and Authentication subsystem.
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/ClientSub.png}
+    \end{center}
+    \label{fig:ClientSub}
+	\caption{Client subsystem.}
+\end{figure}
 \end{document}
