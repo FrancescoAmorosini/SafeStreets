@@ -7,8 +7,9 @@
 \usepackage{pdfpages}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{tabularx}
 \usepackage{ltablex}
-\usepackage{multicol}
+\usepackage{longtable}
 
 \title{Design Document}
 \author{AmorosiniCasaliFioravanti}
@@ -22,8 +23,6 @@
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
-
-\newcommand\mc{\multicolumn{1}{c}{}}
 
 \begin{document}
 
@@ -363,92 +362,78 @@ All the decisions and the architectural choices taken in this document aim to ac
 \section{Functional Requirements}
 In the following table it is shown which components of the system are in charge of carrying out the functional requirements defined in section 3.2 of the RASD.
 
-\begin{tabularx}{\linewidth}{| c || X |}
-    \hline
-    \endfoot
 
-    \hline
-	\textbf{Component(DD)} & \textbf{Requirement(RASD)}\\
-	\hline
-	\hline
-    \large{Auth Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
-    $\bullet$ {[R.1]} A visitor must be able to register. During the registration the System will ask to provide some credentials. \\
+    \begin{tabularx}{\linewidth}{| l | X |}
+		\hline
+		\textbf{Component(DD)} & \textbf{Requirement(RASD)}\\
+		\hline
+		\hline
+		Auth Controller & $\bullet$ {[R.1]} A visitor must be able to register. During the registration the System will ask to provide some credentials. \\
 
-	 $\bullet$ {[R.2]} Check if the Guest credentials are valid \\
+		& $\bullet$ {[R.2]} Check if the Guest credentials are valid \\
 
-	 $\bullet$ {[R.3]} If credentials are valid, the System sends a confirmation email \\
+		& $\bullet$ {[R.3]} If credentials are valid, the System sends a confirmation email \\
 
-	 $\bullet$ {[R.4]} Allow to log in using personal credentials. \\
+		& $\bullet$ {[R.4]} Allow to log in using personal credentials. \\
 
-	 $\bullet$ {[R.13]} Provide a recognition system of badge number (this may involve communication with the Municipality).\\}\\
+		& $\bullet$ {[R.13]} Provide a recognition system of badge number (this may involve communication with the Municipality).
+		\\
+		\hline
 		
-    \hline
-    \large{User Controller} & \parbox{0.45\textwidth}{ \vspace{2mm} 
-    $\bullet$ {[R.5]} Allow to change username, only if the new username is not already in use by another User, email, only if the new email is in a correct format and password, only if the new password is different from the precedent and respects the minimum length. \\
+		User Controller &  $\bullet$ {[R.5]} Allow to change username, only if the new username is not already in use by another User, email, only if the new email is in a correct format and password, only if the new password is different from the precedent and respects the minimum length. \\
 
-	$\bullet$ {[R.6]} Send a confirmation email if username, email or password is changed (similarly to the registration process). \\
+		& $\bullet$ {[R.6]} Send a confirmation email if username, email or password is changed (similarly to the registration process). \\
 
-	$\bullet$ {[R.7]} Allow to change password if it has been forgotten, through the personal email. \\
+		& $\bullet$ {[R.7]} Allow to change password if it has been forgotten, through the personal email. \\
 
-	$\bullet$ {[R.14]} Allow the Citizen to consult the history of its personal reports.\\} \\
+		& $\bullet$ {[R.14]} Allow the Citizen to consult the history of its personal reports. \\
 		
-	\hline
-    \large{Report Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
-    $\bullet$ {[R.8]} The Citizen must be allowed to create reports \\
+		\hline
+		Report Interface & $\bullet$ {[R.8]} The Citizen must be allowed to create reports \\
 
-	$\bullet$ {[R.9]} Check if the Report created by the Citizen is valid. \\}\\
+		& $\bullet$ {[R.9]} Check if the Report created by the Citizen is valid. \\
 
-	\hline
-    \large{Notify Controller} & \parbox{0.45\textwidth}{ \vspace{2mm} 
-    $\bullet$ {[R.10]} Notify the Authorities whenever a new Report involving their municipality is submitted. \\
+		\hline
+		Notify Controller & $\bullet$ {[R.10]} Notify the Authorities whenever a new Report involving their municipality is submitted. \\
 
-	$\bullet$ {[R.16]} All traffic violations must be notified to Authorities according to their municipality.\\}\\
+		& $\bullet$ {[R.16]} All traffic violations must be notified to Authorities according to their municipality. \\
 
-	\hline
-    \large{StatisticsSuggestions Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
-    $\bullet$ {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data. \\
+		\hline
+		StatisticsSuggestions Interface & $\bullet$ {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data. \\
 
-	$\bullet$ {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics.\\}\\
+		& $\bullet$ {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics. \\
 		
-	\hline
-    \large{Map Service Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
-    $\bullet$ {[R.15]} Allow Users to see the their position in a map.\\}\\
+		\hline
+		Map Service Interface & {[R.15]} Allow Users to see the their position in a map.\\
 
-	\hline
-	\large{MISSING COMPONENT} & \parbox{0.45\textwidth}{ \vspace{2mm}
-    $\bullet$ {[R.17]} Provide the Authorities with a list of the most recent reports submitted. \\
+		\hline
+		MISSING COMPONENT & $\bullet$ {[R.17]} Provide the Authorities with a list of the most recent reports submitted. \\
 
-	$\bullet$ {[R.18]} Allow Authorities to also consult older Reports. \\
+		& $\bullet$ {[R.18]} Allow Authorities to also consult older Reports. \\
 		
-	$\bullet$ {[R.20]} Use third party services to enable some functions.\\
+		& $\bullet$ {[R.20]} Use third party services to enable some functions.\\
 
-	$\bullet$ {[R.21]} Statistics and suggestions have to be periodically recomputed\\}\\
+		& $\bullet$ {[R.21]} Statistics and suggestions have to be periodically recomputed.\\
 
-	\hline
-    \large{Storage Interface} & \parbox{0.45\textwidth}{ \vspace{2mm}
-    $\bullet$ {[R.19]} Interact with the Municipality's System to get the permission for using their data.\\
+		\hline
+		Storage Interface & $\bullet$ {[R.19]} Interact with the Municipality's System to get the permission for using their data.\\
 
-	$\bullet$ {[R.24]} Cross the data coming from external DBMSs with the System's own data.\\}\\
+		& $\bullet$ {[R.24]} Cross the data coming from external DBMSs with the System's own data.\\
 
-	\hline
-    \large{Security Manager} & \parbox{0.45\textwidth}{ \vspace{2mm}
-    $\bullet$ {[R.22]} Provide protection of data using encryption.\\
+		\hline
+		Security Manager & $\bullet$ {[R.22]} Provide protection of data using encryption.\\
 
-	$\bullet$ {[R.28]} After its validation, no one should be able to modify a submitted Report.\\}\\
+		& $\bullet$ {[R.28]} After its validation, no one should be able to modify a submitted Report.\\
 
-	\hline
-    \large{Statistic Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
-    $\bullet$ {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.\\
+		\hline
+		Statistic Controller & $\bullet$ {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.\\
 
-    $\bullet$ {[R.25]} Cross data from different Reports in order to establish their truthfulness.\\}\\
+		& $\bullet$ {[R.25]} Cross data from different Reports in order to establish their truthfulness.\\
 
-	\hline
-    \large{AI Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
-    $\bullet$ {[R.26]} Unsafe areas are detected by means of an artificial intelligence.\\
+		\hline
+		AI Controller & $\bullet$ {[R.26]} Unsafe areas are detected by means of an artificial intelligence.\\
 
-	$\bullet$ {[R.27]} Safety Suggestions are computed by means of an artificial intelligence.\\}\\
-    \hline
-    
-\end{tabularx}
-
+		& $\bullet$ {[R.27]} Safety Suggestions are computed by means of an artificial intelligence.\\
+		\hline
+	\end{tabularx}
 \end{document}
