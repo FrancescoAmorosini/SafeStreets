@@ -9,6 +9,7 @@
 \usepackage{array}
 \usepackage{ltablex}
 \usepackage{multicol}
+\usepackage{capt-of}
 
 \title{Design Document}
 \author{AmorosiniCasaliFioravanti}
@@ -22,8 +23,6 @@
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
-
-\newcommand\mc{\multicolumn{1}{c}{}}
 
 \begin{document}
 
@@ -95,7 +94,7 @@ In this chapter the architectural structure of the system will be discussed at m
 The UML component diagram aims at capturing the internal modular structure of the components, showing how they are connected together in order to form larger components. Components are wired together by using an assembly connector to connect the required interface of one component with the provided interface of another component.
 \begin{figure}[!ht]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/Component2.png}
+	\includegraphics[width=\textwidth]{img/Component2_2.png}
     \end{center}
     \label{fig:componentdiagram}
 	\caption{Component diagram of the system.}
@@ -115,7 +114,7 @@ Below is a description of each component:
     \item \textbf{Notify Controller}: the role of this component is to select the correct authorities to notify based on their municipality, using his \textit{AuthorityList}. It depends on the Report Controller, in the sense that it will notify the authorities only if the check of the report is successful and the type of the report is \textit{Traffic Violation}.
     \item \textbf{Security Manager}: it takes care of the security side: as specified in the Security section of the RASD, before being stored, the report is encrypted and then stored in the database. This task is accomplished by this specific component, that also depends on the Report Controller due to the fact that if the report doesn't pass the check verification, it will be discarded and therefore never encrypted.
 \end{itemize}
-\item \textbf{Storage Interface}: its main purpose is to retrive the reports from the database, decopuling the other components of the system from the particular data sources. This component is also in charge of authenticating the system with local municipalities' systems, and eventually crossing their data with SafeStreets' own information.
+\item \textbf{Storage Interface}: its main purpose is to retrive the reports from the database, decoupling the other components of the system from the particular data sources. This component is also in charge of authenticating the system with local municipalities' systems, and eventually crossing their data with SafeStreets' own information.
 \item \textbf{DB}: this component represent the DBMS, which provides an interface to read and store data. Both user credentials and submitted reports are stored in the database.
 %\item \textbf{Notification Interface}: it's goal is to send push notifications to all the authorities identified by the \textit{Notification Controller}.
 \item \textbf{Information Manager}: a \textit{subsystem} in charge of building statistics, compute safety suggestions and deploy them to the users who requested them.
@@ -176,7 +175,7 @@ The system is composed of a multitier architecture and each specific role is cla
 \end{figure}
 The Guest has to register before accessing the functionalities of the application. The Guest fills a form containing the necessary information. The information are sent to the Application Server through an HTTP POST. The \textit{Authentication Controller} handles the request, verifies if the information are correct and complete. Then it generates an URL, that it is forwarded by the external mailing system to the Guest. Once the Guest confirms the registration clicking on the URL link, the \textit{Storage Interface} insert the new User with its credentials in the Database, so from this moment on the new User is able to authenticate and to use the functionalities of the application.
 In the event that is an Authority to register, once the Authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to be sure that the entered badge number is correct. If the Municipality Interface replies that the provided badge number is correct, the registering procedure is the same as before; otherwise an HTTP Error is send back to the Guest that has sent the information.    
-%\newpage
+
 \subsection{Login Runtime View}
 \begin{figure}[!ht]
 	\begin{center}
@@ -390,12 +389,12 @@ All the decisions and the architectural choices taken in this document aim to ac
 \section{Functional Requirements}
 In the following table it is shown which components of the system are in charge of carrying out the functional requirements defined in section 3.2 of the RASD.
 
-\begin{tabularx}{\linewidth}{| c || X |}
+\begin{tabularx}{\linewidth}{| c || c |}
     \hline
     \endfoot
 
     \hline
-	\textbf{Component(DD)} & \textbf{Requirement(RASD)}\\
+\textbf{Component(DD)} & \textbf{Requirement(RASD)}\\
 	\hline
 	\hline
     \large{Auth Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
@@ -407,8 +406,10 @@ In the following table it is shown which components of the system are in charge 
 
 	 $\bullet$ {[R.4]} Allow to log in using personal credentials. \\
 
-	 $\bullet$ {[R.13]} Provide a recognition system of badge number (this may involve communication with the Municipality).\\}\\
-		
+     $\bullet$ {[R.13]} Provide a recognition system of badge number.\\
+     
+    $\bullet$ {[R.20]} Use third party services to enable some functions (Mail Service).\\}\\
+        
     \hline
     \large{User Controller} & \parbox{0.45\textwidth}{ \vspace{2mm} 
     $\bullet$ {[R.5]} Allow to change username, only if the new username is not already in use by another User, email, only if the new email is in a correct format and password, only if the new password is different from the precedent and respects the minimum length. \\
@@ -417,39 +418,37 @@ In the following table it is shown which components of the system are in charge 
 
 	$\bullet$ {[R.7]} Allow to change password if it has been forgotten, through the personal email. \\
 
-	$\bullet$ {[R.14]} Allow the Citizen to consult the history of its personal reports.\\} \\
-		
+    $\bullet$ {[R.14]} Allow the Citizen to consult the history of its personal reports.\\
+    
+    $\bullet$ {[R.20]} Use third party services to enable some functions (Mail Service).\\} \\
+
 	\hline
     \large{Report Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
-    $\bullet$ {[R.8]} The Citizen must be allowed to create reports \\
+    $\bullet$ {[R.8]} The Citizen must be allowed to create reports \\} \\
 
-	$\bullet$ {[R.9]} Check if the Report created by the Citizen is valid. \\}\\
+    \hline
+    \large{Report Controller} & \parbox{0.45\textwidth}{ \vspace{2mm} 
+    $\bullet$ {[R.9]} Check if the Report created by the Citizen is valid. \\
+
+    $\bullet$ {[R.20]} Use third party services to enable some functions (OCR Service).\\}\\
 
 	\hline
     \large{Notify Controller} & \parbox{0.45\textwidth}{ \vspace{2mm} 
-    $\bullet$ {[R.10]} Notify the Authorities whenever a new Report involving their municipality is submitted. \\
+    $\bullet$ {[R.10]} Notify the Authorities whenever a new Report is submitted. \\
 
 	$\bullet$ {[R.16]} All traffic violations must be notified to Authorities according to their municipality.\\}\\
-
-	\hline
-    \large{StatisticsSuggestions Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
-    $\bullet$ {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data. \\
-
-	$\bullet$ {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics.\\}\\
 		
 	\hline
     \large{Map Service Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
-    $\bullet$ {[R.15]} Allow Users to see the their position in a map.\\}\\
+    $\bullet$ {[R.15]} Allow Users to see the their position in a map.\\
 
+    $\bullet$ {[R.20]} Use third party services to enable some functions (Map Service).\\}\\
+		
 	\hline
-	\large{MISSING COMPONENT} & \parbox{0.45\textwidth}{ \vspace{2mm}
+	\large{History Manager} & \parbox{0.45\textwidth}{ \vspace{2mm}
     $\bullet$ {[R.17]} Provide the Authorities with a list of the most recent reports submitted. \\
 
-	$\bullet$ {[R.18]} Allow Authorities to also consult older Reports. \\
-		
-	$\bullet$ {[R.20]} Use third party services to enable some functions.\\
-
-	$\bullet$ {[R.21]} Statistics and suggestions have to be periodically recomputed\\}\\
+	$\bullet$ {[R.18]} Allow Authorities to also consult older Reports. \\}\\
 
 	\hline
     \large{Storage Interface} & \parbox{0.45\textwidth}{ \vspace{2mm}
@@ -463,11 +462,20 @@ In the following table it is shown which components of the system are in charge 
 
 	$\bullet$ {[R.28]} After its validation, no one should be able to modify a submitted Report.\\}\\
 
+
+	\hline
+    \large{StatisticsSuggestions Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
+    $\bullet$ {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data. \\
+
+    $\bullet$ {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics.\\}\\
+    
 	\hline
     \large{Statistic Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
     $\bullet$ {[R.23]} Acknowledge whether or not multiple istances of Reports are referred to the same infraction, even if protracted over time.\\
 
-    $\bullet$ {[R.25]} Cross data from different Reports in order to establish their truthfulness.\\}\\
+    $\bullet$ {[R.25]} Cross data from different Reports in order to establish their truthfulness.\\
+
+    $\bullet$ {[R.21]} Statistics and suggestions have to be periodically recomputed\\}\\
 
 	\hline
     \large{AI Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
@@ -477,6 +485,10 @@ In the following table it is shown which components of the system are in charge 
     \hline
     
 \end{tabularx}
+\captionof{table}{Functional requirements mapping on system's component}
+
+\section{Non-Functional Requirements}
+The non-functional requirements defined in Section 3.3 and 3.5 of the RASD are mainly a matter of concern for the development team. However, design choices such as the three-tier architecture and the subdivision in decoupled subsystems aim for increased performances and in general to improve the software quality attributes.
 
 \chapter{Implementation, Integration and Test Plan}
 As previously illustrated in the Component Diagram, the System is composed by many components that can be divided into the following categories:

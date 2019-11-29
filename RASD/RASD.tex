@@ -339,10 +339,10 @@ In the following section are explained the functional requirements of the applic
 			\item A picture of the violation/accident (not mandatory).
 		\end{itemize}
 	\item {[R.9]} Check if the Report created by the Citizen is valid.
-	\item {[R.10]} Notify the Authorities whenever a new Report involving their municipality is submitted. 
+	\item {[R.10]} Notify the Authorities whenever a new Report is submitted. 
 	\item {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data.
 	\item {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics.
-	\item {[R.13]} Provide a recognition system of badge number (this may involve communication with the Municipality).
+	\item {[R.13]} Provide a recognition system of badge number.
 	\item {[R.14]} Allow the Citizen to consult the history of its personal reports.
 	\item {[R.15]} Allow Users to see the their position in a map.
 	\item {[R.16]} All traffic violations must be notified to Authorities according to their municipality.
@@ -645,7 +645,7 @@ In the following section are explained the functional requirements of the applic
 \newpage
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics[width=\textwidth]{./img/RetrieveInformationSD.png}
+\includegraphics[width=\textwidth]{./img/RetrieveSdd.png}
 \end{center}
 \caption{Retrieve Information Sequence Diagram.}
 \label{fig:SequenceDiagram4}
@@ -687,7 +687,7 @@ In the following section are explained the functional requirements of the applic
 \begin{center}\large{\textit{Requirements}}\end{center}
     \begin{itemize}
 		\item {[R.4]} Allow to log in using personal credentials.
-		\item {[R.13]} Provide a recognition system of badge number (this may involve communication with the Municipality).
+		\item {[R.13]} Provide a recognition system of badge number.
     	\item {[R.15]} Allow Users to see the their position in a map.
     	\item {[R.20]} Use third party services to enable some functions (Mapping System).
 	\end{itemize}
@@ -714,7 +714,8 @@ In the following section are explained the functional requirements of the applic
 \begin{center}\large{\textit{Requirements}}\end{center}
     \begin{itemize}
 		\item {[R.10]}
-		Notify the Authorities whenever a new Report involving their municipality is submitted. 
+		Notify the Authorities whenever a new Report is submitted. 
+		\item {[R.16]} All traffic violations must be notified to Authorities according to their municipality.
 		\item {[R.20]}
 		Use third party services to enable some functions (OCR).
 	\end{itemize}
@@ -728,7 +729,6 @@ In the following section are explained the functional requirements of the applic
 	\item \textbf{{[G.5]} Allow Authorities to consult the reports submitted by the Citizens.}
 \begin{center}\large{\textit{Requirements}}\end{center}
 	\begin{itemize}
-		\item {[R.16]} All traffic violations must be notified to Authorities according to their municipality.
 		\item {[R.17]} Provide the Authorities with a list of the most recent reports submitted.
 		\item {[R.18]} Allow Authorities to also consult older Reports.
 	\end{itemize}
