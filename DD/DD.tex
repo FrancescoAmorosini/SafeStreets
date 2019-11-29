@@ -101,12 +101,11 @@ The UML component diagram aims at capturing the internal modular structure of th
 \end{figure}
 Below is a description of each component:
 \begin{itemize}
-\item \textbf{Mobile Client}: the client device that accesses to the functionalities of the entire system. It is implemented as thin client as explained below.
-\item \textbf{Login Manager}: it takes care of all the operation related to the registration, login, checking credentials... . It is composed by 2 main components:
-\begin{itemize}
-    \item \textbf{User Controller}: it takes care of all the operation related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
+\item \textbf{Mobile Client} and \textbf{Web Client}: the client device that accesses to the functionalities of the entire system. It is implemented as thin client as explained below.
+
+\item \textbf{User Controller}: it takes care of all the operation related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
 \item \textbf{Auth Controller}: it takes care of all the authentication-related operations: it is responsible both for the log in and the registration process, and it also uses the \textit{Storage Interface} to retrieve and store new users' credentials in the databse. During the registration process, the Auth Controller uses the \textit{Mail Service Interface} to communicate with the Mailing Service in order to send registration emails.
-\end{itemize}
+\item \textbf{History Manager}: its functionality is to retrieve and show to the Client his/her report's history.
 \item \textbf{Report Manager}: it's a \textit{subsystem} component in charge of all the processing functions on the newly recieved reports:
 \begin{itemize}
     \item \textbf{Report Interface}: it exposes to the User an interface in the form of a blank report to be compiled.
@@ -566,14 +565,26 @@ All the components are first implemented and unit tested. Then some of the compo
 	\caption{Information Manager subsystem.}
 \end{figure}
 
-\subsection{Integration of backend and frontend}
-When all the components of the backend are fully implemented, integrated and tested, the frontend will be integrated and tested with the backend: in particular it will be integrated the Client subsystem with the Report Manager subsystem, Information Manager subsystem, HistoryReport subsystem, User subsystem and Authentication subsystem.
+
 \begin{figure}[!ht]
-	\begin{center}
+    \subsection{Integration of backend and frontend}
+    When all the components of the backend are fully implemented, integrated and tested, the frontend will be integrated and tested with the backend: in particular it will be integrated the Client subsystem with the Report Manager subsystem, Information Manager subsystem, HistoryReport subsystem, User subsystem and Authentication subsystem. 
+    \vspace{1cm}
+    \begin{center}
 	\includegraphics[width=\textwidth]{img/ClientSub.png}
     \end{center}
     \label{fig:ClientSub}
 	\caption{Client subsystem.}
 \end{figure}
 
+\begin{figure}[!ht]
+    \subsection{System integration}
+At the end of the previuous procedures the \textit{frontend}, \textit{backend} and \textit{External Components/Subsystems} are integrated and tested together.
+\vspace{1cm}    
+\begin{center}
+	\includegraphics[width=\textwidth]{img/SystemSub.png}
+    \end{center}
+    \label{fig:SysSub}
+	\caption{Integration of the whole System.}
+\end{figure}
 \end{document}
