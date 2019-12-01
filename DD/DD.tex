@@ -23,6 +23,7 @@
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
 
 \begin{document}
 
@@ -490,20 +491,57 @@ In the following table it is shown which components of the system are in charge 
 The non-functional requirements defined in Section 3.3 and 3.5 of the RASD are mainly a matter of concern for the development team. However, design choices such as the three-tier architecture and the subdivision in decoupled subsystems aim for increased performances and in general to improve the software quality attributes.
 
 \chapter{Implementation, Integration and Test Plan}
-As previously illustrated in the Component Diagram, the System is composed by many components that can be divided into the following categories:
+As previously illustrated in the Component Diagram, the System is made of many components that can be divided into the following categories:
 \begin{itemize}
 \item \textbf{Frontend components}: Client application.
 \item \textbf{Backend components}: User controller, Authentication controller, Report controller, History Manager, Notify controller, Security Manager, AI controller, Statistic controller, StatisticSuggestion Interface and Storage Interface.
 \item \textbf{External components}: DB, Mail service interface, OCR service interface, Map service Interface and Municipality Interface.
 \end{itemize}
-In order to implement, integrate and test the System, a bottom-up approach will be used, considering also the importance of the various functionalities. Infact as illustrated in the Figure ref\{fig:all-oy\}, the component are grouped into subsystems, therefore the components of the same subsystem will be implemented, integrated and tested first and then the subsystems will be integrated and tested together in order to verify the correct behaviour of the System. As specified in the RASD, the System is not responsible for failures of the third parts services, so the components of the external subsystems don't need to be tested because they are considered reliable. Therefore the implementation and integration process will be performed in two levels:
-\begin{itemize}
+In order to implement, integrate and test the system, a bottom-up approach will be used, considering also the importance of the various functionalities. Thus, since some components are grouped into subsystems as illustrated in the Figure \ref{fig:componentdiagram}, the components in the same subsystem will be implemented, integrated and tested first and then the subsystems will be integrated and tested together in order to verify the correct behaviour of the system. As specified in the RASD, the System is not responsible for failures of third party services, so the components of the external subsystems don't need to be tested and are assumed to be reliable. Therefore the implementation and integration process will be performed in two phases:
+\begin{enumerate}
 \item Implementation and integration of each component of the same subsystem;
 \item Integration of different subsystems;
-\end{itemize}
-%The following table lists the main features avaiable, their importance and %implementation difficulty is shown below to better understand the decision about %implementation, testing and integration that will be taken in the rest of this section.
+\end{enumerate}
+The following table lists the main features avaiable to the customer. Their importance and implementation difficulty is shown below to better understand the decision about implementation, testing and integration that will be taken in the rest of this section.
+\clearpage
 
-Regarding the first phase, components integration of the same subsystem will be applied only for backend components. More specifically, the components to be integrated and tested together, as showed in the Component diagram, are:
+\begin{table}
+
+\bgroup
+\def\arraystretch{1.5}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{| c || c | c |}
+    \hline
+    \textbf{Functionality} & \textbf{Importance for the customer} & \textbf{Difficulty 
+    of implementation}\\
+
+    \hline
+    \hline
+    Sign up and login & \textit{Low} & \textit{Low} \\
+
+    \hline
+    Report a violation & \textit{Medium} & \textit{Low} \\
+
+    \hline
+    Consult older reports & \textit{Medium} & \textit{Low} \\
+
+    \hline
+    Use external map services & \textit{Low} & \textit{Low} \\
+
+    \hline
+    Visualize statistics & \textit{High} & \textit{High} \\
+
+    \hline
+    Visualize suggestions & \textit{Medium} & \textit{High} \\
+
+    \bottomrule
+\end{tabular}
+}
+\egroup
+\caption{Main functionalities with their importance and implementation difficulty}
+\end{table}
+
+\noindent Regarding the first phase, components integration of the same subsystem will be applied only for backend components. More specifically, the components to be integrated and tested together, as showed in the Component Diagram, are:
 \begin{itemize}
 \item User Controller and Storage Interface, forming the \textit{User subsystem};
 \item Authentication Controller and Storage Interface, forming the \textit{Authentication subsystem};
