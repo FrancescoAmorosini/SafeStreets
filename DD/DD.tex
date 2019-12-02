@@ -10,6 +10,7 @@
 \usepackage{ltablex}
 \usepackage{multicol}
 \usepackage{capt-of}
+\usepackage{float}
 
 \title{Design Document}
 \author{AmorosiniCasaliFioravanti}
@@ -166,7 +167,7 @@ The system is composed of a multitier architecture and each specific role is cla
 \section{Runtime view}
 
 \subsection{Registration Runtime View}
-\begin{figure}[!ht]
+\begin{figure}[!h]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/Registration1.png}
     \end{center}
@@ -177,7 +178,7 @@ The Guest has to register before accessing the functionalities of the applicatio
 In the event that is an Authority to register, once the Authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to be sure that the entered badge number is correct. If the Municipality Interface replies that the provided badge number is correct, the registering procedure is the same as before; otherwise an HTTP Error is send back to the Guest that has sent the information.    
 
 \subsection{Login Runtime View}
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/Login1.png}
     \end{center}
@@ -187,7 +188,7 @@ In the event that is an Authority to register, once the Authority has filled and
 The Client to access the functionalities of the application has to log in (clearly as specified before he/she must be registered). The Client fill the Log in form with his/her credentials. The provided information are sent to the Application Server through an HTTP POST. The \textit{Authentication Controller} handles the request and checks the information. It interfaces with the \textit{Storage Interface} that runs a SELECT query on the Database to verify the existence of the User. If the query return a result an HTTP Success message is return to the Client that now is able to access to the functionalities of the application, otherwise an HTTP Error is send back to the Client that is not able to log in successfully.
 %\newpage
 \subsection{Send Report Runtime View}
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/SendReport1.png}
     \end{center}
@@ -211,7 +212,16 @@ The procedure to compute the statistics and the suggestions is performed by the 
 Security Manager} uses the Storage Interface to retrieve all the report. So it decrypt them and requests the \textit{Statistic Controller} to compute the statistics on them. If the Municipality has given the permission to process the data relative to the traffic tickets, the Storage Interface retrieve them contacting the \textit{Municipality Interface} (external to the system). As soon as the statistics are available, the Statistic Controller provides them to the StatisticsSuggestions Interface and moreover provides them to the \textit{AI Controller} that runs some algorithm to compute useful suggestions based on the avaiable statistics.
 When avaiable, the suggestions, as the statistics, are provided to the StatisticsSuggestions Interface. So when an User goes in to the Statistics section, the StatisticsSuggestions Interface shows him everything. 
 In particular if the User is an Authority, suggestions are also shown.  
-
+\subsection{History Report Runtime View}
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/HistoryReport.png}
+    \end{center}
+    \label{fig:HistoryReportSD}
+	\caption{Report's History Runtime View.}
+\end{figure}
+The User is logged in and want to retrieve all the reports he/she has sent up to that moment with a GET request. The \textit{History Manager} handles this request and interfacing with the Storage Interface tries to retrieve all the reports relative the specific User. So the Storage Interface runs a query on the Database and if there are reports corresponding to the User who requested it, an HTTP Success message is returned back to the User and the Storage Manager shows the reports; otherwise an HTTP Error is send back to the User.
+If the User that request the Report's History is an Authority the History Manager retrieves and shows all the Report based on the report's date selected by the Authority.   
 
 \section{Component Interfaces}
 \subsection{API REST}
