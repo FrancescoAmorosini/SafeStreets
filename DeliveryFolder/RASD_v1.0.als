@@ -5,7 +5,7 @@
 	lone abstract sig TrafficViolation extends ReportType{}
 	lone sig Statistics{}
 	lone sig Suggestions{}
-	lone sig DBMS{}
+	lone sig StorageManager{}
 	
 	sig Municipality{}
 	sig Location{
@@ -33,10 +33,10 @@
 	
 	lone sig ReportManager{
 		notify: Report-> Authority,
-		store: Report -> DBMS
+		store: Report -> StorageManager
 	}
 	lone sig InformationManager{
-		retrieve: DBMS,
+		retrieve: StorageManager,
 		build: lone Statistics,
 		compute: lone Suggestions,
 		giveStats: Statistics -> User,
@@ -57,7 +57,7 @@
 		all r:Report, c:Citizen |one rm:ReportManager | (r.sender=c) <=>( r->rm in c.send)
 	}
 	fact reportStore{
-		all rm:ReportManager, r:Report |one db:DBMS | r->db in rm.store
+		all rm:ReportManager, r:Report |one db:StorageManager | r->db in rm.store
 	}
 	fact notifyReportBasedOnTypeAndMunicipality{
 		all a:Authority,r:Report |one rm:ReportManager | ((r.type = TrafficViolation) and (r.location.municipality =a.municipality)) <=> (r->a in rm.notify) 
@@ -98,8 +98,8 @@
 		no v:TrafficViolation| ( no r: Report | r.type = v)
 		no i:Incident| ( no r: Report | r.type = i)	
 	}
-	fact aloneDBMS{
-		(#InformationManager = 0 and #ReportManager = 0) implies #DBMS = 0
+	fact aloneStorageManager{
+		(#InformationManager = 0 and #ReportManager = 0) implies #StorageManager = 0
 	}
 	
 	/*ASSERTIONS*/
@@ -133,8 +133,8 @@
 	assert allUsersLoggedWithID{
 		no u:User, lm:LoginManager, i:Int | (i->u in lm.logged) and (i != u.id)
 	}
-	assert onlyRMandIMaccessDBMS{
-		no d:DBMS, rm:ReportManager, im:InformationManager | rm = none and im = none and d != none
+	assert onlyRMandIMaccessStorageManager{
+		no d:StorageManager, rm:ReportManager, im:InformationManager | rm = none and im = none and d != none
 	}
 	
 	/*PREDICATES*/
@@ -197,4 +197,4 @@ check allUsersCanSeeStatistics
 check suggestionsVisibility
 check allUsersLoggedWithID
 check noWanderingClient
-check onlyRMandIMaccessDBMS
+check onlyRMandIMaccessStorageManager
