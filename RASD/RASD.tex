@@ -401,8 +401,7 @@ In the following section are explained the functional requirements of the applic
 			\begin{itemize}
 				\item If the \textbf{\textit{Guest}} is an Authority, he/she has to insert his/her badge number as username and provide the municipality of belonging.
 			\end{itemize}	
-			\item The \textbf{\textit{Login Manager}} checks if all the informa-
-			tions are correct, in which case it generates a random activation
+			\item The \textbf{\textit{Login Manager}} checks if all the informations are correct, in which case it generates a random activation
 			URL and asks the \textbf{\textit{Mailing Service}} to forward the URL to the email address of the \textbf{\textit{Guest}}.
 			\item The \textbf{\textit{Guest}} receives the mail and clicks on the URL. \item The \textbf{\textit{Login Manager}} accepts the registration and stores the data provided by the \textbf{\textit{User}} .
 	\end{enumerate}}\\
@@ -811,14 +810,20 @@ Moreover, the System is not designed to communicate with any registry office, th
 	\item \textbf{Latitude and Longidute degrees} for all the information regarding locations.
 \end{itemize}
 \subsection{Hardware Limitations}
-The application should be able to run, at least, under the following condi-
-tions:
+The application should be able to run, at least, under the following conditions:
 \begin{itemize}
-	\item iOS or Android smartphone
-	\item 3G connections at 2Mb/s
-	\item 50 MB of space
-	\item 2 GB of RAM
-	\item GPS
+	\item Mobile application:
+	\begin{itemize}
+		\item iOS or Android smartphone
+		\item 3G connections at 2Mb/s
+		\item 50 MB of space
+		\item 2 GB of RAM
+		\item GPS
+	\end{itemize}
+	\item Web application:
+	\begin{itemize}
+		\item Updated web browser
+	\end{itemize} 
 \end{itemize}
 \section{Software System Attributes}
 This section will cover the non-functional requirements that might be used to evaluate the software performances. All of the covered requirements are part of the ISO/IEC 9126-1:2001 (see Section \ref{docs}).
@@ -850,6 +855,7 @@ The main aspects of the System and its relationships with the World are represen
 \end{figure}\\
 In such world the Users are modeled either as Citizen or Authority, and each of them has a unique ID (and badge number, if Authority) for which the following facts hold:
 \begin{lstlisting}[language=alloy]
+	
 	-- All IDs and badges are unique, different and positive integers --
 	fact idsAndBadgesDifferent{
 		all disj u1,u2:User | u1.id!=u2.id 

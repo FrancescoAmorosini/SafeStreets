@@ -59,6 +59,7 @@ Further information about the scope of the application can be found in the Chapt
     \item \textbf{OCR}: \textit{Optical Character Recognition}, software dedicated to the detection of characters contained in a document and to their transfer to digital text that can be read by a machine. In this context, OCR will be used to read license plates.
     \item \textbf{UML}: \textit{Unified Modeling Language}, a standard visual modeling language intended to be used for analysis, design, and implementation of software-based systems.
     \item \textbf{MVC}: \textit{Model View Controller}, a software design pattern commonly used to provide user interfaces.
+    \item \textbf{CRUD}: \textit{Create, Read, Update, Delete}. These are the basic four operations which allow users to interact with a resource in a relational database (\texttt{INSERT}, \texttt{SELECT},\texttt{UPDATE}, \texttt{DELETE}).
     \item \textbf{UX}: \textit{User eXperience}, a diagram used to describe the interfaces provided by the application.
     \end{itemize}
 \subsection{Abbreviations}
@@ -167,7 +168,7 @@ The system is composed of a multitier architecture and each specific role is cla
 \section{Runtime view}
 
 \subsection{Registration Runtime View}
-\begin{figure}[!h]
+\begin{figure}[!ht]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/Registration1.png}
     \end{center}
@@ -361,34 +362,35 @@ applications that can be modified, enhanced or maintained just by operating on a
 	\caption{Three-tier architecture schema.}
 \end{figure}
 
-\begin{center}\large{\textbf{Thin Client}}\end{center}
-A thin Client is a lightweight computer which does most of the computation in a remote Server. In this paradigm in fact, since the Servers take care of several duties such as storage 
-of data and performing calculations, the Client does not need to have a large memory or powerful computing capabilities to run the application.
-\begin{center}\large{\textit{Motivations}}\end{center} 
-The application is thought mostly for mobile phones which do not have great computing power or very large memories. Thanks to a thin client a internet connection is virtually the only requirements to use the application. Furthermore, this architecture simplify the front-end implementation by shifting most of the execution to the servers.
-
 \begin{center}\large{\textbf{MVC Design Pattern}}\end{center}
 Model-View-Controller is a software design pattern commonly used to develop user interfaces. Indeed, this pattern is used for the front-end implementation of the application. It divides the program logic in three interconnected elements: \textit{model} that directly manages data and rules of the application, \textit{view} which handles any representation of data, \textit{controller} that 
-accepts input and converts it to commands for the model or view. This mechanism is used to separate internal representation of information from the ways information is presented to and accepted from the user. \\
+accepts input and converts it to commands for the model or view. This mechanism is used to separate internal representation of information from the ways information is presented to and accepted from the user. 
 \begin{center}\large{\textit{Motivations}}\end{center} 
 MVC allows full encapsulation of objects. This means that each component can be changed without creating issues to other components.
 Furthermore, MVC provides decopuling of its components, which means that developers are able to work in parallel on different components of the pattern without interfering with each other.
 
 \begin{center}\large{\textbf{Reverse Proxy Design Pattern}}\end{center}
 A simple proxy acts as an interface to refer an object in another machine. The reverse proxy offers a single point of access (with HTTP) to multiple Clients who want to access to several application servers. In practice, it is a wrapper for an object behind the scenes. 
-Proxies also provides extra functionalities such as data caching (g.e. store the newest statistics available) and security (g.e. client-side firewall).\\
+Proxies also provides extra functionalities such as data caching (g.e. store the newest statistics available) and security (g.e. client-side firewall).
 \begin{center}\large{\textit{Motivations}}\end{center} 
 It is useful to organize the requests of multiple clients and to save frequent requested informations. It also protects the application servers from external attack and slightly improve the overall performances.
 
-\begin{center}\large{\textbf{Relational DBMS}}\end{center}
-The Data layer consists of a relational DBMS. The relational model is a widely used design and there are several valid options, 
-both open source and not, for what concerns the choice of the Management System.
-
-\section{Other Architecture}
 \begin{center}\large{\textbf{REpresentational State Transfer}}\end{center}
-REST is an architectural software type that has become a standard in the creation of Web API. REST describes all type of interfaces capable of exchange data through HTTP, without using auxiliary technologies like cookies or other protocols. This architecture make the communication client-server totally stateless (every request is independent from the others).\\ An HTTP method show the operation to do for accessing an URL. The requests are written in JSON code.
+REST is software architectural style that has become a standard in the creation of Web API. It describes those types of interfaces capable of exchanging data and enabling CRUD operations through HTTP requests, without using auxiliary technologies like cookies or other protocols. This architecture makes the communication client-server totally stateless (every request is independent from the others), and also allows for different representations of a resource (g.e statistics) based on who is accessing it (g.e. user from a certain location).
 \begin{center}\large{\textit{Motivations}}\end{center}
-We decide to use REST to simplify the design and the implementation of the application. Indeed, the developers do not need to take in account the traceability of states.
+We decide to use REST to simplify the design and the implementation of the application. Indeed, the developers do not need to take in account the traceability of states. REST also enables a design approach based on microservices.
+
+\section{Other Architectures}
+\begin{center}\large{\textbf{Thin Client}}\end{center}
+A thin Client is a lightweight computer which does most of the computation in a remote Server. In this paradigm in fact, since the Servers take care of several duties such as storage 
+of data and performing calculations, the Client does not need to have a large memory or powerful computing capabilities to run the application.
+\begin{center}\large{\textit{Motivations}}\end{center} 
+The application is thought mostly for mobile phones which do not have great computing power or very large memories. Thanks to a thin client a internet connection is virtually the only requirements to use the application. Furthermore, this architecture simplify the front-end implementation by shifting most of the execution to the servers.
+
+\begin{center}\large{\textbf{Microservices}}\end{center}
+Microservices is a software development technique that is based on developing a single application as a suite of smaller services. Each service runs its own process and is independently deployable from the other, and its interactions with other microservices are orchestrated using a RESTful approach based on communicating with lightweight mechanisms (HTTP).
+\begin{center}\large{\textit{Motivations}}\end{center}
+A microservices approach favors a decentralized management of the system's functionalities by loosely copuling its subsystems. This approach promotes information hiding between different services, gives rise to high resilience to failures (which are isolated whithin the subsystem involved), and allows to replicate each service according to its usage rather than duplicating the whole application. 
 
 \chapter{User Interface Design}
 \section{Mockup}
@@ -523,7 +525,7 @@ In the following table it is shown which components of the system are in charge 
 \captionof{table}{Functional requirements mapping on system's component}
 
 \section{Non-Functional Requirements}
-The non-functional requirements defined in Section 3.3 and 3.5 of the RASD are mainly a matter of concern for the development team. However, design choices such as the three-tier architecture and the subdivision in decoupled subsystems aim for increased performances and in general to improve the software quality attributes.
+The non-functional requirements defined in Section 3.3 and 3.5 of the RASD are mainly a matter of concern for the development team. However, design choices such as the three-tier architecture and the microservices approach aim for increased performances and in general to improve the software quality attributes.
 
 \chapter{Implementation, Integration and Test Plan}
 As previously illustrated in the Component Diagram, the System is made of many components that can be divided into the following categories:
@@ -555,13 +557,13 @@ The following table lists the main features avaiable to the customer. Their impo
     Sign up and login & \textit{Low} & \textit{Low} \\
 
     \hline
-    Report a violation & \textit{Medium} & \textit{Low} \\
-
-    \hline
     Consult older reports & \textit{Medium} & \textit{Low} \\
 
     \hline
-    Use external map services & \textit{Low} & \textit{Low} \\
+    Use external map services & \textit{Medium} & \textit{Low} \\
+
+    \hline
+    Report a violation & \textit{Medium} & \textit{Medium} \\
 
     \hline
     Visualize statistics & \textit{High} & \textit{High} \\
@@ -660,4 +662,47 @@ At the end of the previuous procedures the \textit{frontend}, \textit{backend} a
     \label{fig:SysSub}
 	\caption{Integration of the whole System.}
 \end{figure}
+
+\chapter{Effort Spent}
+\subsection*{Alice Casali}
+\begin{table}[!ht]
+	\begin{tabular}{|C{.60\textwidth}||C{.20\textwidth}|}
+		\toprule
+        \textbf{Task} & \textbf{Hours}\\
+        \midrule
+        Discussion about architectural design & 3\\
+        \midrule
+        High-level architecture diagram & 3\\
+        \midrule
+        Architectural Structures & 4\\
+        \midrule
+        MVC explanation & 2\\
+        \midrule
+        Deployment View & 3\\
+        \midrule
+        Added REST architecture & 2 \\
+        \midrule
+        Fixed Deployment View & 1\\
+        \midrule
+        API REST table for Computation Interfaces & 4\\
+		\midrule
+		User interface mockup & 2\\
+        \midrule
+        User interface UX diagrams & 3\\
+        \midrule
+		\small{\textbf{Recap Call}}: & \\
+		\vspace{.2mm}
+		$\bullet$ Discussion on the consistency between the document & \vspace{.2mm} 1\\
+        $\bullet$ Schedule of missing sections & 1\\
+        \midrule
+        Added new API REST table & 2\\
+        \midrule
+        Relational database & 2\\
+        \midrule
+		Sequence Diagram review & 2\\
+		\midrule
+		& \textbf{Total:} 35\\
+		\bottomrule
+	\end{tabular}
+\end{table}
 \end{document}
