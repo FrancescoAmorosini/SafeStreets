@@ -97,7 +97,7 @@ In this chapter the architectural structure of the system will be discussed at m
 The UML component diagram aims at capturing the internal modular structure of the components, showing how they are connected together in order to form larger components. Components are wired together by using an assembly connector to connect the required interface of one component with the provided interface of another component.
 \begin{figure}[!ht]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/Component2_2.png}
+	\includegraphics[width=\textwidth]{img/Component2_3.png}
     \end{center}
     \label{fig:componentdiagram}
 	\caption{Component diagram of the system.}
@@ -202,19 +202,28 @@ At this point, when all the information are avaiable, the report is shared with 
 Then using the \textit{Security Manager} the report is encrypted and stored in the Database using the \textit{Storage Interface}, that runs an INSERT query. 
 \newpage
 \subsection{Compute Statistics Runtime View}
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/ComputeStatistics.png}
     \end{center}
     \label{fig:ComputeStatisticSD}
 	\caption{Compute Statistics Runtime View.}
 \end{figure}
-The procedure to compute the statistics and the suggestions is performed by the \textit{Information Manager}. In particular the \textit{
-Security Manager} uses the Storage Interface to retrieve all the report. So it decrypt them and requests the \textit{Statistic Controller} to compute the statistics on them. If the Municipality has given the permission to process the data relative to the traffic tickets, the Storage Interface retrieve them contacting the \textit{Municipality Interface} (external to the system). As soon as the statistics are available, the Statistic Controller provides them to the StatisticsSuggestions Interface and moreover provides them to the \textit{AI Controller} that runs some algorithm to compute useful suggestions based on the avaiable statistics.
-When avaiable, the suggestions, as the statistics, are provided to the StatisticsSuggestions Interface. So when an User goes in to the Statistics section, the StatisticsSuggestions Interface shows him everything. 
-In particular if the User is an Authority, suggestions are also shown.  
+The procedure to compute the statistics is performed by the \textit{Information Manager}. In particular the \textit{
+Security Manager} uses the Storage Interface to retrieve all the report. So it decrypt them and requests the \textit{Statistic Controller} to compute the statistics on them. If the Municipality has given the permission to process the data relative to the traffic tickets, the Storage Interface retrieve them contacting the \textit{Municipality Interface} (external to the system).
+When an User taps on Statistic button, a GET request is send to the StatisticsSuggestions Interface, that retrieves the avaiable statistics from the Statistic Controller and shows them to the User. An HTTP Success message is also send back to the User.    
+\subsection{Compute Suggestion Runtime View}
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/ComputeSuggestions.png}
+    \end{center}
+    \label{fig:SuggestionsSD}
+	\caption{Compute Suggestions Runtime View.}
+\end{figure}
+The procedure to compute the suggestions is performed as soon as the statistics are computed and avaiable. So at this moment, the Statistic Controller send the already computed statistics to the \textit{Ai Controller}, that runs some smart algorithms to compute useful suggestions. As for the statistics, whenever an User taps on Suggestion button, a GET request is send to the StatisticsSuggestions Interface that retrieve the suggestions from 
+the AI Controller and shows them to the User. Notice that only User authenticated as Authority can visualize the suggestions.
 \subsection{History Report Runtime View}
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/HistoryReport.png}
     \end{center}
