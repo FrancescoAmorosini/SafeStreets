@@ -268,7 +268,7 @@ The Authentication Controller exposes the following methods: \\
 	\hline
     \textbf{Error Response} & code: 401 \newline body: {error: "Unauthorized access"} \\
 	\hline
-	\textbf{Notes} & Allows the client to obtain an authentication Token \\
+	\textbf{Notes} & Allows the Client to obtain an authentication. \\
 	\hline
 \end{tabular}
 \\
@@ -286,7 +286,7 @@ The Authentication Controller exposes the following methods: \\
         \hline
         \textbf{Error Response} & code: 404 NOT FOUND \newline content: {error: "Incorrect activation code"} \newline \newline code: 401 \newline body: {"error": "Account not activated"} \newline \newline code: 401 \newline body: {error: "Wrong password"} \newline \newline code: 401 \newline body: {error: "Provided email does not exist"}   \\
         \hline
-        \textbf{Notes} & Allows a Client to activate the account \\
+        \textbf{Notes} & Allows a Client to activate the account. \\
         \hline
     \end{tabular}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -299,11 +299,11 @@ tional on the Citizen authentication which is handled by the \textit{Authenticat
 \begin{center}{\textbf{Send Report}}\end{center}
     \begin{tabular}{| l | p{8cm} |}
         \hline
-        \textbf{Endpoint} & */send \\
+        \textbf{Endpoint} & */report/send \\
         \hline
         \textbf{Method} & POST \\
         \hline
-        \textbf{Data Params} & date: [string] \newline time: [string] \newline license plate: [string] \newline picture: [png/jpg]\\
+        \textbf{Data Params} & date: [string] \newline time: [string] \newline license plate: [string] \newline pictureID: [int]\\
         \hline
         \textbf{Success Response} &  code: 200 \newline content: {message: "Report received successfully"} \newline \newline code:202 \newline body: {message: "Accepted request"}\\
         \hline
@@ -314,17 +314,55 @@ tional on the Citizen authentication which is handled by the \textit{Authenticat
     \end{tabular}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\\\
+\begin{center}\large{\textbf{StatisticsSuggestions Interface}}\end{center}
+The \textit{StatisticsSuggestions Interface} handles the GET requests of the Users by giving them statistics and suggestions (only in case that the User is an Authority).
+\begin{center}{\textbf{Get Statistics}}\end{center}
+    \begin{tabular}{| l | p{8cm} |}
+        \hline
+        \textbf{Endpoint} & */stat/get \\
+        \hline
+        \textbf{Method} & GET \\
+        \hline
+        \textbf{Data Params} & \\
+        \hline
+        \textbf{Success Response} &  code: 200 \newline content: {message: "Request satisfied successfully"}\\
+        \hline
+        \textbf{Error Response} & \\
+        \hline
+        \textbf{Notes} & Allows the User to retrieves up to date statistics. \\
+        \hline
+    \end{tabular}
 \\
+\begin{center}{\textbf{Get Suggestions}}\end{center}
+    \begin{tabular}{| l | p{8cm} |}
+        \hline
+        \textbf{Endpoint} & */sugg/get \\
+        \hline
+        \textbf{Method} & GET \\
+        \hline
+        \textbf{Data Params} & \\
+        \hline
+        \textbf{Success Response} &  code: 200 \newline content: {message: "Request satisfied successfully"}\\
+        \hline
+        \textbf{Error Response} & \\
+        \hline
+        \textbf{Notes} & Allows the Authority to retrieves up to date suggestions. \\
+        \hline
+    \end{tabular}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\\\
 \begin{center}\large{\textbf{History Manager}}\end{center}
     The \textit{History Manager} handles the request of the User providing an old report stored in the database. When a date is selected, the corrisponding old report is requested and delivered to the User.
 \begin{center}{\textbf{Get old report}}\end{center}
     \begin{tabular}{| l | p{8cm} |}
         \hline
-        \textbf{Endpoint} & */get \\
+        \textbf{Endpoint} & */report/get \\
         \hline
         \textbf{Method} & GET \\
         \hline
-        \textbf{Data Params} & old date: [string]\\
+        \textbf{Data Params} & old date: [date]\\
         \hline
         \textbf{Success Response} &  code: 200 \newline content: {message: "Report received successfully"}\\
         \hline
@@ -386,6 +424,16 @@ It is useful to organize the requests of multiple clients and to save frequent r
 REST is software architectural style that has become a standard in the creation of Web API. It describes those types of interfaces capable of exchanging data and enabling CRUD operations through HTTP requests, without using auxiliary technologies like cookies or other protocols. This architecture makes the communication client-server totally stateless (every request is independent from the others), and also allows for different representations of a resource (g.e statistics) based on who is accessing it (g.e. user from a certain location).
 \begin{center}\large{\textit{Motivations}}\end{center}
 We decide to use REST to simplify the design and the implementation of the application. Indeed, the developers do not need to take in account the traceability of states. REST also enables a design approach based on microservices.
+
+\begin{center}\large{\textbf{Relational DBMS}}\end{center}
+The Data tier consists in a relational database where all the informations are strored in a structured way. There are a lot of table structures that can be used, 
+here we show an example of how data can be organised in a Entity Relation Schema.
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/RDBMS.png}
+	\end{center}
+	\caption{Example of entity relation schema.}
+\end{figure}
 
 \section{Other Architectures}
 \begin{center}\large{\textbf{Thin Client}}\end{center}
@@ -707,8 +755,14 @@ At the end of the previuous procedures the \textit{frontend}, \textit{backend} a
         Relational database & 2\\
         \midrule
 		Sequence Diagram review & 2\\
-		\midrule
-		& \textbf{Total:} 35\\
+        \midrule
+        Completed API REST table & 2\\
+        \midrule
+        Relational database schema & 3\\
+        \midrule
+        Group review & 2\\
+        \midrule
+		& \textbf{Total:} 42\\
 		\bottomrule
 	\end{tabular}
 \end{table}
