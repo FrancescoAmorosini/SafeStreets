@@ -114,19 +114,18 @@ The UML component diagram in Figure \ref{fig:componentdiagram} aims at capturing
     \item \textbf{Report Interface}: it exposes to the User an interface in the form of a blank report to be compiled.
     \item \textbf{Report Controller}: it aims to check the validity of the sent reports. To do this, it communicates with the Report Interface to check them as soon as they are recieved.
     \item \textbf{Notify Controller}: the role of this component is to select the correct authorities to notify based on their municipality, using his \textit{AuthorityList}. It depends on the Report Controller, in the sense that it will notify the authorities only if the check of the report is successful and the type of the report is \textit{Traffic Violation}.
-    \item \textbf{Security Manager}: it takes care of the security side: as specified in the Security section of the RASD, before being stored, the report is encrypted and then stored in the database. This task is accomplished by this specific component, that also depends on the Report Controller due to the fact that if the report doesn't pass the check verification, it will be discarded and therefore never encrypted.
+    \item \textbf{Security Manager}: it takes care of the security side: as specified in the Security section of the RASD, before being stored, the report is encrypted so that no one can access it besides some specific system components. This component also depends on the Report Controller verification process, due to the fact that if the report doesn't pass it, it will be discarded and therefore never encrypted.
 \end{itemize}
-\item \textbf{Storage Interface}: its main purpose is to retrive the reports from the database, decoupling the other components of the system from the particular data sources. This component is also in charge of authenticating the system with local municipalities' systems, and eventually crossing their data with SafeStreets' own information.
-\item \textbf{DB}: this component represent the DBMS, which provides an interface to read and store data. Both user credentials and submitted reports are stored in the database.
-%\item \textbf{Notification Interface}: it's goal is to send push notifications to all the authorities identified by the \textit{Notification Controller}.
+\item \textbf{Storage Interface}: its main purpose is to retrive the reports from the database, decoupling the other components of the system from the specific data sources. This component is also in charge of authenticating the system with local municipalities' systems, and eventually crossing their data with SafeStreets' own information. Also, since the most recent version of the statistics and the suggestions are computed whithin the AI Controller and the Statistics Controller, this component is also in charge of keeping the stored version of the data up to date, eventually resolving data conflicts due to the replication of the mentioned components.
+\item \textbf{DB}: this component represents the DBMS, which provides an interface to read and store data. User credentials, submitted reports, and older statistics and suggestions are stored in the database.
 \item \textbf{Information Manager}: a \textit{subsystem} in charge of building statistics, compute safety suggestions and deploy them to the users who requested them.
     \begin{itemize}
         \item \textbf{StatisticsSuggestions Interface}: it exposes to the users the latest statistics and safety suggestions. As aready mentioned in the RASD, the exposed data may be different according to the level of visibility granted to different users.
-        \item \textbf{Statistics Controller}: it analyzes the stored reports to build statistics and find unsafe urban areas. Depending on the agreements with local municipalities, this component can also compute statistics on iussued traffic tickets or refine its statistics about accidents.
-        \item \textbf{AI Controller}: its role is to analye previously built statistics and compute safety suggestions. These suggestions are addressed to the authorities who use the SafeStreets application.
+        \item \textbf{Statistics Controller}: it analyzes the stored reports to build statistics such as unsafe urban areas, most frequent violations, and offenders. Depending on the agreements with local municipalities, this component can also compute statistics on iussued traffic tickets or refine its statistics about accidents.
+        \item \textbf{AI Controller}: its role is to analyze previously built statistics and compute safety suggestions. These suggestions are addressed to the authorities who use the SafeStreets application.
         \item \textbf{Security Manager}: similarly to the one described in the Report Manager subsystem, this component is in charge of decrypting stored reports so that they can be analyzed. To ensure that no report is ever altered, this component can perform read-only operations, whereas the one in the Report Manager is the ony one which disposes of write permissions.
     \end{itemize}
-\item \textbf{Municipality Interface}: it is a component external respect to the system. It deals with interfacing with the Authentication Control to confirm the validity of the badge number of the authorities and it is useful to retrieve data relative to the traffic tickets, in this case only if the Municipality gives the permission to treat this data.
+\item \textbf{Municipality Interface}: this component represents the point of access to the municipality's system. Its main tasks are to interact with the Auth Controller to confirm the validity of the badge number provided by users, to grant or refuse the access of the Storage Interface to the municipality's database, and eventually to mediate the retrieving data process.
 \item \textbf{External Services Interfaces}: it's a set of components whose main task is to make an API call to the corresponding third party service.
     \begin{itemize}
         \item \textbf{Mail service Interface}: it's an interface towards the mailing service, which is in charge of sending confirmation mails at the end of the registration process.
@@ -135,7 +134,7 @@ The UML component diagram in Figure \ref{fig:componentdiagram} aims at capturing
 \end{itemize} 
 \end{itemize}
 \section{Deployment view}
-In this section it is described the deployment view of the components inside the system. The deployment diagram shows the distribution of components of the hardware.
+In this section it is described the deployment view of the components inside the system. The deployment diagram shows the distribution of hardware components.
 \begin{figure}[!ht]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/DeploymentView.png}
@@ -146,19 +145,18 @@ In this section it is described the deployment view of the components inside the
 The system is composed of a multitier architecture and each specific role is clarified below.\\
 \begin{itemize}
     \item \textbf{Client}\\
-    The first tier contains the mobile client which have installed SafeStreets application
-    to access all its functionalities, and the PC that accesses to SafeStreets through the Web Browser.\\
+    The first tier contains the mobile clients which installed the SafeStreets application and the desktop clients which accessed its functionalities via web browser.\\
     \item \textbf{Web Server}\\
     A web server is used to store, process and deliver web pages to desktop
     clients. The communication between client and server takes place using the
     Hypertext Transfer Protocol (HTTP).
     \item \textbf{Reverse Proxy}\\
-    The second tier contains a reverse proxy to implement load balancing on the several requests to access the application servers.
-    Furthermore, it is a cacheble component who can speed-up the most frequent requests.
+    The second tier contains a reverse proxy to implement the load balancing of the several requests towards the application servers.
+    Furthermore, a reverse proxy works as a single point of access which improves the security and enables a caching function which can speed-up the most frequent requests.
     Linux machine have been chosen for safety and simplicity. \\
     \item \textbf{Application servers}\\
-    This is the middleware level of the application where all the computations happen. The servers
-    are distributed to increase the scalability of the network, they are also part of the second tier.\\
+    This is the logic level of the application where all the computations happen, which corresponds to the second tier of the architecture. The servers
+    are distributed to increase the scalability, reliability and availability of the network.\\
     \item \textbf{Firewall}\\
     The access to the Database is protected from a firewall to avoid unauthorized accesses to sensible data.\\
     \item \textbf{Database Server}\\
@@ -175,8 +173,8 @@ The system is composed of a multitier architecture and each specific role is cla
     \label{fig:RegistrationSD}
 	\caption{Registration Runtime View.}
 \end{figure}
-The Guest has to register before accessing the functionalities of the application. The Guest fills a form containing the necessary information. The information are sent to the Application Server through an HTTP POST. The \textit{Authentication Controller} handles the request, verifies if the information are correct and complete. Then it generates an URL, that it is forwarded by the external mailing system to the Guest. Once the Guest confirms the registration clicking on the URL link, the \textit{Storage Interface} insert the new User with its credentials in the Database, so from this moment on the new User is able to authenticate and to use the functionalities of the application.
-In the event that is an Authority to register, once the Authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to be sure that the entered badge number is correct. If the Municipality Interface replies that the provided badge number is correct, the registering procedure is the same as before; otherwise an HTTP Error is send back to the Guest that has sent the information.    
+The guest has to register before accessing the functionalities of the application. The guest fills a form containing with his/her authentication credentials. The credentials are sent to the Application Server through an HTTP POST. The \textit{Authentication Controller} handles the request and verifies that the information are valid and complete. Then it generates an URL that it is forwarded by the external mailing system to the uest. Once the guest confirms the registration clicking on the URL link, the \textit{Storage Interface} insert the new user with its credentials in the database, so from this moment on the new user is able to authenticate and to use the functionalities of the application.
+In the event that is an authority to register, once the authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to be sure that the entered badge number is correct. If the Municipality Interface replies that the provided badge number is correct, the registering procedure is the same as before; otherwise an HTTP Error is sent back to the guest that has sent the information.    
 
 \subsection{Login Runtime View}
 \begin{figure}[H]
@@ -446,7 +444,7 @@ In the following table it is shown which components of the system are in charge 
     \large{Auth Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
     $\bullet$ {[R.1]} A visitor must be able to register. During the registration the System will ask to provide some credentials. \\
 
-	$\bullet$ {[R.2]} Check if the Guest credentials are valid \\
+	$\bullet$ {[R.2]} Check if the guest credentials are valid \\
 
 	$\bullet$ {[R.3]} If credentials are valid, the System sends a confirmation email \\
 
@@ -513,7 +511,7 @@ In the following table it is shown which components of the system are in charge 
     \large{StatisticsSuggestions Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
     $\bullet$ {[R.11]} Provide two different level of visibility regarding the statistics. Only the Authorities can consult statistics with private data. \\
 
-    $\bullet$ {[R.12]} Safestreets' application must show the most recent version of the suggestions and statistics.\\}\\
+    $\bullet$ {[R.12]} SafeStreets' application must show the most recent version of the suggestions and statistics.\\}\\
     
 	\hline
     \large{Statistic Controller} & \parbox{0.45\textwidth}{ \vspace{2mm}
