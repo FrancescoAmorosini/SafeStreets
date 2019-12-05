@@ -97,7 +97,7 @@ In this chapter the architectural structure of the system will be discussed at m
 The UML component diagram in Figure \ref{fig:componentdiagram} aims at capturing the internal modular structure of the components, showing how they are connected together in order to form larger components. Components are wired together by using an assembly connector to connect the required interface of one component with the provided interface of another component.
 \begin{figure}[!ht]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/Component2_3.png}
+	\includegraphics[width=\textwidth]{img/Component2_33.pdf}
     \end{center}
     \label{fig:componentdiagram}
 	\caption{Component diagram of the system.}
@@ -164,29 +164,29 @@ The system is composed of a multitier architecture and each specific role is cla
 \end{itemize}
 \newpage
 \section{Runtime view}
-
-\subsection{Registration Runtime View}
-\begin{figure}[!ht]
+\begin{center}\large{\textbf{Registration Runtime View}}\end{center}
+\begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/Registration1.png}
+	\includegraphics[width=.90\textwidth]{img/Registrationn.pdf}
     \end{center}
     \label{fig:RegistrationSD}
 	\caption{Registration Runtime View.}
 \end{figure}
-The guest has to register before accessing the functionalities of the application. The guest fills a form containing with his/her authentication credentials. The credentials are sent to the Application Server through an HTTP POST. The \textit{Authentication Controller} handles the request and verifies that the information are valid and complete. Then it generates an URL that it is forwarded by the external mailing system to the uest. Once the guest confirms the registration clicking on the URL link, the \textit{Storage Interface} insert the new user with its credentials in the database, so from this moment on the new user is able to authenticate and to use the functionalities of the application.
-In the event that is an authority to register, once the authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to be sure that the entered badge number is correct. If the Municipality Interface replies that the provided badge number is correct, the registering procedure is the same as before; otherwise an HTTP Error is sent back to the guest that has sent the information.    
+\clearpage
+\noindent Every guest has to register before accessing the functionalities of the application. The guest fills a form containing with his/her authentication credentials, which issent to the Application Server through an HTTP \texttt{POST}. The \textit{Authentication Controller} handles the request and verifies that the entered data are valid and complete. If the form is valid, a new user is created into the database and an email containing a confirmation URL is forwarded by an external mailing system to the guest. Once the guest confirms the registration clicking on the URL link, the \textit{Storage Interface} updates the newly created user to a \textit{verified} status, so from this moment on the guest is able to authenticate and to use the functionalities of the application.
+In case the guest is an authority, once the authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to ensure that the entered badge number corresponds to an authority working at the provided municipality. If the Municipality Interface replies that the provided badge number is correct, the registering procedure is the same as before; otherwise an HTTP error code is sent back to the guest.    
 
-\subsection{Login Runtime View}
+\begin{center}\large{\textbf{Login Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/Login1.png}
+	\includegraphics[width=.9\textwidth]{img/Loginn.pdf}
     \end{center}
     \label{fig:LoginSD}
 	\caption{Login Runtime View.}
 \end{figure}
-The Client to access the functionalities of the application has to log in (clearly as specified before he/she must be registered). The Client fill the Log in form with his/her credentials. The provided information are sent to the Application Server through an HTTP POST. The \textit{Authentication Controller} handles the request and checks the information. It interfaces with the \textit{Storage Interface} that runs a SELECT query on the Database to verify the existence of the User. If the query return a result an HTTP Success message is return to the Client that now is able to access to the functionalities of the application, otherwise an HTTP Error is send back to the Client that is not able to log in successfully.
-%\newpage
-\subsection{Send Report Runtime View}
+Once a guest has undergone the registration procedure, he/she can log in to access the application's functionalities. To do that, he/she fills the login form with the credentials provided during the registration phase. The entered data are sent to the Application Server through an HTTP \texttt{POST}. The \textit{Authentication Controller} checks if the data provided are valid: it asks the \textit{Storage Interface} to run a \texttt{SELECT} query on the database to verify that the data provided belong to a registered user. If the query returns a non-null result, then the \textit{Authentication Controller} requests to login the guest and it returns a successmessage, otherwise an HTTP error is sent back to the guest which has not been able to log in successfully.
+
+\begin{center}\large{\textbf{Send Report Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/SendReport1.png}
@@ -194,23 +194,24 @@ The Client to access the functionalities of the application has to log in (clear
     \label{fig:SendReportSD}
 	\caption{Send Report Runtime View.}
 \end{figure}
-The User (Citizen in this case) is logged in and opens the section to send the report. The \textit{Report Interface} provides the report form that has to be filled. The \textit{Report Interface} interfaces also with the \textit{Report Controller}, so once the report is compiled and sent by the User, the Report Interface shows it to the Report Controller so that it can checks its consistency. 
-If the User has not inserted the license plate in the report, the Report Controller uses an external OCR service system, that execute an OCR algorithm to retrieve the license plate from the picture provided by the User.
-At this point, when all the information are avaiable, the report is shared with the \textit{Notify Controller} which will check its Authority list to notify the right Authority.
-Then using the \textit{Security Manager} the report is encrypted and stored in the Database using the \textit{Storage Interface}, that runs an INSERT query. 
-\newpage
-\subsection{Compute Statistics Runtime View}
+A citizen is logged in and opens the menu to send a new report. The \textit{Report Interface} provides the report form that has to be filled. The \textit{Report Interface} also communicates with the \textit{Report Controller}, thus once the report is compiled and sent by the citizen, the \textit{Report Interface} sends it to the \textit{Report Controller} to check its validity. 
+If the citizen did not insert the license plate in the report, the \textit{Report Controller} uses an external OCR service which executes an OCR algorithm to retrieve the license plate from the picture provided by the citizen.
+At this point, when all the data are avaiable, the report is shared with the \textit{Notify Controller} which will check its authority list to notify the right authority.
+Finally, the \textit{Security Manager} encrypts the report and stores it in the database using the \textit{Storage Interface}, that runs an \texttt{INSERT} query. 
+
+\begin{center}\large{\textbf{Build Statistics Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/ComputeStatistics.png}
     \end{center}
     \label{fig:ComputeStatisticSD}
-	\caption{Compute Statistics Runtime View.}
+	\caption{Build Statistics Runtime View.}
 \end{figure}
-The procedure to compute the statistics is performed by the \textit{Information Manager}. In particular the \textit{
-Security Manager} uses the Storage Interface to retrieve all the report. So it decrypt them and requests the \textit{Statistic Controller} to compute the statistics on them. If the Municipality has given the permission to process the data relative to the traffic tickets, the Storage Interface retrieve them contacting the \textit{Municipality Interface} (external to the system).
-When an User taps on Statistic button, a GET request is send to the StatisticsSuggestions Interface, that retrieves the avaiable statistics from the Statistic Controller and shows them to the User. An HTTP Success message is also send back to the User.    
-\subsection{Compute Suggestion Runtime View}
+The procedure to compute the statistics is performed by the \textit{Information Manager} subsystem. Firstly, the \textit{
+Security Manager} uses the Storage Interface to retrieve all the reports needed and decrypts them.  After that, the decrypted data is sent the \textit{Statistic Controller} to compute the statistics on them. If the municipality has given the permission to access their database, the Storage Interface  can also retrieve them contacting the \textit{Municipality Interface}, and cross them with SafeStreets's.
+When an user taps on the statistics button, a \texttt{GET} request is sent to the StatisticsSuggestions Interface, which retrieves the latest avaiable statistics from the \textit{Statistic Controller} and shows them to the User.
+
+\begin{center}\large{\textbf{Compute Suggestions Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/ComputeSuggestions.png}
@@ -218,9 +219,9 @@ When an User taps on Statistic button, a GET request is send to the StatisticsSu
     \label{fig:SuggestionsSD}
 	\caption{Compute Suggestions Runtime View.}
 \end{figure}
-The procedure to compute the suggestions is performed as soon as the statistics are computed and avaiable. So at this moment, the Statistic Controller send the already computed statistics to the \textit{Ai Controller}, that runs some smart algorithms to compute useful suggestions. As for the statistics, whenever an User taps on Suggestion button, a GET request is send to the StatisticsSuggestions Interface that retrieve the suggestions from 
-the AI Controller and shows them to the User. Notice that only User authenticated as Authority can visualize the suggestions.
-\subsection{History Report Runtime View}
+The procedure to compute the suggestions is performed after the latest statistics are computed and avaiable. When available, the \textit{Statistic Controller} sends the statistics it built to the \textit{AI Controller}, which runs an artificial intelligence in order to compute some suggestions to improve the safety of urban areas. Safety suggestions are only addressed to the authorities, which are the only users  enabled to send a \texttt{GET} request to the StatisticsSuggestions Interface and retrieve the latest suggestions available.
+
+\begin{center}\large{\textbf{Report History Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/HistoryReport.png}
@@ -228,9 +229,9 @@ the AI Controller and shows them to the User. Notice that only User authenticate
     \label{fig:HistoryReportSD}
 	\caption{Report's History Runtime View.}
 \end{figure}
-The User is logged in and want to retrieve all the reports he/she has sent up to that moment with a GET request. The \textit{History Manager} handles this request and interfacing with the Storage Interface tries to retrieve all the reports relative the specific User. So the Storage Interface runs a query on the Database and if there are reports corresponding to the User who requested it, an HTTP Success message is returned back to the User and the Storage Manager shows the reports; otherwise an HTTP Error is send back to the User.
-If the User that request the Report's History is an Authority the History Manager retrieves and shows all the Report based on the report's date selected by the Authority.   
-
+A logged in user wants to retrieve all the reports he/she has sent up to that moment with a \texttt{GET} request. The \textit{History Manager} handles this functionality communicating with the \textit{Storage Interface}, which is able to retrieve all the reports relative a specific user. This is done by running a \texttt{SELECT} query on the database and, if the query result is non-null, an HTTP Success message is returned to the user and the Storage Manager shows the reports; otherwise an HTTP Error is send back to the User.
+In case the user is an authority, he/she can retrieve all the submitted reports in a given area or period of time.  
+\clearpage
 \section{Component Interfaces}
 \subsection{API REST}
 \begin{center}\large{\textbf{Authentication Controller}}\end{center}
@@ -246,13 +247,31 @@ The Authentication Controller exposes the following methods: \\
     \hline
     \textbf{Data Params} & username: [string] \newline email: [string] \newline password: [string] \newline If the user is an authority: \newline municipality: [string]\\
     \hline
-    \textbf{Success Response} & code: 200 \newline body: {message: "Registration successful"} \newline \newline code:202 \newline body: {message: "Accepted request"}\\
+    \textbf{Success Response} & code: 200 \newline body: {message: "Registration successful"} \newline \newline code:202 \newline body: {message: "Accepted request"}
+    \newline \newline code:201 \newline body: {message: "New user created"}\\
     \hline
     \textbf{Error Response} & code: 400 \newline body: {error: "Failed check"} \newline \newline code: 401 \newline body: {error: "Unauthorized access"} \newline \newline code: 422 \newline body: {error: "Unprocessable entity"}   \\
     \hline
-    \textbf{Notes} & Allows the user to request the registration as citizen or authority \\
+    \textbf{Notes} & Allows the user to request the registration as citizen or authority. \\
     \hline
 \end{tabular}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}{\textbf{Activate Account}}\end{center}
+    \begin{tabular}{| l | p{8cm} |}
+        \hline
+        \textbf{Endpoint} & */auth/activate \\
+        \hline
+        \textbf{Method} & PUT \\
+        \hline
+        \textbf{Data Params} & username: [string] \newline password: [string] \newline verified: [bool]\\
+        \hline
+        \textbf{Success Response} & code: 200 \newline content: {message: "Account activated"}\\
+        \hline
+        \textbf{Error Response} & code: 404 NOT FOUND \newline content: {error: "Incorrect activation code"} \newline \newline code: 401 \newline body: {"error": "Account not activated"} \newline \newline code: 401 \newline body: {error: "Wrong password"} \newline \newline code: 401 \newline body: {error: "Provided email does not exist"}   \\
+        \hline
+        \textbf{Notes} & Allows a Client to activate the account. \\
+        \hline
+    \end{tabular}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \\
 \begin{center}{\textbf{Login}}\end{center}
@@ -260,7 +279,7 @@ The Authentication Controller exposes the following methods: \\
 	\hline
 	\textbf{Endpoint} & */auth/login \\
 	\hline
-	\textbf{Method} & POST \\
+	\textbf{Method} & PUT \\
 	\hline
 	\textbf{Data Params} & username: [string] \newline password: [string]\\
 	\hline
@@ -273,23 +292,6 @@ The Authentication Controller exposes the following methods: \\
 \end{tabular}
 \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{center}{\textbf{Activate Account}}\end{center}
-    \begin{tabular}{| l | p{8cm} |}
-        \hline
-        \textbf{Endpoint} & */auth/activate \\
-        \hline
-        \textbf{Method} & GET \\
-        \hline
-        \textbf{Data Params} & \\
-        \hline
-        \textbf{Success Response} & code: 200 \newline content: {message: "Account activated"}\\
-        \hline
-        \textbf{Error Response} & code: 404 NOT FOUND \newline content: {error: "Incorrect activation code"} \newline \newline code: 401 \newline body: {"error": "Account not activated"} \newline \newline code: 401 \newline body: {error: "Wrong password"} \newline \newline code: 401 \newline body: {error: "Provided email does not exist"}   \\
-        \hline
-        \textbf{Notes} & Allows a Client to activate the account. \\
-        \hline
-    \end{tabular}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \\\\
 \begin{center}\large{\textbf{Report Controller}}\end{center}
@@ -299,15 +301,15 @@ tional on the Citizen authentication which is handled by the \textit{Authenticat
 \begin{center}{\textbf{Send Report}}\end{center}
     \begin{tabular}{| l | p{8cm} |}
         \hline
-        \textbf{Endpoint} & */report/send \\
+        \textbf{Endpoint} & */reports\\
         \hline
         \textbf{Method} & POST \\
         \hline
-        \textbf{Data Params} & date: [string] \newline time: [string] \newline license plate: [string] \newline pictureID: [int]\\
+        \textbf{Data Params} & date: [string] \newline time: [string] \newline license plate: [string] \newline pictureID: [string]\\
         \hline
         \textbf{Success Response} &  code: 200 \newline content: {message: "Report received successfully"} \newline \newline code:202 \newline body: {message: "Accepted request"}\\
         \hline
-        \textbf{Error Response} & code: 400 BAD REQUEST \newline body: {error: "Data not correct"}\\
+        \textbf{Error Response} & code: 400 BAD REQUEST \newline body: {error: "Incorrect data"}\\
         \hline
         \textbf{Notes} & Allows the Citizen to send a report to the system. \\
         \hline
@@ -320,7 +322,7 @@ The \textit{StatisticsSuggestions Interface} handles the GET requests of the Use
 \begin{center}{\textbf{Get Statistics}}\end{center}
     \begin{tabular}{| l | p{8cm} |}
         \hline
-        \textbf{Endpoint} & */stat/get \\
+        \textbf{Endpoint} & */stats \\
         \hline
         \textbf{Method} & GET \\
         \hline
@@ -337,7 +339,7 @@ The \textit{StatisticsSuggestions Interface} handles the GET requests of the Use
 \begin{center}{\textbf{Get Suggestions}}\end{center}
     \begin{tabular}{| l | p{8cm} |}
         \hline
-        \textbf{Endpoint} & */sugg/get \\
+        \textbf{Endpoint} & */suggs \\
         \hline
         \textbf{Method} & GET \\
         \hline
@@ -358,7 +360,7 @@ The \textit{StatisticsSuggestions Interface} handles the GET requests of the Use
 \begin{center}{\textbf{Get old report}}\end{center}
     \begin{tabular}{| l | p{8cm} |}
         \hline
-        \textbf{Endpoint} & */report/get \\
+        \textbf{Endpoint} & */reports \\
         \hline
         \textbf{Method} & GET \\
         \hline
@@ -516,7 +518,7 @@ In the following table it is shown which components of the system are in charge 
 
 	\hline
     \large{Report Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
-    $\bullet$ {[R.8]} The Citizen must be allowed to create reports \\} \\
+    $\bullet$ {[R.8]} The Citizen must be allowed to create reports. \\} \\
 
     \hline
     \large{Report Controller} & \parbox{0.45\textwidth}{ \vspace{2mm} 
@@ -528,7 +530,7 @@ In the following table it is shown which components of the system are in charge 
     \large{Notify Controller} & \parbox{0.45\textwidth}{ \vspace{2mm} 
     $\bullet$ {[R.10]} Notify the Authorities whenever a new Report is submitted. \\
 
-	$\bullet$ {[R.16]} All traffic violations must be notified to Authorities according to their municipality.\\}\\
+	$\bullet$ {[R.16]} All traffic violations must be notified to Authorities according to their type and municipality.\\}\\
 		
 	\hline
     \large{Map Service Interface} & \parbox{0.45\textwidth}{ \vspace{2mm} 
@@ -540,7 +542,7 @@ In the following table it is shown which components of the system are in charge 
 	\large{History Manager} & \parbox{0.45\textwidth}{ \vspace{2mm}
     $\bullet$ {[R.17]} Provide the Authorities with a list of the most recent reports submitted. \\
 
-	$\bullet$ {[R.18]} Allow Authorities to also consult older Reports. \\}\\
+	$\bullet$ {[R.18]} Allow Authorities to also retrieve older Reports not shown in the application. \\}\\
 
 	\hline
     \large{Storage Interface} & \parbox{0.45\textwidth}{ \vspace{2mm}
@@ -719,6 +721,41 @@ At the end of the previuous procedures the \textit{frontend}, \textit{backend} a
 \end{figure}
 
 \chapter{Effort Spent}
+\subsection*{Francesco Amorosini}
+\begin{table}[!ht]
+	\begin{tabular}{|C{.60\textwidth}||C{.20\textwidth}|}
+		\toprule
+        \textbf{Task} & \textbf{Hours}\\
+        \midrule
+        Purpose and Scope & 3\\
+        \midrule
+        Runtime view review & 2.5\\
+        \midrule
+		REST API Table review & 3\\
+        \midrule
+        REST and microservices approach & 3.5\\
+        \midrule
+        Relational database & 1\\
+        \midrule
+        Requirement mapping on components & 4.5 \\
+		\midrule
+		\small{\textbf{Recap Call}}: & \\
+		\vspace{.2mm}
+		$\bullet$ Discussion on document consistency & \vspace{.2mm} 1\\
+        $\bullet$ Schedule of missing sections & 1\\
+        \midrule
+        Priority table for component integration & 2\\
+        \midrule
+        Image polishing & 2 \\
+        \midrule
+        English check and impagination & 5 \\
+        \midrule
+        Group review & 2\\
+        \midrule
+		& \textbf{Total:} 30.5\\
+		\bottomrule
+	\end{tabular}
+\end{table}
 \subsection*{Alice Casali}
 \begin{table}[!ht]
 	\begin{tabular}{|C{.60\textwidth}||C{.20\textwidth}|}
@@ -747,7 +784,7 @@ At the end of the previuous procedures the \textit{frontend}, \textit{backend} a
         \midrule
 		\small{\textbf{Recap Call}}: & \\
 		\vspace{.2mm}
-		$\bullet$ Discussion on the consistency between the document & \vspace{.2mm} 1\\
+		$\bullet$ Discussion on document consistency & \vspace{.2mm} 1\\
         $\bullet$ Schedule of missing sections & 1\\
         \midrule
         Added new API REST table & 2\\
