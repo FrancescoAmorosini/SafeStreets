@@ -173,9 +173,9 @@ The system is composed of a multitier architecture and each specific role is cla
 	\caption{Registration Runtime View.}
 \end{figure}
 \clearpage
-\noindent Every guest has to register before accessing the functionalities of the application. The guest fills a form containing with his/her authentication credentials, which issent to the Application Server through an HTTP \texttt{POST}. The \textit{Authentication Controller} handles the request and verifies that the entered data are valid and complete. If the form is valid, a new user is created into the database and an email containing a confirmation URL is forwarded by an external mailing system to the guest. Once the guest confirms the registration clicking on the URL link, the \textit{Storage Interface} updates the newly created user to a \textit{verified} status, so from this moment on the guest is able to authenticate and to use the functionalities of the application.
-In case the guest is an authority, once the authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to ensure that the entered badge number corresponds to an authority working at the provided municipality. If the Municipality Interface replies that the provided badge number is correct, the registering procedure is the same as before; otherwise an HTTP error code is sent back to the guest.    
-
+\noindent Every guest has to register before accessing the functionalities of the application. The guest fills a form containing with his/her authentication credentials, which is sent to the Application Server through an HTTP \texttt{POST}. The \textit{Authentication Controller} handles the request and verifies that the entered data are valid and complete. If the form is valid, a new user is created into the database and an email containing a confirmation URL is forwarded by an external mailing system to the guest. Once the guest confirms the registration clicking on the URL link, the \textit{Storage Interface} updates the newly created user to a \textit{verified} status, so from this moment on the guest is able to authenticate and to use the functionalities of the application.
+In case the guest is an authority, once the authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to ensure that the entered badge number corresponds to an authority working at the provided municipality. If the Municipality Interface replies that the badge number is correct, the registering procedure is the same as before; otherwise an HTTP error code is sent back to the guest.    
+\clearpage
 \begin{center}\large{\textbf{Login Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
@@ -184,7 +184,7 @@ In case the guest is an authority, once the authority has filled and sent the fo
     \label{fig:LoginSD}
 	\caption{Login Runtime View.}
 \end{figure}
-Once a guest has undergone the registration procedure, he/she can log in to access the application's functionalities. To do that, he/she fills the login form with the credentials provided during the registration phase. The entered data are sent to the Application Server through an HTTP \texttt{POST}. The \textit{Authentication Controller} checks if the data provided are valid: it asks the \textit{Storage Interface} to run a \texttt{SELECT} query on the database to verify that the data provided belong to a registered user. If the query returns a non-null result, then the \textit{Authentication Controller} requests to login the guest and it returns a successmessage, otherwise an HTTP error is sent back to the guest which has not been able to log in successfully.
+Once a guest has undergone the registration procedure, he/she can log in to access the application's functionalities. To do that, he/she fills the login form with the credentials provided during the registration phase. The entered data are sent to the Application Server through an HTTP \texttt{PUT}. The \textit{Authentication Controller} checks if the data provided are valid: it asks the \textit{Storage Interface} to run a \texttt{SELECT} query on the database to verify that the data provided belong to a registered user (this action may involve an HTTP \texttt{GET}). If the query returns a non-null result, then the \textit{Authentication Controller} requests to \texttt{UPDATE} the guest's status to \textit{logged} and it returns a success message, otherwise an HTTP error is sent back to the guest which has not been able to log in successfully.
 
 \begin{center}\large{\textbf{Send Report Runtime View}}\end{center}
 \begin{figure}[H]
@@ -194,27 +194,27 @@ Once a guest has undergone the registration procedure, he/she can log in to acce
     \label{fig:SendReportSD}
 	\caption{Send Report Runtime View.}
 \end{figure}
-A citizen is logged in and opens the menu to send a new report. The \textit{Report Interface} provides the report form that has to be filled. The \textit{Report Interface} also communicates with the \textit{Report Controller}, thus once the report is compiled and sent by the citizen, the \textit{Report Interface} sends it to the \textit{Report Controller} to check its validity. 
-If the citizen did not insert the license plate in the report, the \textit{Report Controller} uses an external OCR service which executes an OCR algorithm to retrieve the license plate from the picture provided by the citizen.
-At this point, when all the data are avaiable, the report is shared with the \textit{Notify Controller} which will check its authority list to notify the right authority.
+A citizen is logged in and opens the menu to send a new report. The \textit{Report Interface} provides the report form that has to be filled. Once the report is compiled and sent by the user, the \textit{Report Interface} forwards it to the \textit{Report Controller} in order to to check for its validity. 
+If the citizen did not insert any the license plate in the report, the \textit{Report Controller} uses an external OCR service which executes an OCR algorithm to retrieve the license plate from the picture provided by the citizen.
+At this point, when all the data are avaiable, the report is shared with the \textit{Notify Controller} which will check its authority list to choose which ones have to be notified regarding the recieved report.
 Finally, the \textit{Security Manager} encrypts the report and stores it in the database using the \textit{Storage Interface}, that runs an \texttt{INSERT} query. 
-
+\clearpage
 \begin{center}\large{\textbf{Build Statistics Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/ComputeStatistics.png}
+	\includegraphics[width=.9\textwidth]{img/ComputeStatistics.png}
     \end{center}
     \label{fig:ComputeStatisticSD}
 	\caption{Build Statistics Runtime View.}
 \end{figure}
 The procedure to compute the statistics is performed by the \textit{Information Manager} subsystem. Firstly, the \textit{
-Security Manager} uses the Storage Interface to retrieve all the reports needed and decrypts them.  After that, the decrypted data is sent the \textit{Statistic Controller} to compute the statistics on them. If the municipality has given the permission to access their database, the Storage Interface  can also retrieve them contacting the \textit{Municipality Interface}, and cross them with SafeStreets's.
-When an user taps on the statistics button, a \texttt{GET} request is sent to the StatisticsSuggestions Interface, which retrieves the latest avaiable statistics from the \textit{Statistic Controller} and shows them to the User.
+Security Manager} uses the \textit{Storage Interface} to retrieve all the reports needed and decrypts them.  After that, the decrypted data is sent the \textit{Statistic Controller} to compute the statistics on them. If the municipality has given the permission to access their database, the Storage Interface can also retrieve their data contacting the \textit{Municipality Interface}, and cross them with SafeStreets's.
+When an user taps on the statistics button, a \texttt{GET} request is sent to the StatisticsSuggestions Interface, which retrieves the latest avaiable statistics from the \textit{Statistic Controller} and shows them to the user.
 
 \begin{center}\large{\textbf{Compute Suggestions Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/ComputeSuggestions.png}
+	\includegraphics[width=.9\textwidth]{img/ComputeSuggestions.png}
     \end{center}
     \label{fig:SuggestionsSD}
 	\caption{Compute Suggestions Runtime View.}
@@ -229,8 +229,8 @@ The procedure to compute the suggestions is performed after the latest statistic
     \label{fig:HistoryReportSD}
 	\caption{Report's History Runtime View.}
 \end{figure}
-A logged in user wants to retrieve all the reports he/she has sent up to that moment with a \texttt{GET} request. The \textit{History Manager} handles this functionality communicating with the \textit{Storage Interface}, which is able to retrieve all the reports relative a specific user. This is done by running a \texttt{SELECT} query on the database and, if the query result is non-null, an HTTP Success message is returned to the user and the Storage Manager shows the reports; otherwise an HTTP Error is send back to the User.
-In case the user is an authority, he/she can retrieve all the submitted reports in a given area or period of time.  
+A logged in user wants to retrieve all the reports he/she has sent up to that moment with a \texttt{GET} request. The \textit{History Manager} handles this functionality communicating with the \textit{Storage Interface}, which is able to retrieve all the reports relative to a specific user. This is done by running a \texttt{SELECT} query on the database and, if the query result is non-null, an HTTP Success message is returned to the user and the Storage Manager shows the reports; otherwise an HTTP Error is send back to the User.
+In case the user is an authority, he/she can retrieve all the submitted reports in a given area or period of time, so the procedure is the same with the only difference that the \texttt{SELECT} query filters on different attributes.  
 \clearpage
 \section{Component Interfaces}
 \subsection{API REST}
@@ -267,7 +267,7 @@ The Authentication Controller exposes the following methods: \\
         \hline
         \textbf{Success Response} & code: 200 \newline content: {message: "Account activated"}\\
         \hline
-        \textbf{Error Response} & code: 404 NOT FOUND \newline content: {error: "Incorrect activation code"} \newline \newline code: 401 \newline body: {"error": "Account not activated"} \newline \newline code: 401 \newline body: {error: "Wrong password"} \newline \newline code: 401 \newline body: {error: "Provided email does not exist"}   \\
+        \textbf{Error Response} & code: 404 NOT FOUND \newline content: {error: "Incorrect activation code"} \newline \newline code: 401 \newline body: {"error": "Account not activated"} \newline \newline code: 401 \newline body: {error: "Wrong password"} \\
         \hline
         \textbf{Notes} & Allows a Client to activate the account. \\
         \hline
@@ -373,7 +373,7 @@ The \textit{StatisticsSuggestions Interface} handles the GET requests of the Use
         \textbf{Notes} & Allows the User to get an old report. \\
         \hline
     \end{tabular}
-
+\clearpage
 
 \section{Selected architectural	styles and patterns}
 The following architectural patterns are used to build the structure of the system in order to provide all the services of SafeStreets application.\\
@@ -385,8 +385,16 @@ Client-Server architecture is a computing model that features two roles: a Serve
 \begin{itemize}
     \item Scalability and Mantainability: it is possible to repair or add more resources to the architecture without significative service interruptions.
     \item Security: the server is able to manage what levels of access each user can have with respect to specific resources.
-\end{itemize}\vspace{2mm}
+\end{itemize}
 
+\vspace{2mm}
+\begin{center}\large{\textbf{Reverse Proxy Design Pattern}}\end{center}
+    A simple proxy acts as an interface to refer an object in another machine. The reverse proxy offers a single point of access (with HTTP) to multiple Clients who want to access to several application servers. In practice, it is a wrapper for an object behind the scenes. 
+    Proxies also provides extra functionalities such as data caching (g.e. store the newest statistics available) and security (g.e. client-side firewall).
+    \begin{center}\large{\textit{Motivations}}\end{center} 
+    It is useful to organize the requests of multiple clients and to save frequent requested informations. It also protects the application servers from external attack and slightly improve the overall performances.
+    
+\vspace{2mm}
 \begin{center}\large{\textbf{Three-tiered Architecture}}\end{center}
 This type of architecture is a kind of Client-Server paradigm where three tiers are phisically separated:
 \begin{itemize}
@@ -416,42 +424,50 @@ accepts input and converts it to commands for the model or view. This mechanism 
 MVC allows full encapsulation of objects. This means that each component can be changed without creating issues to other components.
 Furthermore, MVC provides decopuling of its components, which means that developers are able to work in parallel on different components of the pattern without interfering with each other.
 
-\begin{center}\large{\textbf{Reverse Proxy Design Pattern}}\end{center}
-A simple proxy acts as an interface to refer an object in another machine. The reverse proxy offers a single point of access (with HTTP) to multiple Clients who want to access to several application servers. In practice, it is a wrapper for an object behind the scenes. 
-Proxies also provides extra functionalities such as data caching (g.e. store the newest statistics available) and security (g.e. client-side firewall).
-\begin{center}\large{\textit{Motivations}}\end{center} 
-It is useful to organize the requests of multiple clients and to save frequent requested informations. It also protects the application servers from external attack and slightly improve the overall performances.
-
+\vspace{2mm}
 \begin{center}\large{\textbf{REpresentational State Transfer}}\end{center}
 REST is software architectural style that has become a standard in the creation of Web API. It describes those types of interfaces capable of exchanging data and enabling CRUD operations through HTTP requests, without using auxiliary technologies like cookies or other protocols. This architecture makes the communication client-server totally stateless (every request is independent from the others), and also allows for different representations of a resource (g.e statistics) based on who is accessing it (g.e. user from a certain location).
 \begin{center}\large{\textit{Motivations}}\end{center}
 We decide to use REST to simplify the design and the implementation of the application. Indeed, the developers do not need to take in account the traceability of states. REST also enables a design approach based on microservices.
 
+\vspace{2mm}
 \begin{center}\large{\textbf{Relational DBMS}}\end{center}
 The Data tier consists in a relational database where all the informations are strored in a structured way. There are a lot of table structures that can be used, 
-here we show an example of how data can be organised in a Entity Relation Schema.
-\begin{figure}[!ht]
+in Figure \ref{fig:RDBMS} we show an example of how data can be organised in a Entity Relation Schema. It is also worth considering that, as previously stated, the latest statistics and suggestions are stored within the components that computed them. This however may raise some inconsistencies due to the fact that most components of the system are replicated. To solve such problem, in the implementation phase it is advisable to keep a consistent version of the data in the database, which can also be used as a restarting point in case of component failures. In such case, the task of merging conflicting versions of the data and eventually store them is entrusted to the Storage Interface.
+\begin{center}\large{\textit{Motivations}}\end{center}
+Relational databases are a good choice for those applications that involve several transactions at a time. They allow for the use of foreign keys, which are used to uniquely identify atomic pieces of data within a table, but nonetheless they are equipped with mechanisms to guarantee referencial integrity and reliability. Moreover, most relational databases support SQL, which is an easy and human-readable language that enables CRUD operations for the storage.
+\begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/RDBMS.png}
-	\end{center}
-	\caption{Example of entity relation schema.}
+    \end{center}
+    \label{fig:RDBMS}
+    \caption{Example of entity relation schema.}
 \end{figure}
 
-\section{Other Architectures}
+\vspace{4mm}
+\section{Other Design Decisions}
 \begin{center}\large{\textbf{Thin Client}}\end{center}
 A thin Client is a lightweight computer which does most of the computation in a remote Server. In this paradigm in fact, since the Servers take care of several duties such as storage 
 of data and performing calculations, the Client does not need to have a large memory or powerful computing capabilities to run the application.
 \begin{center}\large{\textit{Motivations}}\end{center} 
 The application is thought mostly for mobile phones which do not have great computing power or very large memories. Thanks to a thin client a internet connection is virtually the only requirements to use the application. Furthermore, this architecture simplify the front-end implementation by shifting most of the execution to the servers.
 
+\vspace{2mm}
 \begin{center}\large{\textbf{Microservices}}\end{center}
 Microservices is a software development technique that is based on developing a single application as a suite of smaller services. Each service runs its own process and is independently deployable from the other, and its interactions with other microservices are orchestrated using a RESTful approach based on communicating with lightweight mechanisms (HTTP).
 \begin{center}\large{\textit{Motivations}}\end{center}
 A microservices approach favors a decentralized management of the system's functionalities by loosely copuling its subsystems. This approach promotes information hiding between different services, gives rise to high resilience to failures (which are isolated whithin the subsystem involved), and allows to replicate each service according to its usage rather than duplicating the whole application. 
 
+\begin{figure}[!ht]
+	\begin{center}
+	\includegraphics[width=\textwidth]{img/replication.png}
+	\end{center}
+	\caption{Replication schema for a microservices approach.}
+\end{figure}
+
 \chapter{User Interface Design}
 \section{Mockup}
-The mockups of the mobile application can be found in the RASD in the chapter \textit{Specific Requirements}. Here we present an hypothetical view of the web application.
+The mockups of the mobile application can be found in the RASD in the chapter \textit{Specific Requirements}. For completeness purposes, we present a possible view of the web application.
 \begin{figure}[!ht]
 	\begin{center}
 	\includegraphics[width=\textwidth]{img/MockupAppWeb.png}
@@ -462,7 +478,7 @@ The mockups of the mobile application can be found in the RASD in the chapter \t
 \section{User Experience Diagram}
 The User Experience diagram (UX) diagrams reported below provide additional information about the User
 Interface that the application provides. The diagrams show the basic core actions
-that can be performed by the user through the mobile application. 
+that can be performed by the user through the mobile and web application. 
 
 \begin{figure}[!ht]
 	\begin{center}
@@ -511,8 +527,6 @@ In the following table it is shown which components of the system are in charge 
 	$\bullet$ {[R.6]} Send a confirmation email if username, email or password is changed (similarly to the registration process). \\
 
 	$\bullet$ {[R.7]} Allow to change password if it has been forgotten, through the personal email. \\
-
-    $\bullet$ {[R.14]} Allow the Citizen to consult the history of its personal reports.\\
     
     $\bullet$ {[R.20]} Use third party services to enable some functions (Mail Service).\\} \\
 
@@ -539,7 +553,9 @@ In the following table it is shown which components of the system are in charge 
     $\bullet$ {[R.20]} Use third party services to enable some functions (Map Service).\\}\\
 		
 	\hline
-	\large{History Manager} & \parbox{0.45\textwidth}{ \vspace{2mm}
+    \large{History Manager} & \parbox{0.45\textwidth}{ \vspace{2mm}
+    $\bullet$ {[R.14]} Allow the Citizen to consult the history of its personal reports.\\
+
     $\bullet$ {[R.17]} Provide the Authorities with a list of the most recent reports submitted. \\
 
 	$\bullet$ {[R.18]} Allow Authorities to also retrieve older Reports not shown in the application. \\}\\
@@ -596,7 +612,7 @@ In order to implement, integrate and test the system, a bottom-up approach will 
 \item Implementation and integration of each component of the same subsystem;
 \item Integration of different subsystems;
 \end{enumerate}
-The following table lists the main features avaiable to the customer. Their importance and implementation difficulty is shown below to better understand the decision about implementation, testing and integration that will be taken in the rest of this section.
+The following table lists the main features avaiable to the customer. Their importance and implementation difficulty is shown to better understand the decisions about implementation, testing and integration that will be taken in the rest of this section.
 \clearpage
 
 \begin{table}
@@ -635,7 +651,7 @@ The following table lists the main features avaiable to the customer. Their impo
 \caption{Main functionalities with their importance and implementation difficulty}
 \end{table}
 
-\noindent Regarding the first phase, components integration of the same subsystem will be applied only for backend components. More specifically, the components to be integrated and tested together, as showed in the Component Diagram, are:
+\noindent Regarding the first phase, components integration of the same subsystems will be applied only for backend components. More specifically, the components to be integrated and tested together are:
 \begin{itemize}
 \item User Controller and Storage Interface, forming the \textit{User subsystem};
 \item Authentication Controller and Storage Interface, forming the \textit{Authentication subsystem};
@@ -643,8 +659,8 @@ The following table lists the main features avaiable to the customer. Their impo
 \item Report Interface, Report Controller, Notify Controller and Security Manager, forming the \textit{Report Manager subsystem}.;
 \item AI Controller, StatisticSuggestion Interface, Statistic Controller and Security Manager, forming the \textit{Information Manager subsystem}.
 \end{itemize}
-Also the Report Manager and Information Manager, as well as the first three subsystems listed above, will use the Storage Interface to interact with the DB. Moreover, the User and the Authentication subsystems use the \textit{Mail Service Interface}; the latter one interact also with the \textit{Municipality Interface}. Finally the Report Manager could use the \textit{OCR Service Interface}. So in the implementation and integration process these components must also be taken into account. 
-Considering that the Storage interface is used by a lot of components and therefore also by many subsystems, it will be useful to implement and test it first and then try to integrate it with the other components/subsystems. 
+Also the Report Manager and Information Manager, as well as the first three subsystems listed above, will use the Storage Interface to interact with the DB. Moreover, the \textit{Mail Service Interface} will be used both by the User and the Authentication subsystem; the latter one also interacts with the \textit{Municipality Interface}. Finally the Report Manager could use the \textit{OCR Service Interface}. Thus in the implementation and integration process the mentioned components must also be taken into account. 
+Considering that the Storage interface is used by many components and therefore also by many subsystems, it is useful to implement and test it first and then try to integrate it with the other components/subsystems. 
 \newline
 \newline
 For the second step all higher-level subsystems will be integrated. In particular, this integration activity involves the Business Logic and the Client subsystem.
@@ -657,7 +673,7 @@ At the end, when the integration system is completed, the whole system is tested
 The following diagrams describe the process of implementation, integration
 and testing. The arrow goes from the used component/subsystem to the
 component/subsystem that uses it.
-\subsection{Integration of the backend subsystem}
+\subsection{Integration of the backend subsystems}
 All the components are first implemented and unit tested. Then some of the components are integrated into subsystem and integration tests will be performed. The integrations are the following:
 \begin{figure}[!ht]
 	\begin{center}
@@ -735,7 +751,7 @@ At the end of the previuous procedures the \textit{frontend}, \textit{backend} a
         \midrule
         REST and microservices approach & 3.5\\
         \midrule
-        Relational database & 1\\
+        Relational database & 2\\
         \midrule
         Requirement mapping on components & 4.5 \\
 		\midrule
@@ -746,16 +762,17 @@ At the end of the previuous procedures the \textit{frontend}, \textit{backend} a
         \midrule
         Priority table for component integration & 2\\
         \midrule
-        Image polishing & 2 \\
+        Image polishing & 2.5 \\
         \midrule
         English check and impagination & 5 \\
         \midrule
         Group review & 2\\
         \midrule
-		& \textbf{Total:} 30.5\\
+		& \textbf{Total:} 32\\
 		\bottomrule
 	\end{tabular}
 \end{table}
+\clearpage
 \subsection*{Alice Casali}
 \begin{table}[!ht]
 	\begin{tabular}{|C{.60\textwidth}||C{.20\textwidth}|}
