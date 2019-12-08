@@ -3940,17 +3940,17 @@
 												"$ref": "AAAAAAFugx21ur1EGSc="
 											},
 											"font": "Arial;13;0",
-											"left": 461,
-											"top": 192,
-											"width": 155.32080078125,
+											"left": 463,
+											"top": 232,
+											"width": 221.076171875,
 											"height": 13,
-											"alpha": 1.6373634795087755,
-											"distance": 60.13318551349163,
+											"alpha": 1.2120246907708967,
+											"distance": 102.52804494381037,
 											"hostEdge": {
 												"$ref": "AAAAAAFugx21ur1F7lE="
 											},
 											"edgePosition": 1,
-											"text": "3 : check(registrationForm)"
+											"text": "3 : checkCredentials(registrationForm)"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -6268,17 +6268,17 @@
 												"$ref": "AAAAAAFu1yciCzlCoyQ="
 											},
 											"font": "Arial;13;0",
-											"left": 428,
+											"left": 470,
 											"top": 1243,
-											"width": 107.66259765625,
+											"width": 111.28076171875,
 											"height": 13,
-											"alpha": 1.5707963267948966,
-											"distance": 10,
+											"alpha": 1.5896610092578491,
+											"distance": 53.009433122794285,
 											"hostEdge": {
 												"$ref": "AAAAAAFu1yciCzlDt3I="
 											},
 											"edgePosition": 1,
-											"text": "18 : generateURI()"
+											"text": "18 : generateURL()"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -6389,7 +6389,7 @@
 												"$ref": "AAAAAAFug0Uv779bSAQ="
 											},
 											"edgePosition": 1,
-											"text": "19 : send(URI, User.mail)"
+											"text": "19 : send(URL, User.mail)"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -7425,7 +7425,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFugw5v+7xVyCc="
 							},
-							"name": "check",
+							"name": "checkCredentials",
 							"source": {
 								"$ref": "AAAAAAFugxZyqryJwro="
 							},
@@ -7643,7 +7643,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFugw5v+7xVyCc="
 							},
-							"name": "generateURI()",
+							"name": "generateURL()",
 							"source": {
 								"$ref": "AAAAAAFugxZyqryJwro="
 							},
@@ -7665,7 +7665,7 @@
 								"$ref": "AAAAAAFugxcFc7zqBHM="
 							},
 							"messageSort": "asynchCall",
-							"arguments": "URI, User.mail"
+							"arguments": "URL, User.mail"
 						},
 						{
 							"_type": "UMLMessage",
