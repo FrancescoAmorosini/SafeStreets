@@ -34,7 +34,7 @@
 
 \chapter{Introduction}
 \section{Purpose}
-While the RASD presented a general view of the SafeStreets appliction and its features, this document aims to further analyze the system's design and architecture, as well as describing for each of its components their runtime behaviour, integration, interfaces, implementation and testing plans.
+While the RASD presented a general view of the SafeStreets application and its features, this document aims to further analyze the system's design and architecture, as well as describing for each of its components their runtime behaviour, integration, interfaces, implementation and testing plans.
 This document is mainly intended to be used by the test and development teams as a guidance in the development process, but also to prevent structural degradation during maintainance and extension phases. Nonetheless, the document is also addressed to all the stakeholders who are interested in supervising the development process.
 
 \section{Scope}
@@ -48,7 +48,7 @@ Further information about the scope of the application can be found in the Chapt
 \begin{itemize}
     \item \textit{Client}: a piece of computer hardware or software that accesses a resource or a service made available by a Server.
     \item \textit{Server}: a device or a computer program that provides resources or functionalities to other programs or devices.
-    \item \textit{Firewall}: a network security systems that monitors incoming and outcoming network traffic, applying predefined predefined security rules.
+    \item \textit{Firewall}: a network security systems that monitors incoming and outcoming network traffic, applying predefined security rules.
     \item \textit{Microservice}: a basic function of the application exectuted independently from the others.
 \end{itemize}
 \subsection{Acronyms}
@@ -104,7 +104,7 @@ The UML component diagram in Figure \ref{fig:componentdiagram} aims at capturing
 \end{figure}
 
 \begin{itemize}
-\item \textbf{Mobile Client} and \textbf{Web Client}: the client device that accesses to the functionalities of the entire system. It will be implemented implemented using the thin clien approach.
+\item \textbf{Mobile Client} and \textbf{Web Client}: the client device that accesses to the functionalities of the entire system. It will be implemented using the thin clien approach.
 \item \textbf{Presentation}: a Web Client, accessing through the browser, needs this component in order to display the web pages of the application. This layer only provides the structure of the user interface without accessing any data or application logic.
 \item \textbf{User Controller}: it takes care of all the operations related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
 \item \textbf{Auth Controller}: it takes care of all the authentication-related operations: it is responsible both for the log in and the registration process, and it also uses the \textit{Storage Interface} to retrieve and store new users' credentials in the databse. During the registration process, the Auth Controller uses the \textit{Mail Service Interface} to communicate with the Mailing Service in order to send registration emails.
@@ -112,12 +112,12 @@ The UML component diagram in Figure \ref{fig:componentdiagram} aims at capturing
 \item \textbf{Report Manager}: it's a \textit{subsystem} component in charge of all the processing functions on the newly recieved reports:
 \begin{itemize}
     \item \textbf{Report Interface}: it exposes to the User an interface in the form of a blank report to be compiled.
-    \item \textbf{Report Controller}: it aims to check the validity of the sent reports. To do this, it communicates with the Report Interface to check them as soon as they are recieved.
+    \item \textbf{Report Controller}: it aims to check the validity of the sent reports. To do this, it communicates with the Report Interface to check them as soon as they are received.
     \item \textbf{Notify Controller}: the role of this component is to select the correct authorities to notify based on their municipality, using his \textit{AuthorityList}. It depends on the Report Controller, in the sense that it will notify the authorities only if the check of the report is successful and the type of the report is \textit{Traffic Violation}.
     \item \textbf{Security Manager}: it takes care of the security side: as specified in the Security section of the RASD, before being stored, the report is encrypted so that no one can access it besides some specific system components. This component also depends on the Report Controller verification process, due to the fact that if the report doesn't pass it, it will be discarded and therefore never encrypted.
 \end{itemize}
 \item \textbf{Storage Interface}: its main purpose is to retrive the reports from the database, decoupling the other components of the system from the specific data sources. This component is also in charge of authenticating the system with local municipalities' systems, and eventually crossing their data with SafeStreets' own information. Also, since the most recent version of the statistics and the suggestions are computed whithin the AI Controller and the Statistics Controller, this component is also in charge of keeping the stored version of the data up to date, eventually resolving data conflicts due to the replication of the mentioned components.
-\item \textbf{DB}: this component represents the DBMS, which provides an interface to read and store data. User credentials, submitted reports, and older statistics and suggestions are stored in the database.
+\item \textbf{DB}: this component represents the DBMS, which provides an interface to read and store data. User credentials and submitted reports are stored in the database.
 \item \textbf{Information Manager}: a \textit{subsystem} in charge of building statistics, compute safety suggestions and deploy them to the users who requested them.
     \begin{itemize}
         \item \textbf{StatisticsSuggestions Interface}: it exposes to the users the latest statistics and safety suggestions. As aready mentioned in the RASD, the exposed data may be different according to the level of visibility granted to different users.
@@ -432,8 +432,8 @@ We decide to use REST to simplify the design and the implementation of the appli
 
 \vspace{2mm}
 \begin{center}\large{\textbf{Relational DBMS}}\end{center}
-The Data tier consists in a relational database where all the informations are strored in a structured way. There are a lot of table structures that can be used, 
-in Figure \ref{fig:RDBMS} we show an example of how data can be organised in a Entity Relation Schema. It is also worth considering that, as previously stated, the latest statistics and suggestions are stored within the components that computed them. This however may raise some inconsistencies due to the fact that most components of the system are replicated. To solve such problem, in the implementation phase it is advisable to keep a consistent version of the data in the database, which can also be used as a restarting point in case of component failures. In such case, the task of merging conflicting versions of the data and eventually store them is entrusted to the Storage Interface.
+The Data tier consists in a relational database where all the informations are strored in a structured way. 
+There are a lot of table structures that can be used, in Figure \ref{fig:RDBMS} we show an example of how data can be organised in a Entity Relation Schema.
 \begin{center}\large{\textit{Motivations}}\end{center}
 Relational databases are a good choice for those applications that involve several transactions at a time. They allow for the use of foreign keys, which are used to uniquely identify atomic pieces of data within a table, but nonetheless they are equipped with mechanisms to guarantee referencial integrity and reliability. Moreover, most relational databases support SQL, which is an easy and human-readable language that enables CRUD operations for the storage.
 \begin{figure}[H]
@@ -816,9 +816,9 @@ At the end of the previuous procedures the \textit{frontend}, \textit{backend} a
         \midrule
         Relational database schema & 3\\
         \midrule
-        Group review & 2\\
+        Group review & 3\\
         \midrule
-		& \textbf{Total:} 42\\
+		& \textbf{Total:} 43\\
 		\bottomrule
 	\end{tabular}
 \end{table}
