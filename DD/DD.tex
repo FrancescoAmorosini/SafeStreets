@@ -60,7 +60,7 @@ Further information about the scope of the application can be found in the Chapt
     \item \textbf{OCR}: \textit{Optical Character Recognition}, software dedicated to the detection of characters contained in a document and to their transfer to digital text that can be read by a machine. In this context, OCR will be used to read license plates.
     \item \textbf{UML}: \textit{Unified Modeling Language}, a standard visual modeling language intended to be used for analysis, design, and implementation of software-based systems.
     \item \textbf{MVC}: \textit{Model View Controller}, a software design pattern commonly used to provide user interfaces.
-    \item \textbf{CRUD}: \textit{Create, Read, Update, Delete}. These are the basic four operations which allow users to interact with a resource in a relational database (\texttt{INSERT}, \texttt{SELECT},\texttt{UPDATE}, \texttt{DELETE}).
+    \item \textbf{CRUD}: \textit{Create, Read, Update, Delete}. These are the basic four operations which allow users to interact with a resource in a relational database (\texttt{INSERT}, \texttt{SELECT}, \texttt{UPDATE}, \texttt{DELETE}).
     \item \textbf{UX}: \textit{User eXperience}, a diagram used to describe the interfaces provided by the application.
     \end{itemize}
 \subsection{Abbreviations}
@@ -107,7 +107,7 @@ The UML component diagram in Figure \ref{fig:componentdiagram} aims at capturing
 \item \textbf{Mobile Client} and \textbf{Web Client}: the client device that accesses to the functionalities of the entire system. It will be implemented using the thin clien approach.
 \item \textbf{Presentation}: a Web Client, accessing through the browser, needs this component in order to display the web pages of the application. This layer only provides the structure of the user interface without accessing any data or application logic.
 \item \textbf{User Controller}: it takes care of all the operations related to the user's data. It exposes methods to change account credentials and it stores the user's data in the database using the Storage Interface.
-\item \textbf{Auth Controller}: it takes care of all the authentication-related operations: it is responsible both for the log in and the registration process, and it also uses the \textit{Storage Interface} to retrieve and store new users' credentials in the databse. During the registration process, the Auth Controller uses the \textit{Mail Service Interface} to communicate with the Mailing Service in order to send registration emails.
+\item \textbf{Auth Controller}: it takes care of all the authentication-related operations: it is responsible both for the login and the registration process, and it also uses the \textit{Storage Interface} to retrieve and store new users' credentials in the databse. During the registration process, the Auth Controller uses the \textit{Mail Service Interface} to communicate with the Mailing Service in order to send registration emails.
 \item \textbf{History Manager}: its functionality is to retrieve and show to the Client his/her report's history.
 \item \textbf{Report Manager}: it's a \textit{subsystem} component in charge of all the processing functions on the newly recieved reports:
 \begin{itemize}
@@ -137,7 +137,7 @@ The UML component diagram in Figure \ref{fig:componentdiagram} aims at capturing
 In this section it is described the deployment view of the components inside the system. The deployment diagram shows the distribution of hardware components.
 \begin{figure}[!ht]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/DeploymentView.png}
+	\includegraphics[width=.95\textwidth]{img/DeploymentView.png}
     \end{center}
     \label{fig:deploymentview}
 	\caption{Deployment diagram of the system.}
@@ -167,19 +167,18 @@ The system is composed of a multitier architecture and each specific role is cla
 \begin{center}\large{\textbf{Registration Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=.90\textwidth]{img/Registrationn.pdf}
+	\includegraphics[width=.9\textwidth]{img/Registrationn.pdf}
     \end{center}
     \label{fig:RegistrationSD}
 	\caption{Registration Runtime View.}
 \end{figure}
 \clearpage
 \noindent Every guest has to register before accessing the functionalities of the application. The guest fills a form containing with his/her authentication credentials, which is sent to the Application Server through an HTTP \texttt{POST}. The \textit{Authentication Controller} handles the request and verifies that the entered data are valid and complete. If the form is valid, a new user is created into the database and an email containing a confirmation URL is forwarded by an external mailing system to the guest. Once the guest confirms the registration clicking on the URL link, the \textit{Storage Interface} updates the newly created user to a \textit{verified} status, so from this moment on the guest is able to authenticate and to use the functionalities of the application.
-In case the guest is an authority, once the authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to ensure that the entered badge number corresponds to an authority working at the provided municipality. If the Municipality Interface replies that the badge number is correct, the registering procedure is the same as before; otherwise an HTTP error code is sent back to the guest.    
-\clearpage
+In case the guest is an authority, once the authority has filled and sent the form, the \textit{Authentication Manager} contacts the \textit{Municipality Interface} to ensure that the entered badge number corresponds to an authority working at the provided municipality. If the Municipality Interface replies that the badge number is correct, the registering procedure is the same as before; otherwise an HTTP error code is sent back to the guest.   \vspace{2mm} 
 \begin{center}\large{\textbf{Login Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=.9\textwidth]{img/Loginn.pdf}
+	\includegraphics[width=.78\textwidth]{img/Loginn.pdf}
     \end{center}
     \label{fig:LoginSD}
 	\caption{Login Runtime View.}
@@ -195,26 +194,26 @@ Once a guest has undergone the registration procedure, he/she can log in to acce
 	\caption{Send Report Runtime View.}
 \end{figure}
 A citizen is logged in and opens the menu to send a new report. The \textit{Report Interface} provides the report form that has to be filled. Once the report is compiled and sent by the user, the \textit{Report Interface} forwards it to the \textit{Report Controller} in order to to check for its validity. 
-If the citizen did not insert any the license plate in the report, the \textit{Report Controller} uses an external OCR service which executes an OCR algorithm to retrieve the license plate from the picture provided by the citizen.
+If the citizen did not insert any license plate in the report, the \textit{Report Controller} uses an external OCR service which executes an OCR algorithm to retrieve the license plate from the picture provided by the citizen.
 At this point, when all the data are avaiable, the report is shared with the \textit{Notify Controller} which will check its authority list to choose which ones have to be notified regarding the recieved report.
 Finally, the \textit{Security Manager} encrypts the report and stores it in the database using the \textit{Storage Interface}, that runs an \texttt{INSERT} query. 
 \clearpage
 \begin{center}\large{\textbf{Build Statistics Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=.9\textwidth]{img/ComputeStatisticss.pdf}
+	\includegraphics[width=.88\textwidth]{img/ComputeStatisticss.pdf}
     \end{center}
     \label{fig:ComputeStatisticSD}
 	\caption{Build Statistics Runtime View.}
 \end{figure}
 The procedure to compute the statistics is performed by the \textit{Information Manager} subsystem. Firstly, the \textit{
 Security Manager} uses the \textit{Storage Interface} to retrieve all the reports needed and decrypts them.  After that, the decrypted data is sent the \textit{Statistic Controller} to compute the statistics on them. If the municipality has given the permission to access their database, the Storage Interface can also retrieve their data contacting the \textit{Municipality Interface}, and cross them with SafeStreets's.
-When an user taps on the statistics button, a \texttt{GET} request is sent to the StatisticsSuggestions Interface, which retrieves the latest avaiable statistics from the \textit{Statistic Controller} and shows them to the user.
+When an user taps on the statistics button, a \texttt{GET} request is sent to the StatisticsSuggestions Interface, which retrieves the latest avaiable statistics from the \textit{Statistic Controller} and shows them to the user. \vspace{2mm}
 
 \begin{center}\large{\textbf{Compute Suggestions Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=.9\textwidth]{img/ComputeSuggestionss.pdf}
+	\includegraphics[width=.88\textwidth]{img/ComputeSuggestionss.pdf}
     \end{center}
     \label{fig:SuggestionsSD}
 	\caption{Compute Suggestions Runtime View.}
@@ -224,7 +223,7 @@ The procedure to compute the suggestions is performed after the latest statistic
 \begin{center}\large{\textbf{Report History Runtime View}}\end{center}
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=\textwidth]{img/HistoryReport.png}
+	\includegraphics[width=.9\textwidth]{img/HistoryReport.png}
     \end{center}
     \label{fig:HistoryReportSD}
 	\caption{Report's History Runtime View.}
@@ -255,6 +254,7 @@ The Authentication Controller exposes the following methods: \\
     \textbf{Notes} & Allows the user to request the registration as citizen or authority. \\
     \hline
 \end{tabular}
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{center}{\textbf{Activate Account}}\end{center}
     \begin{tabular}{| l | p{8cm} |}
@@ -297,7 +297,7 @@ The Authentication Controller exposes the following methods: \\
 \begin{center}\large{\textbf{Report Controller}}\end{center}
 The \textit{Report Controller} handles the submission of the User, in this case the Citizen. The use of the send method is condi-
 tional on the Citizen authentication which is handled by the \textit{Authentication Controller}.\\
-
+\clearpage
 \begin{center}{\textbf{Send Report}}\end{center}
     \begin{tabular}{| l | p{8cm} |}
         \hline
@@ -353,8 +353,8 @@ The \textit{StatisticsSuggestions Interface} handles the GET requests of the Use
         \hline
     \end{tabular}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\\\\
 \begin{center}\large{\textbf{History Manager}}\end{center}
     The \textit{History Manager} handles the request of the User providing an old report stored in the database. When a date is selected, the corrisponding old report is requested and delivered to the User.
 \begin{center}{\textbf{Get old report}}\end{center}
@@ -668,7 +668,7 @@ For the second step all higher-level subsystems will be integrated. In particula
 It is important that the verification and validation processes starts as soon as the development of the system begins in order to find errors as quickly as possible. As specified above, an incremental approach is used for the integration process, so that bug tracking is more easier. Moreover, also scaffolding techniques must be used when needed: in particular due to the fact that the frontend and the external subsystems are independent, the external services will be used in place of stubs to test the interfaces.
 \newline
 At the end, when the integration system is completed, the whole system is tested: for this purpose a fundamental type of test is the performance test that is useful to identify bottlenecks affecting the response time, the utilization and the throughput. It identifies also inefficient algorithms, Hardware/Network issues and Query optimimzation possibilities and this is very important since in this system there are a lot of interactions with the database. 
-\newpage
+
 \section{Sequence of Component Integration}
 The following diagrams describe the process of implementation, integration
 and testing. The arrow goes from the used component/subsystem to the
@@ -768,9 +768,9 @@ At the end of the previuous procedures the \textit{frontend}, \textit{backend} a
         \midrule
         Group review & 2\\
         \midrule
-        Many consistency fixes in diagrams& 4\\
+        Consistency fixes in diagrams& 3\\
         \midrule
-		& \textbf{Total:} 36\\
+		& \textbf{Total:} 35\\
 		\bottomrule
 	\end{tabular}
 \end{table}
