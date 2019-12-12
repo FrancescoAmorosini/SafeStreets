@@ -39,7 +39,7 @@ This document is mainly intended to be used by the test and development teams as
 
 \section{Scope}
 SafeStreets is a mobile application that aims to improve the safety of urban areas by giving its users the possibility to report traffic violations to authorities. Users are logged in either as citizen, those who report the violations, or authorities, those who are notified about newly reported violations and are supposed to take action on them.\\
-The system is in charge of collecting all the reports, storing them, and notifying the authorities about them. The stored reports are then used to build statistics, find unsafe areas, and compute suggestions on how to improve the safety of such areas. The system may also interact with local Municipalities' Systems in order to retrieve information about accidents and iussued traffic tickets: in this case some of the above functions are enhanced, and some new functions are enabled (g.e computing statistics on traffic tickets).\\
+The system is in charge of collecting all the reports, storing them, and notifying the authorities about them. The stored reports are then used to build statistics, find unsafe areas, and compute suggestions on how to improve the safety of such areas. The system may also interact with local Municipalities' Systems in order to retrieve information about accidents and issued traffic tickets: in this case some of the above functions are enhanced, and some new functions are enabled (g.e computing statistics on traffic tickets).\\
 \newline
 Further information about the scope of the application can be found in the Chapter 1 of the RASD.
 
@@ -121,7 +121,7 @@ The UML component diagram in Figure \ref{fig:componentdiagram} aims at capturing
 \item \textbf{Information Manager}: a \textit{subsystem} in charge of building statistics, compute safety suggestions and deploy them to the users who requested them.
     \begin{itemize}
         \item \textbf{StatisticsSuggestions Interface}: it exposes to the users the latest statistics and safety suggestions. As aready mentioned in the RASD, the exposed data may be different according to the level of visibility granted to different users.
-        \item \textbf{Statistics Controller}: it analyzes the stored reports to build statistics such as unsafe urban areas, most frequent violations, and offenders. Depending on the agreements with local municipalities, this component can also compute statistics on iussued traffic tickets or refine its statistics about accidents.
+        \item \textbf{Statistics Controller}: it analyzes the stored reports to build statistics such as unsafe urban areas, most frequent violations, and offenders. Depending on the agreements with local municipalities, this component can also compute statistics on issued traffic tickets or refine its statistics about accidents.
         \item \textbf{AI Controller}: its role is to analyze previously built statistics and compute safety suggestions. These suggestions are addressed to the authorities who use the SafeStreets application.
         \item \textbf{Security Manager}: similarly to the one described in the Report Manager subsystem, this component is in charge of decrypting stored reports so that they can be analyzed. To ensure that no report is ever altered, this component can perform read-only operations, whereas the one in the Report Manager is the ony one which disposes of write permissions.
     \end{itemize}
